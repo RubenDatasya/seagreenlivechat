@@ -1,0 +1,599 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		87A2CFE029FEB55200AEAB4D /* AIAEC in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFDF29FEB55200AEAB4D /* AIAEC */; };
+		87A2CFE229FEB55200AEAB4D /* AINS in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFE129FEB55200AEAB4D /* AINS */; };
+		87A2CFE429FEB55200AEAB4D /* AudioBeauty in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFE329FEB55200AEAB4D /* AudioBeauty */; };
+		87A2CFE629FEB55200AEAB4D /* ClearVision in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFE529FEB55200AEAB4D /* ClearVision */; };
+		87A2CFE829FEB55200AEAB4D /* ContentInspect in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFE729FEB55200AEAB4D /* ContentInspect */; };
+		87A2CFEA29FEB55200AEAB4D /* DRM in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFE929FEB55200AEAB4D /* DRM */; };
+		87A2CFEC29FEB55200AEAB4D /* FaceDetection in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFEB29FEB55200AEAB4D /* FaceDetection */; };
+		87A2CFEE29FEB55200AEAB4D /* ReplayKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFED29FEB55200AEAB4D /* ReplayKit */; };
+		87A2CFF029FEB55200AEAB4D /* RtcBasic in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFEF29FEB55200AEAB4D /* RtcBasic */; };
+		87A2CFF229FEB55200AEAB4D /* SpatialAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFF129FEB55200AEAB4D /* SpatialAudio */; };
+		87A2CFF429FEB55200AEAB4D /* VQA in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFF329FEB55200AEAB4D /* VQA */; };
+		87A2CFF629FEB55200AEAB4D /* VirtualBackground in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFF529FEB55200AEAB4D /* VirtualBackground */; };
+		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
+		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
+		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
+		87A2D00329FF9F9300AEAB4D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D00229FF9F9300AEAB4D /* Constants.swift */; };
+		87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D00829FFA1E200AEAB4D /* LiveChatAlert.swift */; };
+		87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */; };
+		87A2D01029FFAD4000AEAB4D /* ChannelMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D00F29FFAD4000AEAB4D /* ChannelMessage.swift */; };
+		87A2D01329FFB7BA00AEAB4D /* LiveChatTokenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01229FFB7BA00AEAB4D /* LiveChatTokenApi.swift */; };
+		87A2D01529FFB7CE00AEAB4D /* SignalingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01429FFB7CE00AEAB4D /* SignalingToken.swift */; };
+		87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */; };
+		87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */; };
+		87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60929FE7B020020B2A9 /* ContentView.swift */; };
+		87EFE60C29FE7B040020B2A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87EFE60B29FE7B040020B2A9 /* Assets.xcassets */; };
+		87EFE61029FE7B040020B2A9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87EFE60F29FE7B040020B2A9 /* Preview Assets.xcassets */; };
+		87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE63D29FE7CD10020B2A9 /* ViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
+		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
+		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		87A2D00829FFA1E200AEAB4D /* LiveChatAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatAlert.swift; sourceTree = "<group>"; };
+		87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionManager.swift; sourceTree = "<group>"; };
+		87A2D00F29FFAD4000AEAB4D /* ChannelMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMessage.swift; sourceTree = "<group>"; };
+		87A2D01229FFB7BA00AEAB4D /* LiveChatTokenApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatTokenApi.swift; sourceTree = "<group>"; };
+		87A2D01429FFB7CE00AEAB4D /* SignalingToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalingToken.swift; sourceTree = "<group>"; };
+		87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApiProtocol.swift; sourceTree = "<group>"; };
+		87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeagreenLiveChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeagreenLiveChatApp.swift; sourceTree = "<group>"; };
+		87EFE60929FE7B020020B2A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		87EFE60B29FE7B040020B2A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		87EFE60D29FE7B040020B2A9 /* SeagreenLiveChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SeagreenLiveChat.entitlements; sourceTree = "<group>"; };
+		87EFE60F29FE7B040020B2A9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		87EFE63D29FE7CD10020B2A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		87EFE60129FE7B020020B2A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87A2CFEA29FEB55200AEAB4D /* DRM in Frameworks */,
+				87A2CFE429FEB55200AEAB4D /* AudioBeauty in Frameworks */,
+				87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */,
+				87A2CFF429FEB55200AEAB4D /* VQA in Frameworks */,
+				87A2CFF029FEB55200AEAB4D /* RtcBasic in Frameworks */,
+				87A2CFEC29FEB55200AEAB4D /* FaceDetection in Frameworks */,
+				87A2CFE829FEB55200AEAB4D /* ContentInspect in Frameworks */,
+				87A2CFE029FEB55200AEAB4D /* AIAEC in Frameworks */,
+				87A2CFE629FEB55200AEAB4D /* ClearVision in Frameworks */,
+				87A2CFF629FEB55200AEAB4D /* VirtualBackground in Frameworks */,
+				87A2CFEE29FEB55200AEAB4D /* ReplayKit in Frameworks */,
+				87A2CFF229FEB55200AEAB4D /* SpatialAudio in Frameworks */,
+				87A2CFE229FEB55200AEAB4D /* AINS in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		87A2CFFC29FF9EE700AEAB4D /* LiveChatContent */ = {
+			isa = PBXGroup;
+			children = (
+				87A2D00729FFA1CD00AEAB4D /* Models */,
+				87A2D00529FFA1B900AEAB4D /* View */,
+				87A2D00429FFA1AF00AEAB4D /* ViewModel */,
+			);
+			path = LiveChatContent;
+			sourceTree = "<group>";
+		};
+		87A2D00129FF9F8000AEAB4D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				87A2D00229FF9F9300AEAB4D /* Constants.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		87A2D00429FFA1AF00AEAB4D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		87A2D00529FFA1B900AEAB4D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				87EFE60929FE7B020020B2A9 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		87A2D00729FFA1CD00AEAB4D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				87A2D00829FFA1E200AEAB4D /* LiveChatAlert.swift */,
+				87A2D00F29FFAD4000AEAB4D /* ChannelMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		87A2D00A29FFA25600AEAB4D /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		87A2D01129FFB79F00AEAB4D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				87A2D01229FFB7BA00AEAB4D /* LiveChatTokenApi.swift */,
+				87A2D01429FFB7CE00AEAB4D /* SignalingToken.swift */,
+				87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		87EFE5FB29FE7B020020B2A9 = {
+			isa = PBXGroup;
+			children = (
+				87EFE60629FE7B020020B2A9 /* SeagreenLiveChat */,
+				87EFE60529FE7B020020B2A9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		87EFE60529FE7B020020B2A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87EFE60629FE7B020020B2A9 /* SeagreenLiveChat */ = {
+			isa = PBXGroup;
+			children = (
+				87A2D01129FFB79F00AEAB4D /* API */,
+				87A2D00A29FFA25600AEAB4D /* Tools */,
+				87A2D00129FF9F8000AEAB4D /* Resources */,
+				87A2CFFC29FF9EE700AEAB4D /* LiveChatContent */,
+				87EFE63C29FE7CBE0020B2A9 /* LiveChat */,
+				87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */,
+				87EFE60B29FE7B040020B2A9 /* Assets.xcassets */,
+				87EFE60D29FE7B040020B2A9 /* SeagreenLiveChat.entitlements */,
+				87EFE60E29FE7B040020B2A9 /* Preview Content */,
+			);
+			path = SeagreenLiveChat;
+			sourceTree = "<group>";
+		};
+		87EFE60E29FE7B040020B2A9 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				87EFE60F29FE7B040020B2A9 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		87EFE63C29FE7CBE0020B2A9 /* LiveChat */ = {
+			isa = PBXGroup;
+			children = (
+				87EFE63D29FE7CD10020B2A9 /* ViewController.swift */,
+				87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */,
+			);
+			path = LiveChat;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		87EFE60329FE7B020020B2A9 /* SeagreenLiveChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87EFE61329FE7B040020B2A9 /* Build configuration list for PBXNativeTarget "SeagreenLiveChat" */;
+			buildPhases = (
+				87EFE60029FE7B020020B2A9 /* Sources */,
+				87EFE60129FE7B020020B2A9 /* Frameworks */,
+				87EFE60229FE7B020020B2A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SeagreenLiveChat;
+			packageProductDependencies = (
+				87A2CFDF29FEB55200AEAB4D /* AIAEC */,
+				87A2CFE129FEB55200AEAB4D /* AINS */,
+				87A2CFE329FEB55200AEAB4D /* AudioBeauty */,
+				87A2CFE529FEB55200AEAB4D /* ClearVision */,
+				87A2CFE729FEB55200AEAB4D /* ContentInspect */,
+				87A2CFE929FEB55200AEAB4D /* DRM */,
+				87A2CFEB29FEB55200AEAB4D /* FaceDetection */,
+				87A2CFED29FEB55200AEAB4D /* ReplayKit */,
+				87A2CFEF29FEB55200AEAB4D /* RtcBasic */,
+				87A2CFF129FEB55200AEAB4D /* SpatialAudio */,
+				87A2CFF329FEB55200AEAB4D /* VQA */,
+				87A2CFF529FEB55200AEAB4D /* VirtualBackground */,
+				87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */,
+			);
+			productName = SeagreenLiveChat;
+			productReference = 87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		87EFE5FC29FE7B020020B2A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					87EFE60329FE7B020020B2A9 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+				};
+			};
+			buildConfigurationList = 87EFE5FF29FE7B020020B2A9 /* Build configuration list for PBXProject "SeagreenLiveChat" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 87EFE5FB29FE7B020020B2A9;
+			packageReferences = (
+				87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */,
+				87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */,
+			);
+			productRefGroup = 87EFE60529FE7B020020B2A9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				87EFE60329FE7B020020B2A9 /* SeagreenLiveChat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		87EFE60229FE7B020020B2A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87EFE61029FE7B040020B2A9 /* Preview Assets.xcassets in Resources */,
+				87EFE60C29FE7B040020B2A9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		87EFE60029FE7B020020B2A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */,
+				87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */,
+				87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */,
+				87A2D01329FFB7BA00AEAB4D /* LiveChatTokenApi.swift in Sources */,
+				87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */,
+				87A2D00329FF9F9300AEAB4D /* Constants.swift in Sources */,
+				87A2D01529FFB7CE00AEAB4D /* SignalingToken.swift in Sources */,
+				87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */,
+				87A2D01029FFAD4000AEAB4D /* ChannelMessage.swift in Sources */,
+				87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */,
+				87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */,
+				87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		87EFE61129FE7B040020B2A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		87EFE61229FE7B040020B2A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		87EFE61429FE7B040020B2A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SeagreenLiveChat/SeagreenLiveChat.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SeagreenLiveChat/Preview Content\"";
+				DEVELOPMENT_TEAM = LVKN97J3GA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera usage is needed";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone usage is needed";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreen.livechat.SeagreenLiveChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		87EFE61529FE7B040020B2A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SeagreenLiveChat/SeagreenLiveChat.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SeagreenLiveChat/Preview Content\"";
+				DEVELOPMENT_TEAM = LVKN97J3GA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera usage is needed";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone usage is needed";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreen.livechat.SeagreenLiveChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		87EFE5FF29FE7B020020B2A9 /* Build configuration list for PBXProject "SeagreenLiveChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87EFE61129FE7B040020B2A9 /* Debug */,
+				87EFE61229FE7B040020B2A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87EFE61329FE7B040020B2A9 /* Build configuration list for PBXNativeTarget "SeagreenLiveChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87EFE61429FE7B040020B2A9 /* Debug */,
+				87EFE61529FE7B040020B2A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AgoraIO/AgoraRtcEngine_iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AgoraIO/AgoraRtm_iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		87A2CFDF29FEB55200AEAB4D /* AIAEC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = AIAEC;
+		};
+		87A2CFE129FEB55200AEAB4D /* AINS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = AINS;
+		};
+		87A2CFE329FEB55200AEAB4D /* AudioBeauty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = AudioBeauty;
+		};
+		87A2CFE529FEB55200AEAB4D /* ClearVision */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = ClearVision;
+		};
+		87A2CFE729FEB55200AEAB4D /* ContentInspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = ContentInspect;
+		};
+		87A2CFE929FEB55200AEAB4D /* DRM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = DRM;
+		};
+		87A2CFEB29FEB55200AEAB4D /* FaceDetection */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = FaceDetection;
+		};
+		87A2CFED29FEB55200AEAB4D /* ReplayKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = ReplayKit;
+		};
+		87A2CFEF29FEB55200AEAB4D /* RtcBasic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = RtcBasic;
+		};
+		87A2CFF129FEB55200AEAB4D /* SpatialAudio */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = SpatialAudio;
+		};
+		87A2CFF329FEB55200AEAB4D /* VQA */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = VQA;
+		};
+		87A2CFF529FEB55200AEAB4D /* VirtualBackground */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = VirtualBackground;
+		};
+		87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */;
+			productName = AgoraRtmKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 87EFE5FC29FE7B020020B2A9 /* Project object */;
+}
