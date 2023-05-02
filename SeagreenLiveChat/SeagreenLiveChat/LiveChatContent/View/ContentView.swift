@@ -12,7 +12,7 @@ import SwiftUI
 
 enum CameraActionType : String {
     case zoom = "plus.magnifyingglass"
-    case brightness = "rays"
+    case brightness = "wand.and.rays"
     case move = "cross.circle"
     case cameraReverse = "arrow.triangle.2.circlepath.camera"
     case shut = "iphone.gen2.slash"
@@ -51,11 +51,11 @@ struct ContentView: View {
     func CameraActionView() -> some View {
         VStack(alignment: .trailing, spacing: 40) {
             CameraActionButton(image: .zoom) {
-
+                viewModel.sendMessage(event: .zoomIn)
             }
 
             CameraActionButton(image: .brightness) {
-
+                viewModel.sendMessage(event: .brightnessUp)
             }
 
             CameraActionButton(image: .move) {

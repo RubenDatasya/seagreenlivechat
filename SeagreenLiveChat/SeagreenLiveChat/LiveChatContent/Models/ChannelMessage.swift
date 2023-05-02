@@ -6,26 +6,35 @@
 //
 
 import Foundation
-import StreamChat
 
 enum ChannelMessageEvent : String, Codable  {
-
-    case zoomIn 
+    case zoomIn
     case zoomOut
     case brightnessUp
     case brightnessDown
     case flashOn
     case flashOff
     case leave
+    case unknown
+
+    static func value( _ from : String) -> Self{
+        switch from {
+        case ChannelMessageEvent.zoomIn.rawValue:
+            return .zoomIn
+        case  ChannelMessageEvent.zoomOut.rawValue:
+            return .zoomOut
+        case  ChannelMessageEvent.brightnessUp.rawValue:
+            return .brightnessUp
+        case  ChannelMessageEvent.brightnessDown.rawValue:
+            return .brightnessDown
+        case  ChannelMessageEvent.flashOn.rawValue:
+            return .flashOn
+        case  ChannelMessageEvent.flashOff.rawValue:
+            return .flashOff
+        case  ChannelMessageEvent.leave.rawValue:
+            return .leave
+        default:
+            return .unknown
+        }
+    }
 }
-
-
-struct ChannelMessage: CustomEventPayload {
-
-    static var eventType: StreamChat.EventType = .healthCheck
-
-    var event : ChannelMessageEvent
-
-
-}
-

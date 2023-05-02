@@ -29,8 +29,6 @@
 		87A2D01329FFB7BA00AEAB4D /* LiveChatTokenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01229FFB7BA00AEAB4D /* LiveChatTokenApi.swift */; };
 		87A2D01529FFB7CE00AEAB4D /* SignalingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01429FFB7CE00AEAB4D /* SignalingToken.swift */; };
 		87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */; };
-		87A2D01F2A00016200AEAB4D /* StreamChat in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2D01E2A00016200AEAB4D /* StreamChat */; };
-		87A2D0212A00016200AEAB4D /* StreamChatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2D0202A00016200AEAB4D /* StreamChatUI */; };
 		87A2D0242A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D0222A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld */; };
 		87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */; };
 		87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60929FE7B020020B2A9 /* ContentView.swift */; };
@@ -68,9 +66,7 @@
 				87A2CFE429FEB55200AEAB4D /* AudioBeauty in Frameworks */,
 				87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */,
 				87A2CFF429FEB55200AEAB4D /* VQA in Frameworks */,
-				87A2D01F2A00016200AEAB4D /* StreamChat in Frameworks */,
 				87A2CFF029FEB55200AEAB4D /* RtcBasic in Frameworks */,
-				87A2D0212A00016200AEAB4D /* StreamChatUI in Frameworks */,
 				87A2CFEC29FEB55200AEAB4D /* FaceDetection in Frameworks */,
 				87A2CFE829FEB55200AEAB4D /* ContentInspect in Frameworks */,
 				87A2CFE029FEB55200AEAB4D /* AIAEC in Frameworks */,
@@ -226,8 +222,6 @@
 				87A2CFF329FEB55200AEAB4D /* VQA */,
 				87A2CFF529FEB55200AEAB4D /* VirtualBackground */,
 				87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */,
-				87A2D01E2A00016200AEAB4D /* StreamChat */,
-				87A2D0202A00016200AEAB4D /* StreamChatUI */,
 			);
 			productName = SeagreenLiveChat;
 			productReference = 87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */;
@@ -260,7 +254,6 @@
 			packageReferences = (
 				87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */,
 				87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */,
-				87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */,
 			);
 			productRefGroup = 87EFE60529FE7B020020B2A9 /* Products */;
 			projectDirPath = "";
@@ -536,14 +529,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/GetStream/stream-chat-swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -611,16 +596,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */;
 			productName = AgoraRtmKit;
-		};
-		87A2D01E2A00016200AEAB4D /* StreamChat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */;
-			productName = StreamChat;
-		};
-		87A2D0202A00016200AEAB4D /* StreamChatUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */;
-			productName = StreamChatUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 

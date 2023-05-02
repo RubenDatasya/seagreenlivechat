@@ -21,6 +21,5 @@ class Constants {
 
     //To update per session
     var token: String  = "007eJxTYHh/ZuHMrdZfjho6Ptxy6K+a0e2jcXOmXJh4Na7h9bT5vdduKzAYGFhYmpkYmlpaGBuYGJmbJSYZp5olJaYZmhgmGxiZWvw/EZDSEMjIsEpnFgMjFIL4QgzFqYnpRampeTmZZanJGYkl8YYMDADXGyk2"
-
     var channel: String = "seagreenlivechat_1"
 }

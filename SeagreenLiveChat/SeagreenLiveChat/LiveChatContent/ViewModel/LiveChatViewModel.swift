@@ -25,12 +25,12 @@ enum RTCLoginState {
 
 class LiveChatViewModel: NSObject, ObservableObject {
 
+    var receivedMessage: PassthroughSubject<ChannelMessageEvent,Never> = .init()
     var isConnected:   PassthroughSubject<RTCLoginState, Never> = .init()
     var currentCamera: CameraState = .front
     var cameraToggle:  PassthroughSubject<CameraState, Never> = .init()
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var newHostEvent:  PassthroughSubject<UInt, Never> = .init()
-    var messageEvent:  PassthroughSubject<ChannelMessage, Never> = .init()
     var userRole: AgoraClientRole = .broadcaster
 
     lazy var chatApi = LiveChatTokenAPI()
@@ -101,8 +101,9 @@ class LiveChatViewModel: NSObject, ObservableObject {
     }
 
     private func joinMessageChannel() async  {
-        let token = await chatApi.fetch(userid:  Constants.shared.rtmUser)
-        let login = await agoraRtm.login(byToken: token.value, user: Constants.shared.rtmUser)
+        let token = await chatApi.fetch(userid:  Constants.shared.currentUser)
+
+        let login = await agoraRtm.login(byToken: token.value, user: Constants.shared.currentUser)
 
         if login == .ok {
             createMessageChannel()
@@ -129,7 +130,7 @@ class LiveChatViewModel: NSObject, ObservableObject {
             .sink { _ in
                 self.alertSubject.send(.success)
                 Task {
-                    await self.joinMessageChannel()
+                  //  await self.joinMessageChannel()
                 }
             }
             .store(in: &subscriptions)
@@ -172,8 +173,9 @@ extension LiveChatViewModel: AgoraRtcEngineDelegate {
 extension LiveChatViewModel : AgoraRtmDelegate {
 
     func rtmKit(_ kit: AgoraRtmKit, connectionStateChanged state: AgoraRtmConnectionState, reason: AgoraRtmConnectionChangeReason) {
-        print("connectionStateChanged", state.rawValue)
-        print("connectionStateChanged reason ", reason)
+        print("connectionStateChanged", "\(state) \(state.rawValue)")
+        print("connectionStateChanged", "\(reason) \(reason.rawValue)")
+
 
     }
     func rtcEngine(_ engine: AgoraRtcEngineKit, tokenPrivilegeWillExpire token: String) {
@@ -205,7 +207,10 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
     }
 
     func channel(_ channel: AgoraRtmChannel, messageReceived message: AgoraRtmMessage, from member: AgoraRtmMember) {
-        print("messageReceived", message.text)
+        print("messageReceived \(message.text) from \(member.userId)")
+        if member.userId != Constants.shared.rtmUser {
+            receivedMessage.send(ChannelMessageEvent.value(message.text))
+        }
     }
 
 }

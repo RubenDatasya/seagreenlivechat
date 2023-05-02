@@ -65,6 +65,7 @@ class ViewController: UIViewController {
         observeAlert()
         observeNewHost()
         observeCamera()
+        observeChannelMessages()
         viewModel.initializeAgoraEngine()
         setupLocalVideo()
         joinChannels()
@@ -136,6 +137,28 @@ class ViewController: UIViewController {
             await viewModel.joinChannel()
         }
     }
+
+    private func handleChannelMessageEvent( _ event: ChannelMessageEvent) {
+        print(UIDevice.current.systemName , "received \(event)")
+        switch event {
+        case .zoomIn:
+            break
+        case .zoomOut:
+            break
+        case .brightnessUp:
+            break
+        case .brightnessDown:
+            break
+        case .flashOn:
+            break
+        case .flashOff:
+            break
+        case .leave:
+            break
+        case .unknown:
+            break
+        }
+    }
 }
 
 extension ViewController {
@@ -170,6 +193,13 @@ extension ViewController {
                 videoCanvas.view = self.remoteView
                 self.viewModel.agoraEngine.setupRemoteVideo(videoCanvas)
             }
+            .store(in: &subscriptions)
+    }
+
+    func observeChannelMessages() {
+        viewModel.receivedMessage
+            .filter { $0  != .unknown }
+            .sink(receiveValue: handleChannelMessageEvent(_:))
             .store(in: &subscriptions)
     }
 }
