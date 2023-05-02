@@ -16,7 +16,7 @@ class Constants {
 
     let currentUser =  UIDevice.current.identifierForVendor?.uuidString ?? ""
     let rtmUser =  UUID().uuidString
-    let baseURL = "https://bb09-94-154-123-67.ngrok-free.app"
+    let baseURL = "https://f0de-94-154-123-67.ngrok-free.app"
     let appId: String  = "0089641598304276ab3e6baf141c0258"
 
     //To update per session

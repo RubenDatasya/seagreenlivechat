@@ -19,6 +19,7 @@
 		8733E96B2A011BD300DFDDF0 /* SpatialAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 8733E96A2A011BD300DFDDF0 /* SpatialAudio */; };
 		8733E96D2A011BD300DFDDF0 /* VQA in Frameworks */ = {isa = PBXBuildFile; productRef = 8733E96C2A011BD300DFDDF0 /* VQA */; };
 		8733E96F2A011BD300DFDDF0 /* VirtualBackground in Frameworks */ = {isa = PBXBuildFile; productRef = 8733E96E2A011BD300DFDDF0 /* VirtualBackground */; };
+		8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8733E97D2A0153FE00DFDDF0 /* AgoraImprovements.swift */; };
 		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
 		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
 		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8733E97D2A0153FE00DFDDF0 /* AgoraImprovements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraImprovements.swift; sourceTree = "<group>"; };
 		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
 		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
 		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */,
+				8733E97D2A0153FE00DFDDF0 /* AgoraImprovements.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */,
+				8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */,
 				87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */,
 				87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */,
 				87A2D01329FFB7BA00AEAB4D /* LiveChatTokenApi.swift in Sources */,

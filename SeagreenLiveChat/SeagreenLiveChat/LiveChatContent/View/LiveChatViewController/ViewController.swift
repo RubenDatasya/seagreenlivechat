@@ -15,7 +15,6 @@ import AppKit
 #endif
 import AgoraRtcKit
 import AgoraRtmKit
-
 import SwiftUI
 
 #if os(iOS)
@@ -43,12 +42,15 @@ struct VideoChat: UIViewControllerRepresentable {
 
 class ViewController: UIViewController {
 
-    lazy var localView: KitView = .init()
-    lazy var remoteView: KitView = .init()
+    lazy var localView: UIView = .init()
+    lazy var remoteView: UIView = .init()
     lazy var decorator: ViewControllerDecorator = .init()
     var joinButton: UIButton!
     var subscriptions: Set<AnyCancellable> = .init()
     var viewModel: LiveChatViewModel
+
+ //   lazy var customCamera = AgoraCameraSourcePush(delegate: self, videoView: localView)
+
 
     init(viewModel: LiveChatViewModel) {
         self.viewModel = viewModel
@@ -71,9 +73,17 @@ class ViewController: UIViewController {
         joinChannels()
     }
 
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.agoraEngine.setVideoFrameDelegate(self)
+
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.leaveChannels()
+        viewModel.agoraEngine.setVideoFrameDelegate(nil)
         DispatchQueue.global(qos: .userInitiated).async {AgoraRtcEngineKit.destroy()}
     }
 
@@ -91,29 +101,28 @@ class ViewController: UIViewController {
         localView.animate { view in
             view.show()
         }
-        viewModel.agoraEngine.enableVideo()
-        viewModel.agoraEngine.startPreview()
-        viewModel.agoraEngine.enableVideo()
+
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
         videoCanvas.view = localView
         // Set the local video view
         viewModel.agoraEngine.setupLocalVideo(videoCanvas)
+      //  customCamera.startCapture(ofCamera: .front)
+
     }
 
-    func handleCameraState(state : CameraPosition) {
+    func handleCameraState() {
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
-        if state == .front {
+        if viewModel.state.position == .front {
             self.localView.isHidden = false
             videoCanvas.view = self.localView
         } else{
             self.localView.isHidden = true
             videoCanvas.view = self.remoteView
         }
-        // Set the local video view
         self.viewModel.agoraEngine.setupLocalVideo(videoCanvas)
     }
 
@@ -154,7 +163,7 @@ extension ViewController {
             .receive(on: DispatchQueue.main)
             .sink { state in
                 self.viewModel.agoraEngine.switchCamera()
-                self.handleCameraState(state: state)
+                self.handleCameraState()
             }
             .store(in: &subscriptions)
     }
@@ -178,5 +187,45 @@ extension ViewController {
             .filter { $0  != .unknown }
             .sink(receiveValue: handleChannelMessageEvent(_:))
             .store(in: &subscriptions)
+    }
+
+}
+
+
+extension ViewController: AgoraVideoFrameDelegate {
+    // Occurs each time the SDK receives a video frame captured by the local camera
+    func onCapture(_ videoFrame: AgoraOutputVideoFrame) -> Bool {
+
+        return true
+    }
+
+    // Occurs each time the SDK receives a video frame captured by the screen
+    func onScreenCapture(_ videoFrame: AgoraOutputVideoFrame) -> Bool {
+        // Choose whether to ignore the current video frame if the pre-processing fails
+        return false
+    }
+
+    // Occurs each time the SDK receives a video frame sent by the remote user
+    func onRenderVideoFrame(_ videoFrame: AgoraOutputVideoFrame, uid: UInt, channelId: String) -> Bool {
+        // Choose whether to ignore the current video frame if the post-processing fails
+        return false
+    }
+
+    // Indicate the video frame mode of the observer
+    func getVideoFrameProcessMode() -> AgoraVideoFrameProcessMode {
+        // The process mode of the video frame: readOnly, readWrite
+        return AgoraVideoFrameProcessMode.readWrite
+    }
+
+    // Sets the video frame type preference
+    func getVideoFormatPreference() -> AgoraVideoFormat {
+        // Video frame format: I420, BGRA, NV21, RGBA, NV12, CVPixel, I422, Default
+        return AgoraVideoFormat.RGBA
+    }
+
+    // Sets the frame position for the video observer
+    func getObservedFramePosition() -> AgoraVideoFramePosition {
+        // Frame position: postCapture, preRenderer, preEncoder
+        return AgoraVideoFramePosition.postCapture
     }
 }

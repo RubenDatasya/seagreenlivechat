@@ -49,15 +49,34 @@ class LiveChatViewModel: NSObject, ObservableObject {
 
     var subscriptions: Set<AnyCancellable> = .init()
 
+    var encodingConfiguration = AgoraVideoEncoderConfiguration(
+        size: .init(width: 640, height: 360),
+        frameRate: .fps60,
+        bitrate: AgoraVideoBitrateStandard,
+        orientationMode: .adaptative,
+        mirrorMode: .disabled)
+
 
 
     func initializeAgoraEngine() {
         let config = AgoraRtcEngineConfig()
         config.appId = Constants.shared.appId
         agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
+        upgradeCamera()
+        agoraEngine.enableVideo()
+        agoraEngine.startPreview()
         agoraRtm = .init(appId: Constants.shared.appId, delegate: self)
         observeRtcLoginState()
         observeCameraState()
+    }
+
+    func upgradeCamera() {
+        agoraEngine.setVideoEncoderConfiguration(encodingConfiguration)
+        agoraEngine.setBeautyEffectOptions(true, options: nil)
+        let enhancements : [any AgoraQualityImprovementProtocol] = [AgoraColorEnhancement(), AgoraUnderExposed(), AgoraVideoDenoising()]
+        enhancements.forEach { improvement in
+            agoraEngine.setExtensionPropertyWithVendor(improvement.name, extension: improvement.extension, key: improvement.key, value: improvement.value,sourceType: .remoteVideo)
+        }
     }
 
     func joinChannel() async  {
@@ -90,23 +109,25 @@ class LiveChatViewModel: NSObject, ObservableObject {
     }
 
     func leaveChannels() {
-//        leaveChannel()
-//        leaveMessageChannel()
+        leaveChannel()
+        leaveMessageChannel()
     }
 
     func sendMessage(event: ChannelMessageEvent) {
         self.rtmChannel?.send(AgoraRtmMessage(text: event.rawValue )){ error in
             print("sendMessage \(error)", error.rawValue)
         }
+        handleChannelEvent(event.rawValue)
     }
 
     func toggleCamera() {
         if state.position == .front {
-            cameraToggle.send(.rear)
             state.position = .rear
+            cameraToggle.send(.rear)
         }else {
-            cameraToggle.send(.front)
+            state.zoom = 0
             state.position = .front
+            cameraToggle.send(.front)
         }
     }
 
@@ -174,6 +195,31 @@ class LiveChatViewModel: NSObject, ObservableObject {
          }
      }
 
+    private func handleChannelEvent(_ event: String) {
+        guard state.position == .rear else { return }
+        switch ChannelMessageEvent.value(event) {
+        case .zoomIn:
+            if state.zoom < 5 {
+                state.zoom += 1
+            }
+        case .zoomOut:
+            state.zoom -= 1
+        case .brightnessUp:
+            break
+        case .brightnessDown:
+            break
+        case .flashOn:
+            if agoraEngine.isCameraTorchSupported() {
+                state.isFlashOn =  true
+            }
+        case .flashOff:
+            state.isFlashOn =  true
+        case .leave:
+            break
+        case .unknown:
+            break
+        }
+    }
 }
 
 
@@ -235,31 +281,7 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
         if member.userId != Constants.shared.rtmUser {
             receivedMessage.send(ChannelMessageEvent.value(message.text))
         }
-
-        switch ChannelMessageEvent.value(message.text) {
-        case .zoomIn:
-            if state.zoom < 1 {
-                state.zoom += 0.1
-            }
-        case .zoomOut:
-            if state.zoom > 0 {
-                state.zoom -= 0.1
-            }
-        case .brightnessUp:
-            break
-        case .brightnessDown:
-            break
-        case .flashOn:
-            if agoraEngine.isCameraTorchSupported() {
-                state.isFlashOn =  true
-            }
-        case .flashOff:
-            state.isFlashOn =  true
-        case .leave:
-            break
-        case .unknown:
-            break
-        }
+        handleChannelEvent(message.text)
     }
 
 }
