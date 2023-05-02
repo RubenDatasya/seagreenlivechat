@@ -1,12 +1,14 @@
 package com.seagrenlivechatapi.demo
 
 import io.agora.sample.RtmTokenBuilderSample
+import io.agora.sample.SignalingTokenSample
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @SpringBootApplication
@@ -21,10 +23,17 @@ data class Token(var value:String)
 @RequestMapping("/")
 class AgoraTokenController {
 
-	@GetMapping("tokens")
-	fun getStatus(): ResponseEntity<Token> {
+	@GetMapping("chatToken")
+	fun getRtmToken(@RequestParam userid: String): ResponseEntity<Token> {
 		val sampler = RtmTokenBuilderSample()
-		return ResponseEntity(Token(value =  sampler.token), HttpStatus.OK)
+		val rtm = sampler.getToken(userid)
+		return ResponseEntity(Token(value = rtm), HttpStatus.OK)
+	}
+	@GetMapping("messagingToken")
+	fun getSignalingToken(@RequestParam userid: String): ResponseEntity<Token> {
+		val sampler = SignalingTokenSample()
+		val token =  sampler.getToken(userid)
+		return ResponseEntity(Token(value =  token), HttpStatus.OK)
 	}
 
 }
