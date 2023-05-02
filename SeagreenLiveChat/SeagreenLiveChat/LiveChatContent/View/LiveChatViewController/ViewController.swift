@@ -63,7 +63,6 @@ class ViewController: UIViewController {
          super.viewDidLoad()
         initViews()
         observeAlert()
-        observeConnected()
         observeNewHost()
         observeCamera()
         viewModel.initializeAgoraEngine()
@@ -135,7 +134,6 @@ class ViewController: UIViewController {
     func joinChannels() {
         Task {
             await viewModel.joinChannel()
-            await viewModel.joinMessageChannel()
         }
     }
 }
@@ -161,19 +159,11 @@ extension ViewController {
             .store(in: &subscriptions)
     }
 
-    func observeConnected() {
-        viewModel.$isConnected
-            .receive(on: DispatchQueue.main)
-            .sink { isConnected in
-
-            }
-            .store(in: &subscriptions)
-    }
-
     func observeNewHost() {
         viewModel.newHostEvent
             .receive(on: DispatchQueue.main)
             .sink { (uid) in
+                print(UIDevice.current.systemName, "installing remote canvas")
                 let videoCanvas = AgoraRtcVideoCanvas()
                 videoCanvas.uid = uid
                 videoCanvas.renderMode = .hidden

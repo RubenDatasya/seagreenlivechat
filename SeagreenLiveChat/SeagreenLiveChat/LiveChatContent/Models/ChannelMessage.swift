@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import StreamChat
 
-enum ChannelMessageEvent : String, Codable {
+enum ChannelMessageEvent : String, Codable  {
+
     case zoomIn 
     case zoomOut
     case brightnessUp
@@ -18,13 +20,12 @@ enum ChannelMessageEvent : String, Codable {
 }
 
 
-struct ChannelMessage: Codable {
+struct ChannelMessage: CustomEventPayload {
+
+    static var eventType: StreamChat.EventType = .healthCheck
 
     var event : ChannelMessageEvent
 
-    func serialize() -> String {
-        let data =  try! JSONEncoder().encode(self)
-        return String(data: data, encoding: .utf8)!
-    }
+
 }
 

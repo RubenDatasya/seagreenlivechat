@@ -29,6 +29,9 @@
 		87A2D01329FFB7BA00AEAB4D /* LiveChatTokenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01229FFB7BA00AEAB4D /* LiveChatTokenApi.swift */; };
 		87A2D01529FFB7CE00AEAB4D /* SignalingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01429FFB7CE00AEAB4D /* SignalingToken.swift */; };
 		87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */; };
+		87A2D01F2A00016200AEAB4D /* StreamChat in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2D01E2A00016200AEAB4D /* StreamChat */; };
+		87A2D0212A00016200AEAB4D /* StreamChatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2D0202A00016200AEAB4D /* StreamChatUI */; };
+		87A2D0242A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D0222A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld */; };
 		87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */; };
 		87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60929FE7B020020B2A9 /* ContentView.swift */; };
 		87EFE60C29FE7B040020B2A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87EFE60B29FE7B040020B2A9 /* Assets.xcassets */; };
@@ -46,6 +49,7 @@
 		87A2D01229FFB7BA00AEAB4D /* LiveChatTokenApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatTokenApi.swift; sourceTree = "<group>"; };
 		87A2D01429FFB7CE00AEAB4D /* SignalingToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalingToken.swift; sourceTree = "<group>"; };
 		87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApiProtocol.swift; sourceTree = "<group>"; };
+		87A2D0232A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SeagreenLiveChat.xcdatamodel; sourceTree = "<group>"; };
 		87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeagreenLiveChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeagreenLiveChatApp.swift; sourceTree = "<group>"; };
 		87EFE60929FE7B020020B2A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,7 +68,9 @@
 				87A2CFE429FEB55200AEAB4D /* AudioBeauty in Frameworks */,
 				87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */,
 				87A2CFF429FEB55200AEAB4D /* VQA in Frameworks */,
+				87A2D01F2A00016200AEAB4D /* StreamChat in Frameworks */,
 				87A2CFF029FEB55200AEAB4D /* RtcBasic in Frameworks */,
+				87A2D0212A00016200AEAB4D /* StreamChatUI in Frameworks */,
 				87A2CFEC29FEB55200AEAB4D /* FaceDetection in Frameworks */,
 				87A2CFE829FEB55200AEAB4D /* ContentInspect in Frameworks */,
 				87A2CFE029FEB55200AEAB4D /* AIAEC in Frameworks */,
@@ -108,6 +114,7 @@
 		87A2D00529FFA1B900AEAB4D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				87EFE63C29FE7CBE0020B2A9 /* LiveChatViewController */,
 				87EFE60929FE7B020020B2A9 /* ContentView.swift */,
 			);
 			path = View;
@@ -163,11 +170,11 @@
 				87A2D00A29FFA25600AEAB4D /* Tools */,
 				87A2D00129FF9F8000AEAB4D /* Resources */,
 				87A2CFFC29FF9EE700AEAB4D /* LiveChatContent */,
-				87EFE63C29FE7CBE0020B2A9 /* LiveChat */,
 				87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */,
 				87EFE60B29FE7B040020B2A9 /* Assets.xcassets */,
 				87EFE60D29FE7B040020B2A9 /* SeagreenLiveChat.entitlements */,
 				87EFE60E29FE7B040020B2A9 /* Preview Content */,
+				87A2D0222A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld */,
 			);
 			path = SeagreenLiveChat;
 			sourceTree = "<group>";
@@ -180,13 +187,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		87EFE63C29FE7CBE0020B2A9 /* LiveChat */ = {
+		87EFE63C29FE7CBE0020B2A9 /* LiveChatViewController */ = {
 			isa = PBXGroup;
 			children = (
 				87EFE63D29FE7CD10020B2A9 /* ViewController.swift */,
 				87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */,
 			);
-			path = LiveChat;
+			path = LiveChatViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +226,8 @@
 				87A2CFF329FEB55200AEAB4D /* VQA */,
 				87A2CFF529FEB55200AEAB4D /* VirtualBackground */,
 				87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */,
+				87A2D01E2A00016200AEAB4D /* StreamChat */,
+				87A2D0202A00016200AEAB4D /* StreamChatUI */,
 			);
 			productName = SeagreenLiveChat;
 			productReference = 87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */;
@@ -251,6 +260,7 @@
 			packageReferences = (
 				87A2CFDE29FEB55200AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */,
 				87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */,
+				87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */,
 			);
 			productRefGroup = 87EFE60529FE7B020020B2A9 /* Products */;
 			projectDirPath = "";
@@ -290,6 +300,7 @@
 				87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */,
 				87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */,
 				87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */,
+				87A2D0242A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +536,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GetStream/stream-chat-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -593,7 +612,30 @@
 			package = 87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */;
 			productName = AgoraRtmKit;
 		};
+		87A2D01E2A00016200AEAB4D /* StreamChat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */;
+			productName = StreamChat;
+		};
+		87A2D0202A00016200AEAB4D /* StreamChatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87A2D01D2A00016200AEAB4D /* XCRemoteSwiftPackageReference "stream-chat-swift" */;
+			productName = StreamChatUI;
+		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		87A2D0222A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				87A2D0232A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodel */,
+			);
+			currentVersion = 87A2D0232A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodel */;
+			path = SeagreenLiveChat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 87EFE5FC29FE7B020020B2A9 /* Project object */;
 }

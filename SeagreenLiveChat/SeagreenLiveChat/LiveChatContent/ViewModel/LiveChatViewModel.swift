@@ -16,13 +16,19 @@ enum CameraState {
     case front
 }
 
+enum RTCLoginState {
+    case disconnected
+    case connecting
+    case connected
+    case failureConnecting
+}
+
 class LiveChatViewModel: NSObject, ObservableObject {
 
-    @Published var isConnected: Bool = false
+    var isConnected:   PassthroughSubject<RTCLoginState, Never> = .init()
     var currentCamera: CameraState = .front
     var cameraToggle:  PassthroughSubject<CameraState, Never> = .init()
-    var alertSubject: PassthroughSubject<LiveChatAlert, Never> = .init()
-    var setupEvent:  PassthroughSubject<Void, Never> = .init()
+    var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var newHostEvent:  PassthroughSubject<UInt, Never> = .init()
     var messageEvent:  PassthroughSubject<ChannelMessage, Never> = .init()
     var userRole: AgoraClientRole = .broadcaster
@@ -34,15 +40,21 @@ class LiveChatViewModel: NSObject, ObservableObject {
     var agoraRtm: AgoraRtmKit!
     var rtmChannel: AgoraRtmChannel?
 
+    var subscriptions: Set<AnyCancellable> = .init()
+
+
 
     func initializeAgoraEngine() {
         let config = AgoraRtcEngineConfig()
         config.appId = Constants.shared.appId
         agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
         agoraRtm = .init(appId: Constants.shared.appId, delegate: self)
+        observeRtcLoginState()
     }
 
     func joinChannel() async  {
+        let token = await chatApi.fetch(userid: Constants.shared.currentUser)
+
         if await !AVPermissionManager.shared.checkForPermissions() {
             alertSubject.send(.permissionError)
             return
@@ -51,45 +63,20 @@ class LiveChatViewModel: NSObject, ObservableObject {
         let option = AgoraRtcChannelMediaOptions()
         if self.userRole == .broadcaster {
             option.clientRoleType = .broadcaster
-            setupEvent.send(())
         } else {
             option.clientRoleType = .audience
         }
         option.channelProfile = .communication
 
-        let token = await chatApi.fetch(userid:  Constants.shared.currentUser)
+        self.isConnected.send(.connecting)
 
          let result = agoraEngine.joinChannel(
-            byToken: token.value, channelId: Constants.shared.channel, uid: 0, mediaOptions: option,
+            byToken: Constants.shared.token, channelId: Constants.shared.channel, uid: 0, mediaOptions: option,
             joinSuccess: { (channel, uid, elapsed) in }
         )
          if result == 0 {
-            DispatchQueue.main.async {
-                self.isConnected =  true
-            }
-            alertSubject.send(.success)
+             self.isConnected.send(.connected)
         }
-    }
-
-    func joinMessageChannel() async  {
-       // let token = await messsagingApi.fetch(userid:  Constants.shared.currentUser)
-        //fake token above
-        print(Constants.shared.currentUser)
-        let login = await agoraRtm.login(byToken: nil, user: Constants.shared.currentUser)
-        if login == .ok {
-            createMessageChannel()
-            let result = await rtmChannel?.join()
-            print("joinMessageChannel", "\(result?.rawValue ?? -1)" )
-        }
-        print("joinMessageChannel", "login \(login)")
-    }
-
-    func createMessageChannel() {
-        guard let rtmChannel = agoraRtm.createChannel(withId: Constants.shared.channel, delegate: self) else {
-            alertSubject.send(.channelError)
-            return
-        }
-        self.rtmChannel = rtmChannel
     }
 
     func leaveChannels() {
@@ -113,10 +100,51 @@ class LiveChatViewModel: NSObject, ObservableObject {
         }
     }
 
+    private func joinMessageChannel() async  {
+        let token = await chatApi.fetch(userid:  Constants.shared.rtmUser)
+        let login = await agoraRtm.login(byToken: token.value, user: Constants.shared.rtmUser)
+
+        if login == .ok {
+            createMessageChannel()
+            let result = await rtmChannel?.join()
+            print("joinMessageChannel", "success \(result?.rawValue ?? -1)" )
+        } else {
+            print("joinMessageChannel", "failure \(login)")
+        }
+    }
+
+    private func createMessageChannel() {
+        guard let rtmChannel = agoraRtm.createChannel(withId: Constants.shared.channel, delegate: self) else {
+            alertSubject.send(.channelError)
+            return
+        }
+        self.rtmChannel = rtmChannel
+    }
+
+
+    private func observeRtcLoginState() {
+        let connection = isConnected.share()
+        connection
+            .filter { $0 == .connected }
+            .sink { _ in
+                self.alertSubject.send(.success)
+                Task {
+                    await self.joinMessageChannel()
+                }
+            }
+            .store(in: &subscriptions)
+
+        connection
+            .filter { $0 == .disconnected}
+            .sink { _ in
+                self.agoraEngine.stopPreview()
+            }
+            .store(in: &subscriptions)
+    }
+
     private func leaveChannel() {
-        agoraEngine.stopPreview()
         let result = agoraEngine.leaveChannel(nil)
-        if result == 0 { self.isConnected = false }
+        if result == 0 { self.isConnected.send(.disconnected) }
     }
 
     private func leaveMessageChannel() {
@@ -134,6 +162,10 @@ extension LiveChatViewModel: AgoraRtcEngineDelegate {
         newHostEvent.send(uid)
     }
 
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
+        print("didOccurError")
+    }
+
 }
 
 
@@ -144,10 +176,12 @@ extension LiveChatViewModel : AgoraRtmDelegate {
         print("connectionStateChanged reason ", reason)
 
     }
+    func rtcEngine(_ engine: AgoraRtcEngineKit, tokenPrivilegeWillExpire token: String) {
+        print("tokenPrivilegeWillExpire")
+    }
 
-    func rtmKit(_ kit: AgoraRtmKit, messageReceived message: AgoraRtmMessage, fromPeer peerId: String) {
-        print("rtmkit", "nessage received from \(peerId)")
-        print("rtmkit", "nessage \(message)")
+    func rtmKitTokenDidExpire(_ kit: AgoraRtmKit) {
+        print("rtmKitTokenDidExpire")
     }
 
 }
@@ -171,7 +205,7 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
     }
 
     func channel(_ channel: AgoraRtmChannel, messageReceived message: AgoraRtmMessage, from member: AgoraRtmMember) {
-        print("\(message)")
+        print("messageReceived", message.text)
     }
 
 }
