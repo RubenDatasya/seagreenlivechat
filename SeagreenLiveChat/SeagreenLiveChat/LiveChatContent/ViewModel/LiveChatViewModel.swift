@@ -11,7 +11,7 @@ import SwiftUI
 import AgoraRtmKit
 import AgoraRtcKit
 
-enum CameraState {
+enum CameraPosition {
     case rear
     case front
 }
@@ -23,12 +23,19 @@ enum RTCLoginState {
     case failureConnecting
 }
 
+struct CameraState {
+    var position: CameraPosition
+    var zoom: CGFloat = 0.0
+    var isFlashOn: Bool = false
+}
+
 class LiveChatViewModel: NSObject, ObservableObject {
 
+    @Published var state: CameraState = .init(position: .front)
     var receivedMessage: PassthroughSubject<ChannelMessageEvent,Never> = .init()
     var isConnected:   PassthroughSubject<RTCLoginState, Never> = .init()
-    var currentCamera: CameraState = .front
-    var cameraToggle:  PassthroughSubject<CameraState, Never> = .init()
+    var currentCamera: CameraPosition = .front
+    var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var newHostEvent:  PassthroughSubject<UInt, Never> = .init()
     var userRole: AgoraClientRole = .broadcaster
@@ -50,6 +57,7 @@ class LiveChatViewModel: NSObject, ObservableObject {
         agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
         agoraRtm = .init(appId: Constants.shared.appId, delegate: self)
         observeRtcLoginState()
+        observeCameraState()
     }
 
     func joinChannel() async  {
@@ -70,18 +78,20 @@ class LiveChatViewModel: NSObject, ObservableObject {
 
         self.isConnected.send(.connecting)
 
+
+
          let result = agoraEngine.joinChannel(
             byToken: Constants.shared.token, channelId: Constants.shared.channel, uid: 0, mediaOptions: option,
-            joinSuccess: { (channel, uid, elapsed) in }
-        )
+            joinSuccess: { (channel, uid, elapsed) in
+            })
          if result == 0 {
              self.isConnected.send(.connected)
         }
     }
 
     func leaveChannels() {
-        leaveChannel()
-        leaveMessageChannel()
+//        leaveChannel()
+//        leaveMessageChannel()
     }
 
     func sendMessage(event: ChannelMessageEvent) {
@@ -91,13 +101,23 @@ class LiveChatViewModel: NSObject, ObservableObject {
     }
 
     func toggleCamera() {
-        if currentCamera == .front {
+        if state.position == .front {
             cameraToggle.send(.rear)
-            currentCamera = .rear
+            state.position = .rear
         }else {
             cameraToggle.send(.front)
-            currentCamera = .front
+            state.position = .front
         }
+    }
+
+    private func observeCameraState() {
+        $state
+            .receive(on: DispatchQueue.main)
+            .sink { state in
+                self.agoraEngine.setCameraTorchOn(state.isFlashOn)
+                self.agoraEngine.setCameraZoomFactor(state.zoom)
+            }
+            .store(in: &subscriptions)
     }
 
     private func joinMessageChannel() async  {
@@ -130,7 +150,7 @@ class LiveChatViewModel: NSObject, ObservableObject {
             .sink { _ in
                 self.alertSubject.send(.success)
                 Task {
-                  //  await self.joinMessageChannel()
+                    await self.joinMessageChannel()
                 }
             }
             .store(in: &subscriptions)
@@ -164,7 +184,11 @@ extension LiveChatViewModel: AgoraRtcEngineDelegate {
     }
 
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
-        print("didOccurError")
+        print("didOccurError AgoraErrorCode", errorCode.rawValue)
+    }
+
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccur errorType: AgoraEncryptionErrorType) {
+        print("didOccur AgoraEncryptionErrorType", errorType.rawValue)
     }
 
 }
@@ -210,6 +234,31 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
         print("messageReceived \(message.text) from \(member.userId)")
         if member.userId != Constants.shared.rtmUser {
             receivedMessage.send(ChannelMessageEvent.value(message.text))
+        }
+
+        switch ChannelMessageEvent.value(message.text) {
+        case .zoomIn:
+            if state.zoom < 1 {
+                state.zoom += 0.1
+            }
+        case .zoomOut:
+            if state.zoom > 0 {
+                state.zoom -= 0.1
+            }
+        case .brightnessUp:
+            break
+        case .brightnessDown:
+            break
+        case .flashOn:
+            if agoraEngine.isCameraTorchSupported() {
+                state.isFlashOn =  true
+            }
+        case .flashOff:
+            state.isFlashOn =  true
+        case .leave:
+            break
+        case .unknown:
+            break
         }
     }
 

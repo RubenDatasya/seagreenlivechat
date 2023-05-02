@@ -12,6 +12,7 @@ import SwiftUI
 
 enum CameraActionType : String {
     case zoom = "plus.magnifyingglass"
+    case zoomout = "minus.magnifyingglass"
     case brightness = "wand.and.rays"
     case move = "cross.circle"
     case cameraReverse = "arrow.triangle.2.circlepath.camera"
@@ -27,7 +28,7 @@ struct ContentView: View {
         VideoChat(viewModel: viewModel)
             .ignoresSafeArea()
         .overlay(alignment: .top,content: Header)
-        .overlay(alignment: .trailing, content: CameraActionView)
+        .overlay(alignment: .bottomTrailing, content: CameraActionView)
     }
 
     @ViewBuilder
@@ -49,9 +50,13 @@ struct ContentView: View {
 
     @ViewBuilder
     func CameraActionView() -> some View {
-        VStack(alignment: .trailing, spacing: 40) {
+        VStack(alignment: .trailing, spacing: 8) {
             CameraActionButton(image: .zoom) {
                 viewModel.sendMessage(event: .zoomIn)
+            }
+
+            CameraActionButton(image: .zoomout) {
+                viewModel.sendMessage(event: .zoomOut)
             }
 
             CameraActionButton(image: .brightness) {
@@ -83,7 +88,10 @@ struct ContentView: View {
                 .scaledToFit()
                 .frame(width: 30, height: 30)
         }
+        .padding()
         .foregroundColor(color)
+        .background(Color.purple)
+        .clipShape(Circle())
     }
 }
 

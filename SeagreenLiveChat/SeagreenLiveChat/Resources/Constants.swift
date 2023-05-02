@@ -20,6 +20,7 @@ class Constants {
     let appId: String  = "0089641598304276ab3e6baf141c0258"
 
     //To update per session
-    var token: String  = "007eJxTYHh/ZuHMrdZfjho6Ptxy6K+a0e2jcXOmXJh4Na7h9bT5vdduKzAYGFhYmpkYmlpaGBuYGJmbJSYZp5olJaYZmhgmGxiZWvw/EZDSEMjIsEpnFgMjFIL4QgzFqYnpRampeTmZZanJGYkl8YYMDADXGyk2"
-    var channel: String = "seagreenlivechat_1"
+    var token: String  = "007eJxTYDi784fslxvV96LXh5+6dNd43ixZSfHly6PlbSXZH2466zxbgcHAwMLSzMTQ1NLC2MDEyNwsMck41SwpMc3QxDDZwMjUoulmQEpDICOD+YpFrIwMEAjiCzEUpyamF6Wm5uVklqUmZySWxBsxMAAAhhglOg=="
+    
+    var channel: String = "seagreenlivechat_2"
 }
