@@ -88,15 +88,12 @@ class ViewController: UIViewController {
     }
 
     func setupLocalVideo() {
-        // Enable the video module
         localView.animate { view in
             view.show()
         }
-        viewModel.agoraEngine.enableMultiCamera(true, config: nil)
-        // Start the local video preview
+        viewModel.agoraEngine.enableVideo()
         viewModel.agoraEngine.startPreview()
         viewModel.agoraEngine.enableVideo()
-       // agoraEngine.enableAudio()
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
@@ -105,7 +102,7 @@ class ViewController: UIViewController {
         viewModel.agoraEngine.setupLocalVideo(videoCanvas)
     }
 
-    func handleCameraState(state : CameraState) {
+    func handleCameraState(state : CameraPosition) {
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
@@ -138,27 +135,7 @@ class ViewController: UIViewController {
         }
     }
 
-    private func handleChannelMessageEvent( _ event: ChannelMessageEvent) {
-        print(UIDevice.current.systemName , "received \(event)")
-        switch event {
-        case .zoomIn:
-            break
-        case .zoomOut:
-            break
-        case .brightnessUp:
-            break
-        case .brightnessDown:
-            break
-        case .flashOn:
-            break
-        case .flashOff:
-            break
-        case .leave:
-            break
-        case .unknown:
-            break
-        }
-    }
+    private func handleChannelMessageEvent( _ event: ChannelMessageEvent) {    }
 }
 
 extension ViewController {
@@ -186,7 +163,7 @@ extension ViewController {
         viewModel.newHostEvent
             .receive(on: DispatchQueue.main)
             .sink { (uid) in
-                print(UIDevice.current.systemName, "installing remote canvas")
+                print(UIDevice.current.systemName, "installing remote canvas for \(uid)")
                 let videoCanvas = AgoraRtcVideoCanvas()
                 videoCanvas.uid = uid
                 videoCanvas.renderMode = .hidden
