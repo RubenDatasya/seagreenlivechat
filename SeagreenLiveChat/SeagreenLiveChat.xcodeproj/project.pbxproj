@@ -20,6 +20,11 @@
 		8733E96D2A011BD300DFDDF0 /* VQA in Frameworks */ = {isa = PBXBuildFile; productRef = 8733E96C2A011BD300DFDDF0 /* VQA */; };
 		8733E96F2A011BD300DFDDF0 /* VirtualBackground in Frameworks */ = {isa = PBXBuildFile; productRef = 8733E96E2A011BD300DFDDF0 /* VirtualBackground */; };
 		8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8733E97D2A0153FE00DFDDF0 /* AgoraImprovements.swift */; };
+		877822C92A027BA8003C74B7 /* CameraPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822C82A027BA8003C74B7 /* CameraPosition.swift */; };
+		877822CB2A027BB7003C74B7 /* RTCLoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CA2A027BB7003C74B7 /* RTCLoginState.swift */; };
+		877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CC2A027BC9003C74B7 /* CameraState.swift */; };
+		877822CF2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CE2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift */; };
+		877822D12A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822D02A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift */; };
 		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
 		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
 		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
@@ -40,6 +45,11 @@
 
 /* Begin PBXFileReference section */
 		8733E97D2A0153FE00DFDDF0 /* AgoraImprovements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraImprovements.swift; sourceTree = "<group>"; };
+		877822C82A027BA8003C74B7 /* CameraPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPosition.swift; sourceTree = "<group>"; };
+		877822CA2A027BB7003C74B7 /* RTCLoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCLoginState.swift; sourceTree = "<group>"; };
+		877822CC2A027BC9003C74B7 /* CameraState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraState.swift; sourceTree = "<group>"; };
+		877822CE2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiveChatViewModel + AgoraRTC.swift"; sourceTree = "<group>"; };
+		877822D02A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiveChateViewModel + AgoraRTM.swift"; sourceTree = "<group>"; };
 		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
 		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
 		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -83,6 +93,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		877822C72A027B95003C74B7 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				877822C82A027BA8003C74B7 /* CameraPosition.swift */,
+				877822CA2A027BB7003C74B7 /* RTCLoginState.swift */,
+				877822CC2A027BC9003C74B7 /* CameraState.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
 		87A2CFFC29FF9EE700AEAB4D /* LiveChatContent */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,7 +124,10 @@
 		87A2D00429FFA1AF00AEAB4D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				877822C72A027B95003C74B7 /* States */,
 				87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */,
+				877822CE2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift */,
+				877822D02A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -284,6 +307,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				877822C92A027BA8003C74B7 /* CameraPosition.swift in Sources */,
+				877822CB2A027BB7003C74B7 /* RTCLoginState.swift in Sources */,
+				877822CF2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift in Sources */,
+				877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */,
 				87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */,
 				8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */,
 				87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */,
@@ -297,6 +324,7 @@
 				87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */,
 				87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */,
 				87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */,
+				877822D12A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift in Sources */,
 				87A2D0242A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

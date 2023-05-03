@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         observeNewHost()
         observeCamera()
         observeChannelMessages()
-        viewModel.initializeAgoraEngine()
+        viewModel.initializeAgora()
         setupLocalVideo()
         joinChannels()
     }
@@ -103,10 +103,7 @@ class ViewController: UIViewController {
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
         videoCanvas.view = localView
-        // Set the local video view
         viewModel.agoraEngine.setupLocalVideo(videoCanvas)
-      //  customCamera.startCapture(ofCamera: .front)
-
     }
 
     func handleCameraState() {
