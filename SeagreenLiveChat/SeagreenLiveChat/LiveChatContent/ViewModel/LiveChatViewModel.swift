@@ -20,7 +20,7 @@ class LiveChatViewModel: NSObject, ObservableObject {
     var currentCamera: CameraPosition = .front
     var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
-    var newHostEvent:  PassthroughSubject<UInt, Never> = .init()
+    var hostEvent:  PassthroughSubject<HostState, Never> = .init()
     var userRole: AgoraClientRole = .broadcaster
 
     lazy var chatApi = LiveChatTokenAPI()
@@ -43,19 +43,19 @@ class LiveChatViewModel: NSObject, ObservableObject {
         mirrorMode: .disabled)
 
 
-    func initializeAgora() {
-        setupAgoraEngine()
+    func initializeAgora(videoFrameDelegate : AgoraVideoFrameDelegate) {
+        setupAgoraEngine(videoFrameDelegate: videoFrameDelegate)
         agoraRtm = .init(appId: Constants.Secret.appid, delegate: self)
         observeRtcLoginState()
         observeCameraState()
         metalCommandQueue = metalDevice?.makeCommandQueue()
     }
 
-    func setupAgoraEngine() {
+    func setupAgoraEngine(videoFrameDelegate : AgoraVideoFrameDelegate) {
         let config = AgoraRtcEngineConfig()
         config.appId = Constants.Secret.appid
         agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
-        agoraEngine.setVideoFrameDelegate(self)
+        agoraEngine.setVideoFrameDelegate(videoFrameDelegate)
         agoraEngine.setVideoEncoderConfiguration(encodingConfiguration)
         agoraEngine.setBeautyEffectOptions(true, options: nil)
         let enhancements : [any AgoraQualityImprovementProtocol] = [AgoraColorEnhancement(), AgoraUnderExposed(), AgoraVideoDenoising()]
@@ -166,7 +166,6 @@ class LiveChatViewModel: NSObject, ObservableObject {
         connection
             .filter { $0 == .connected }
             .sink { _ in
-                self.alertSubject.send(.success)
                 Task {
                     await self.joinMessageChannel()
                 }
@@ -201,6 +200,8 @@ class LiveChatViewModel: NSObject, ObservableObject {
         }else {
             handleState(event, state: &sharedState)
         }
+
+        
     }
 
 

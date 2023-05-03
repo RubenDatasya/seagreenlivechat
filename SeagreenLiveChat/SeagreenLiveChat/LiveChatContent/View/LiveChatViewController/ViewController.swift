@@ -8,20 +8,10 @@
 import Foundation
 import AVFoundation
 import Combine
-#if os(iOS)
 import UIKit
-#else
-import AppKit
-#endif
 import AgoraRtcKit
 import AgoraRtmKit
 import SwiftUI
-
-#if os(iOS)
-typealias KitView = UIView
-#else
-typealias KitView = NSView
-#endif
 
 
 struct VideoChat: UIViewControllerRepresentable {
@@ -44,7 +34,7 @@ struct VideoChat: UIViewControllerRepresentable {
 class ViewController: UIViewController {
 
     lazy var localView: UIView = .init()
-    lazy var remoteView: UIView = .init()
+    lazy var remoteVideo: MetalVideoView = Bundle.loadView(fromNib: "VideoViewMetal", withType: MetalVideoView.self)
     lazy var decorator: ViewControllerDecorator = .init()
     var joinButton: UIButton!
     var subscriptions: Set<AnyCancellable> = .init()
@@ -65,16 +55,15 @@ class ViewController: UIViewController {
         observeAlert()
         observeNewHost()
         observeCamera()
-        observeChannelMessages()
-        viewModel.initializeAgora()
-        setupLocalVideo()
+        viewModel.initializeAgora(videoFrameDelegate: remoteVideo.videoView)
+        remoteVideo.liveChatViewModel = viewModel
         joinChannels()
     }
 
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        setupLocalVideo()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -86,24 +75,23 @@ class ViewController: UIViewController {
 
     func initViews() {
         self.view.backgroundColor = .systemPurple
-        self.view.addSubview(remoteView)
+        self.view.addSubview(remoteVideo)
         self.view.addSubview(localView)
         view.bringSubviewToFront(localView)
-        localView.hide()
         decorator.decorate(localView: localView, in: self.view)
-        decorator.decorate(remoteView: remoteView, in: self.view)
+        decorator.decorate(remoteView: remoteVideo, in: self.view)
     }
 
     func setupLocalVideo() {
-        localView.animate { view in
-            view.show()
-        }
-
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
         videoCanvas.view = localView
         viewModel.agoraEngine.setupLocalVideo(videoCanvas)
+        localView.animate(delay: 1.5) { view in
+            view.transform = CGAffineTransform(scaleX: 1, y: 1)
+            view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
     }
 
     func handleCameraState() {
@@ -115,7 +103,7 @@ class ViewController: UIViewController {
             videoCanvas.view = self.localView
         } else{
             self.localView.isHidden = true
-            videoCanvas.view = self.remoteView
+            videoCanvas.view = self.remoteVideo
         }
         self.viewModel.agoraEngine.setupLocalVideo(videoCanvas)
     }
@@ -138,8 +126,20 @@ class ViewController: UIViewController {
         }
     }
 
-    private func handleChannelMessageEvent( _ event: ChannelMessageEvent) {    }
-
+    private func handleHostingState( _ state: HostState) {
+        switch state {
+        case .received(let uid):
+            remoteVideo.animate { view in
+                self.remoteVideo.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }
+            remoteVideo.videoView.startRender(uid: uid)
+        case .disconnected(let uid), .none(let uid):
+            remoteVideo.animate { view in
+                view.transform = CGAffineTransform(scaleX: 0, y: 0)
+            }
+            remoteVideo.videoView.stopRender(uid: uid)
+        }
+    }
 }
 
 extension ViewController {
@@ -164,23 +164,9 @@ extension ViewController {
     }
 
     func observeNewHost() {
-        viewModel.newHostEvent
+        viewModel.hostEvent
             .receive(on: DispatchQueue.main)
-            .sink { (uid) in
-                print(UIDevice.current.systemName, "installing remote canvas for \(uid)")
-                let videoCanvas = AgoraRtcVideoCanvas()
-                videoCanvas.uid = uid
-                videoCanvas.renderMode = .hidden
-                videoCanvas.view = self.remoteView
-                self.viewModel.agoraEngine.setupRemoteVideo(videoCanvas)
-            }
-            .store(in: &subscriptions)
-    }
-
-    func observeChannelMessages() {
-        viewModel.receivedMessage
-            .filter { $0  != .unknown }
-            .sink(receiveValue: handleChannelMessageEvent(_:))
+            .sink(receiveValue: handleHostingState(_:))
             .store(in: &subscriptions)
     }
 }

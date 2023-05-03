@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AgoraRtcKit
 import AgoraRtmKit
 
 

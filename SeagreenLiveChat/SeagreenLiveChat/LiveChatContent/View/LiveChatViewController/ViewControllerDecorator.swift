@@ -22,6 +22,8 @@ class ViewControllerDecorator {
         ])
         localView.shadowView(parent: view)
         localView.setBorder(borderColor: Color.pink.cgColor)
+        localView.transform = CGAffineTransform(scaleX: 0, y: 0)
+        localView.transform = CGAffineTransform(translationX: -400, y: 0)
     }
 
     func decorate(remoteView: UIView, in view: UIView) {
@@ -32,22 +34,14 @@ class ViewControllerDecorator {
             remoteView.widthAnchor.constraint(equalTo: view.widthAnchor),
             remoteView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
-
+        remoteView.transform = CGAffineTransform(scaleX: 0, y: 0)
     }
 }
 
 extension UIView {
-    
-    func hide() {
-        self.layer.opacity = 0
-    }
 
-    func show() {
-        self.layer.opacity = 1
-    }
-
-    func animate(duration: TimeInterval = 0.5, animations: @escaping (UIView) -> Void) {
-        UIView.animate(withDuration: duration) {
+    func animate(duration: TimeInterval = 0.5, delay: TimeInterval = 0, animations: @escaping (UIView) -> Void) {
+        UIView.animate(withDuration: duration, delay: delay) {
             animations(self)
         }
     }
