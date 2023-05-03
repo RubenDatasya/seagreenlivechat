@@ -8,19 +8,23 @@
 import Foundation
 import UIKit
 
-class Constants {
+enum Constants {
 
-    private init(){}
+    struct Secret {
+        static let appid: String = "0089641598304276ab3e6baf141c0258"
+        static let certificate: String = "12e9058b7aa64cd6898f2ab446f3e31f"
+    }
 
-    static let shared =  Constants()
+    struct Credentials {
+        static let currentUser =  UIDevice.current.identifierForVendor?.uuidString ?? ""
+        static let rtmUser =  UUID().uuidString
+        static let channel: String = "seagreenlivechat_3"
+        static let token: String  = "007eJxTYJBqu3gisa9sxS7plT8L9ldNuhIt7nH55uLfeefnHj1x6k+xAoOBgYWlmYmhqaWFsYGJkblZYpJxqllSYpqhiWGygZGpxTS9oJSGQEaGhLm8jIwMEAjiCzEUpyamF6Wm5uVklqUmZySWxBszMAAALlsm5g=="
+    }
 
-    let currentUser =  UIDevice.current.identifierForVendor?.uuidString ?? ""
-    let rtmUser =  UUID().uuidString
-    let baseURL = "https://f0de-94-154-123-67.ngrok-free.app"
-    let appId: String  = "0089641598304276ab3e6baf141c0258"
+    struct API {
+        static let baseURL: String = "https://f0de-94-154-123-67.ngrok-free.app"
 
-    //To update per session
-    var token: String  = "007eJxTYDi784fslxvV96LXh5+6dNd43ixZSfHly6PlbSXZH2466zxbgcHAwMLSzMTQ1NLC2MDEyNwsMck41SwpMc3QxDDZwMjUoulmQEpDICOD+YpFrIwMEAjiCzEUpyamF6Wm5uVklqUmZySWxBsxMAAAhhglOg=="
-    
-    var channel: String = "seagreenlivechat_2"
+    }
+
 }

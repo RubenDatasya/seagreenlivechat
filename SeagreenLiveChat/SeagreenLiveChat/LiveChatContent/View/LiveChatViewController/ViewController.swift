@@ -23,6 +23,7 @@ typealias KitView = UIView
 typealias KitView = NSView
 #endif
 
+
 struct VideoChat: UIViewControllerRepresentable {
 
     @ObservedObject var viewModel: LiveChatViewModel
@@ -49,9 +50,6 @@ class ViewController: UIViewController {
     var subscriptions: Set<AnyCancellable> = .init()
     var viewModel: LiveChatViewModel
 
- //   lazy var customCamera = AgoraCameraSourcePush(delegate: self, videoView: localView)
-
-
     init(viewModel: LiveChatViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -76,7 +74,6 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.agoraEngine.setVideoFrameDelegate(self)
 
     }
 
@@ -116,7 +113,7 @@ class ViewController: UIViewController {
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
-        if viewModel.state.position == .front {
+        if viewModel.localState.position == .front {
             self.localView.isHidden = false
             videoCanvas.view = self.localView
         } else{
@@ -145,6 +142,7 @@ class ViewController: UIViewController {
     }
 
     private func handleChannelMessageEvent( _ event: ChannelMessageEvent) {    }
+
 }
 
 extension ViewController {
@@ -188,44 +186,6 @@ extension ViewController {
             .sink(receiveValue: handleChannelMessageEvent(_:))
             .store(in: &subscriptions)
     }
-
 }
 
 
-extension ViewController: AgoraVideoFrameDelegate {
-    // Occurs each time the SDK receives a video frame captured by the local camera
-    func onCapture(_ videoFrame: AgoraOutputVideoFrame) -> Bool {
-
-        return true
-    }
-
-    // Occurs each time the SDK receives a video frame captured by the screen
-    func onScreenCapture(_ videoFrame: AgoraOutputVideoFrame) -> Bool {
-        // Choose whether to ignore the current video frame if the pre-processing fails
-        return false
-    }
-
-    // Occurs each time the SDK receives a video frame sent by the remote user
-    func onRenderVideoFrame(_ videoFrame: AgoraOutputVideoFrame, uid: UInt, channelId: String) -> Bool {
-        // Choose whether to ignore the current video frame if the post-processing fails
-        return false
-    }
-
-    // Indicate the video frame mode of the observer
-    func getVideoFrameProcessMode() -> AgoraVideoFrameProcessMode {
-        // The process mode of the video frame: readOnly, readWrite
-        return AgoraVideoFrameProcessMode.readWrite
-    }
-
-    // Sets the video frame type preference
-    func getVideoFormatPreference() -> AgoraVideoFormat {
-        // Video frame format: I420, BGRA, NV21, RGBA, NV12, CVPixel, I422, Default
-        return AgoraVideoFormat.RGBA
-    }
-
-    // Sets the frame position for the video observer
-    func getObservedFramePosition() -> AgoraVideoFramePosition {
-        // Frame position: postCapture, preRenderer, preEncoder
-        return AgoraVideoFramePosition.postCapture
-    }
-}

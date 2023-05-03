@@ -8,17 +8,22 @@
 import Foundation
 
 enum ChannelMessageEvent : String, Codable  {
+    case participantShares
+    case participantStoppedSharring
     case zoomIn
     case zoomOut
     case brightnessUp
     case brightnessDown
-    case flashOn
-    case flashOff
+    case flash
     case leave
     case unknown
 
     static func value( _ from : String) -> Self{
         switch from {
+        case  ChannelMessageEvent.participantStoppedSharring.rawValue:
+            return .participantStoppedSharring
+        case  ChannelMessageEvent.participantShares.rawValue:
+            return .participantShares
         case ChannelMessageEvent.zoomIn.rawValue:
             return .zoomIn
         case  ChannelMessageEvent.zoomOut.rawValue:
@@ -27,10 +32,8 @@ enum ChannelMessageEvent : String, Codable  {
             return .brightnessUp
         case  ChannelMessageEvent.brightnessDown.rawValue:
             return .brightnessDown
-        case  ChannelMessageEvent.flashOn.rawValue:
-            return .flashOn
-        case  ChannelMessageEvent.flashOff.rawValue:
-            return .flashOff
+        case  ChannelMessageEvent.flash.rawValue:
+            return .flash
         case  ChannelMessageEvent.leave.rawValue:
             return .leave
         default:

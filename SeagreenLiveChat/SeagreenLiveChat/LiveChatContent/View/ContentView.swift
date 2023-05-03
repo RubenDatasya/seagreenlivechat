@@ -5,9 +5,6 @@
 //  Created by Ruben Mimoun on 30/04/2023.
 //
 
-//cetirficate = 12e9058b7aa64cd6898f2ab446f3e31f
-// app id = 0089641598304276ab3e6baf141c0258
-
 import SwiftUI
 
 enum CameraActionType : String {
@@ -68,7 +65,7 @@ struct ContentView: View {
             }
 
             CameraActionButton(image: .flash) {
-                viewModel.sendMessage(event: .flashOn)
+                viewModel.sendMessage(event: .flash)
             }
         }
         .padding(.trailing, 20)

@@ -23,7 +23,7 @@ struct MessagingToken : Codable{
 extension GetApiProtocol {
 
     func fetch(userid : String) async -> Value {
-        var url = URL(string: Constants.shared.baseURL.appending(endpoint))!
+        var url = URL(string: Constants.API.baseURL.appending(endpoint))!
         url.append(queryItems: [
             URLQueryItem(name: "userid", value: userid)
         ])
