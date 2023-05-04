@@ -68,45 +68,6 @@ class AgoraMetalRender: UIView {
         initializeTextureCache()
     }
 
-    func setupAndStartCaptureSession(){
-        DispatchQueue.global(qos: .userInitiated).async{
-            //init session
-            self.captureSession = AVCaptureSession()
-            //start configuration
-            self.captureSession.beginConfiguration()
-
-            //do some configuration?
-            if self.captureSession.canSetSessionPreset(.hd1280x720) {
-                self.captureSession.sessionPreset = .hd1280x720
-            }
-            self.captureSession.automaticallyConfiguresCaptureDeviceForWideColor = true
-
-            //commit configuration
-            self.captureSession.commitConfiguration()
-            //start running it
-            self.captureSession.startRunning()
-        }
-    }
-
-    func setupInputs(){
-        //get back camera
-        if let device = AVCaptureDevice.default(.builtInTripleCamera, for: .video, position: .back) {
-            backCamera = device
-        } else {
-            //handle this appropriately for production purposes
-            fatalError("no back camera")
-        }
-
-        //now we need to create an input objects from our devices
-        guard let bInput = try? AVCaptureDeviceInput(device: backCamera) else {
-            fatalError("could not create input device from back camera")
-        }
-        backInput = bInput
-
-        //connect back camera input to session
-        captureSession.addInput(backInput)
-    }
-
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initializeMetalView()

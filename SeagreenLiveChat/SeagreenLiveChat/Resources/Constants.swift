@@ -18,13 +18,12 @@ enum Constants {
     struct Credentials {
         static let currentUser =  UIDevice.current.identifierForVendor?.uuidString ?? ""
         static let rtmUser =  UUID().uuidString
-        static let channel: String = "seagreenlivechat_3"
-        static let token: String  = "007eJxTYJBqu3gisa9sxS7plT8L9ldNuhIt7nH55uLfeefnHj1x6k+xAoOBgYWlmYmhqaWFsYGJkblZYpJxqllSYpqhiWGygZGpxTS9oJSGQEaGhLm8jIwMEAjiCzEUpyamF6Wm5uVklqUmZySWxBszMAAALlsm5g=="
+        static let channel: String = "seagreenlivechat_4"
+        static let token: String  = "007eJxTYDjz7riArc9jZvGUZoNS7bDatp/Prt6qLpkzWX+91+lOnfMKDAYGFpZmJoamlhbGBiZG5maJScapZkmJaYYmhskGRqYWR4ODUxoCGRlUJlizMDJAIIgvxFCcmphelJqal5NZlpqckVgSb8LAAAAWViP+"
     }
 
     struct API {
-        static let baseURL: String = "https://f0de-94-154-123-67.ngrok-free.app"
-
+        static let baseURL: String = "https://706d-94-154-123-67.ngrok-free.app"
     }
 
 }

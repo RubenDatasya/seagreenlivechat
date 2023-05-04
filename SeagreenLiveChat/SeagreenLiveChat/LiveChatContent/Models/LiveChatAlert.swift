@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LiveChatAlert {
+enum LiveChatAlert: LocalizedError {
     case error
     case permissionError
     case channelError

@@ -11,9 +11,9 @@ import SwiftUI
 
 class ViewControllerDecorator {
 
+
     func decorate(localView: UIView, in view: UIView) {
         localView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate ([
             localView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             localView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
@@ -22,8 +22,8 @@ class ViewControllerDecorator {
         ])
         localView.shadowView(parent: view)
         localView.setBorder(borderColor: Color.pink.cgColor)
-        localView.transform = CGAffineTransform(scaleX: 0, y: 0)
-        localView.transform = CGAffineTransform(translationX: -400, y: 0)
+    //    localView.transform = CGAffineTransform(scaleX: 0, y: 0)
+    //    localView.transform = CGAffineTransform(translationX: -400, y: 0)
     }
 
     func decorate(remoteView: UIView, in view: UIView) {
@@ -34,7 +34,7 @@ class ViewControllerDecorator {
             remoteView.widthAnchor.constraint(equalTo: view.widthAnchor),
             remoteView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
-        remoteView.transform = CGAffineTransform(scaleX: 0, y: 0)
+      //  remoteView.transform = CGAffineTransform(scaleX: 0, y: 0)
     }
 }
 

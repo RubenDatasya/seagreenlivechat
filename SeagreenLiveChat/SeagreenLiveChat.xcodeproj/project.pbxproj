@@ -23,7 +23,6 @@
 		877822C92A027BA8003C74B7 /* CameraPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822C82A027BA8003C74B7 /* CameraPosition.swift */; };
 		877822CB2A027BB7003C74B7 /* RTCLoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CA2A027BB7003C74B7 /* RTCLoginState.swift */; };
 		877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CC2A027BC9003C74B7 /* CameraState.swift */; };
-		877822CF2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CE2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift */; };
 		877822D12A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822D02A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift */; };
 		877822D32A0281FA003C74B7 /* VideoViewMetal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 877822D22A0281FA003C74B7 /* VideoViewMetal.xib */; };
 		877822D52A028202003C74B7 /* AgoraMetalRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822D42A028202003C74B7 /* AgoraMetalRender.swift */; };
@@ -31,6 +30,9 @@
 		877822DA2A0282CD003C74B7 /* Bundle + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */; };
 		877822DD2A028350003C74B7 /* AgoraMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 877822DC2A028350003C74B7 /* AgoraMetalShader.metal */; };
 		877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822DE2A0289CD003C74B7 /* enum HostState.swift */; };
+		877822F12A035037003C74B7 /* CameraInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F02A035037003C74B7 /* CameraInput.swift */; };
+		877822F42A035288003C74B7 /* AgoraRtc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F32A035288003C74B7 /* AgoraRtc.swift */; };
+		877822F62A03556C003C74B7 /* AgoraRtm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F52A03556C003C74B7 /* AgoraRtm.swift */; };
 		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
 		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
 		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
@@ -54,7 +56,6 @@
 		877822C82A027BA8003C74B7 /* CameraPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPosition.swift; sourceTree = "<group>"; };
 		877822CA2A027BB7003C74B7 /* RTCLoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCLoginState.swift; sourceTree = "<group>"; };
 		877822CC2A027BC9003C74B7 /* CameraState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraState.swift; sourceTree = "<group>"; };
-		877822CE2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiveChatViewModel + AgoraRTC.swift"; sourceTree = "<group>"; };
 		877822D02A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiveChateViewModel + AgoraRTM.swift"; sourceTree = "<group>"; };
 		877822D22A0281FA003C74B7 /* VideoViewMetal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewMetal.xib; sourceTree = "<group>"; };
 		877822D42A028202003C74B7 /* AgoraMetalRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraMetalRender.swift; sourceTree = "<group>"; };
@@ -62,6 +63,9 @@
 		877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Extensions.swift"; sourceTree = "<group>"; };
 		877822DC2A028350003C74B7 /* AgoraMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AgoraMetalShader.metal; sourceTree = "<group>"; };
 		877822DE2A0289CD003C74B7 /* enum HostState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "enum HostState.swift"; sourceTree = "<group>"; };
+		877822F02A035037003C74B7 /* CameraInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInput.swift; sourceTree = "<group>"; };
+		877822F32A035288003C74B7 /* AgoraRtc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraRtc.swift; sourceTree = "<group>"; };
+		877822F52A03556C003C74B7 /* AgoraRtm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraRtm.swift; sourceTree = "<group>"; };
 		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
 		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
 		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -105,6 +109,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		821687975BB3D7A5CC674A5B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		877822C72A027B95003C74B7 /* States */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +146,23 @@
 			path = MetalRenderView;
 			sourceTree = "<group>";
 		};
+		877822EF2A03501B003C74B7 /* CameraInputViewController */ = {
+			isa = PBXGroup;
+			children = (
+				877822F02A035037003C74B7 /* CameraInput.swift */,
+			);
+			path = CameraInputViewController;
+			sourceTree = "<group>";
+		};
+		877822F22A035274003C74B7 /* Agora */ = {
+			isa = PBXGroup;
+			children = (
+				877822F32A035288003C74B7 /* AgoraRtc.swift */,
+				877822F52A03556C003C74B7 /* AgoraRtm.swift */,
+			);
+			path = Agora;
+			sourceTree = "<group>";
+		};
 		87A2CFFC29FF9EE700AEAB4D /* LiveChatContent */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,7 +186,6 @@
 			children = (
 				877822C72A027B95003C74B7 /* States */,
 				87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */,
-				877822CE2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift */,
 				877822D02A027C32003C74B7 /* LiveChateViewModel + AgoraRTM.swift */,
 			);
 			path = ViewModel;
@@ -167,6 +194,8 @@
 		87A2D00529FFA1B900AEAB4D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				877822F22A035274003C74B7 /* Agora */,
+				877822EF2A03501B003C74B7 /* CameraInputViewController */,
 				877822DB2A02832D003C74B7 /* MetalRenderView */,
 				87EFE60929FE7B020020B2A9 /* ContentView.swift */,
 				87EFE63C29FE7CBE0020B2A9 /* LiveChatViewController */,
@@ -183,13 +212,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		87A2D00A29FFA25600AEAB4D /* Tools */ = {
+		87A2D00A29FFA25600AEAB4D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */,
 				8733E97D2A0153FE00DFDDF0 /* AgoraImprovements.swift */,
 			);
-			path = Tools;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		87A2D01129FFB79F00AEAB4D /* API */ = {
@@ -207,6 +236,7 @@
 			children = (
 				87EFE60629FE7B020020B2A9 /* SeagreenLiveChat */,
 				87EFE60529FE7B020020B2A9 /* Products */,
+				821687975BB3D7A5CC674A5B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -223,7 +253,7 @@
 			children = (
 				877822D82A0282B9003C74B7 /* Extension */,
 				87A2D01129FFB79F00AEAB4D /* API */,
-				87A2D00A29FFA25600AEAB4D /* Tools */,
+				87A2D00A29FFA25600AEAB4D /* Utils */,
 				87A2D00129FF9F8000AEAB4D /* Resources */,
 				87A2CFFC29FF9EE700AEAB4D /* LiveChatContent */,
 				87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */,
@@ -299,6 +329,7 @@
 				TargetAttributes = {
 					87EFE60329FE7B020020B2A9 = {
 						CreatedOnToolsVersion = 14.3;
+						LastSwiftMigration = 1430;
 					};
 				};
 			};
@@ -343,16 +374,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				877822C92A027BA8003C74B7 /* CameraPosition.swift in Sources */,
+				877822F12A035037003C74B7 /* CameraInput.swift in Sources */,
 				877822D72A028249003C74B7 /* MetalVideoView.swift in Sources */,
 				877822CB2A027BB7003C74B7 /* RTCLoginState.swift in Sources */,
-				877822CF2A027BF9003C74B7 /* LiveChatViewModel + AgoraRTC.swift in Sources */,
 				877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */,
 				87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */,
 				8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */,
 				87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */,
 				87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */,
 				87A2D01329FFB7BA00AEAB4D /* LiveChatTokenApi.swift in Sources */,
+				877822F62A03556C003C74B7 /* AgoraRtm.swift in Sources */,
 				87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */,
+				877822F42A035288003C74B7 /* AgoraRtc.swift in Sources */,
 				87A2D00329FF9F9300AEAB4D /* Constants.swift in Sources */,
 				87A2D01529FFB7CE00AEAB4D /* SignalingToken.swift in Sources */,
 				87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */,
@@ -486,6 +519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SeagreenLiveChat/SeagreenLiveChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -516,6 +550,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -526,6 +561,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SeagreenLiveChat/SeagreenLiveChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

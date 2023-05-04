@@ -21,89 +21,39 @@ class LiveChatViewModel: NSObject, ObservableObject {
     var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var hostEvent:  PassthroughSubject<HostState, Never> = .init()
-    var userRole: AgoraClientRole = .broadcaster
 
     lazy var chatApi = LiveChatTokenAPI()
     lazy var messsagingApi = SignalingTokenAPI()
 
-    var agoraEngine: AgoraRtcEngineKit!
-    var agoraRtm: AgoraRtmKit!
-    var rtmChannel: AgoraRtmChannel?
-
     var subscriptions: Set<AnyCancellable> = .init()
 
-    let metalDevice = MTLCreateSystemDefaultDevice()
-    var metalCommandQueue: MTLCommandQueue?
-
-    var encodingConfiguration = AgoraVideoEncoderConfiguration(
-        size: .init(width: 640, height: 360),
-        frameRate: .fps60,
-        bitrate: AgoraVideoBitrateStandard,
-        orientationMode: .adaptative,
-        mirrorMode: .disabled)
-
-
-    func initializeAgora(videoFrameDelegate : AgoraVideoFrameDelegate) {
-        setupAgoraEngine(videoFrameDelegate: videoFrameDelegate)
-        agoraRtm = .init(appId: Constants.Secret.appid, delegate: self)
+    func initializeAgora() {
+        AgoraRtc.shared.initialize()
+        AgoraRtc.shared.addDelegate(self)
+        AgoraRtm.shared.initalize()
+        AgoraRtm.shared.setDelegate(self)
         observeRtcLoginState()
         observeCameraState()
-        metalCommandQueue = metalDevice?.makeCommandQueue()
-    }
-
-    func setupAgoraEngine(videoFrameDelegate : AgoraVideoFrameDelegate) {
-        let config = AgoraRtcEngineConfig()
-        config.appId = Constants.Secret.appid
-        agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
-        agoraEngine.setVideoFrameDelegate(videoFrameDelegate)
-        agoraEngine.setVideoEncoderConfiguration(encodingConfiguration)
-        agoraEngine.setBeautyEffectOptions(true, options: nil)
-        let enhancements : [any AgoraQualityImprovementProtocol] = [AgoraColorEnhancement(), AgoraUnderExposed(), AgoraVideoDenoising()]
-        enhancements.forEach { improvement in
-            agoraEngine.setExtensionPropertyWithVendor(improvement.name, extension: improvement.extension, key: improvement.key, value: improvement.value,sourceType: .remoteVideo)
-        }
-        agoraEngine.enableVideo()
-        agoraEngine.startPreview()
     }
 
     func joinChannel() async  {
-        let token = await chatApi.fetch(userid: Constants.Credentials.currentUser)
-
-        if await !AVPermissionManager.shared.checkForPermissions() {
-            alertSubject.send(.permissionError)
-            return
-        }
-
-        let option = AgoraRtcChannelMediaOptions()
-        if self.userRole == .broadcaster {
-            option.clientRoleType = .broadcaster
-        } else {
-            option.clientRoleType = .audience
-        }
-        option.channelProfile = .communication
-
-        self.isConnected.send(.connecting)
-
-
-
-         let result = agoraEngine.joinChannel(
-            byToken: Constants.Credentials.token, channelId: Constants.Credentials.channel, uid: 0, mediaOptions: option,
-            joinSuccess: { (channel, uid, elapsed) in
-            })
-         if result == 0 {
-             self.isConnected.send(.connected)
+        do {
+            let result = try await AgoraRtc.shared.joinChannel()
+            self.isConnected.send(result)
+        } catch {
+            if let liveAlert = error as? LiveChatAlert {
+                self.alertSubject.send(liveAlert)
+            }
         }
     }
 
     func leaveChannels() {
-        leaveChannel()
-        leaveMessageChannel()
+        AgoraRtc.shared.leaveChannel()
+        AgoraRtm.shared.leaveChannel()
     }
 
     func sendMessage(event: ChannelMessageEvent) {
-        self.rtmChannel?.send(AgoraRtmMessage(text: event.rawValue )){ error in
-            print("sendMessage \(error)", error.rawValue)
-        }
+        AgoraRtm.shared.sendMessage(event: event)
         handleState(event)
     }
 
@@ -124,42 +74,17 @@ class LiveChatViewModel: NSObject, ObservableObject {
         $sharedState
             .receive(on: DispatchQueue.main)
             .sink { state in
-                self.agoraEngine.setCameraTorchOn(state.isFlashOn)
-                self.agoraEngine.setCameraZoomFactor(state.zoom)
+                AgoraRtc.shared.activate(state: state)
             }
             .store(in: &subscriptions)
 
         $localState
             .receive(on: DispatchQueue.main)
             .sink { state in
-                self.agoraEngine.setCameraTorchOn(state.isFlashOn)
-                self.agoraEngine.setCameraZoomFactor(state.zoom)
+                AgoraRtc.shared.activate(state: state)
             }
             .store(in: &subscriptions)
     }
-
-    private func joinMessageChannel() async  {
-        let token = await chatApi.fetch(userid:  Constants.Credentials.currentUser)
-
-        let login = await agoraRtm.login(byToken: token.value, user: Constants.Credentials.currentUser)
-
-        if login == .ok {
-            createMessageChannel()
-            let result = await rtmChannel?.join()
-            print("joinMessageChannel", "success \(result?.rawValue ?? -1)" )
-        } else {
-            print("joinMessageChannel", "failure \(login)")
-        }
-    }
-
-    private func createMessageChannel() {
-        guard let rtmChannel = agoraRtm.createChannel(withId: Constants.Credentials.channel, delegate: self) else {
-            alertSubject.send(.channelError)
-            return
-        }
-        self.rtmChannel = rtmChannel
-    }
-
 
     private func observeRtcLoginState() {
         let connection = isConnected.share()
@@ -167,7 +92,11 @@ class LiveChatViewModel: NSObject, ObservableObject {
             .filter { $0 == .connected }
             .sink { _ in
                 Task {
-                    await self.joinMessageChannel()
+                    do {
+                        try await AgoraRtm.shared.joinMessageChannel(delegate: self)
+                    } catch {
+                        print("observeRtcLoginState", error)
+                    }
                 }
             }
             .store(in: &subscriptions)
@@ -175,21 +104,11 @@ class LiveChatViewModel: NSObject, ObservableObject {
         connection
             .filter { $0 == .disconnected}
             .sink { _ in
-                self.agoraEngine.stopPreview()
+                AgoraRtc.shared.stop()
             }
             .store(in: &subscriptions)
     }
 
-    private func leaveChannel() {
-        let result = agoraEngine.leaveChannel(nil)
-        if result == 0 { self.isConnected.send(.disconnected) }
-    }
-
-    private func leaveMessageChannel() {
-         rtmChannel?.leave { (error) in
-             print("leave channel error:\(error.rawValue)")
-         }
-     }
 
 
     func handleState(_ event: ChannelMessageEvent) {
@@ -200,8 +119,6 @@ class LiveChatViewModel: NSObject, ObservableObject {
         }else {
             handleState(event, state: &sharedState)
         }
-
-        
     }
 
 
@@ -218,7 +135,7 @@ class LiveChatViewModel: NSObject, ObservableObject {
         case .brightnessDown:
             break
         case .flash:
-            if agoraEngine.isCameraTorchSupported() {
+            if AgoraRtc.shared.kit.isCameraTorchSupported() {
                 state.isFlashOn.toggle()
             }
         case .participantShares, .participantStoppedSharring :
@@ -228,5 +145,24 @@ class LiveChatViewModel: NSObject, ObservableObject {
         case .unknown:
             break
         }
+    }
+}
+
+extension LiveChatViewModel: AgoraRtcEngineDelegate {
+
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
+        hostEvent.send(.received(uid: uid))
+    }
+
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {
+        hostEvent.send(.disconnected(uid: uid))
+    }
+
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
+        print("didOccurError AgoraErrorCode", errorCode.rawValue)
+    }
+
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccur errorType: AgoraEncryptionErrorType) {
+        print("didOccur AgoraEncryptionErrorType", errorType.rawValue)
     }
 }

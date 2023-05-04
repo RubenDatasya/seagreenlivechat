@@ -14,10 +14,7 @@ import AgoraRtmKit
 extension LiveChatViewModel : AgoraRtmDelegate {
 
     func rtmKit(_ kit: AgoraRtmKit, connectionStateChanged state: AgoraRtmConnectionState, reason: AgoraRtmConnectionChangeReason) {
-        print("connectionStateChanged", "\(state) \(state.rawValue)")
-        print("connectionStateChanged", "\(reason) \(reason.rawValue)")
-
-
+        print("connectionStateChanged", "\(state) \(state.rawValue), \(reason) \(reason.rawValue)")
     }
     func rtcEngine(_ engine: AgoraRtcEngineKit, tokenPrivilegeWillExpire token: String) {
         print("tokenPrivilegeWillExpire")

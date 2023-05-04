@@ -16,4 +16,15 @@ extension Bundle {
         }
 
         fatalError("Could not load view with type " + String(describing: type))
-    }}
+    }
+    
+}
+
+extension UIViewController {
+
+    static func instantiate<T: UIViewController>() -> T {
+        let identifier = String(describing: T.self)
+        return UIStoryboard(name: "ChatStoryboard", bundle: nil)
+            .instantiateViewController(withIdentifier: identifier) as! T
+    }
+}
