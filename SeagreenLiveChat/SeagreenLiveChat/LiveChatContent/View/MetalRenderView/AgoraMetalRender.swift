@@ -12,7 +12,7 @@ import AVFoundation
 
 
 #if os(iOS) && (!arch(i386) && !arch(x86_64))
-    import MetalKit
+import MetalKit
 #endif
 import AgoraRtcKit
 
@@ -29,12 +29,6 @@ enum AgoraVideoRotation:Int {
     case rotation180 = 2
     /** 3: 270 degrees */
     case rotation270 = 3
-}
-
-extension AgoraMetalRender: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-
-    }
 }
 
 class AgoraMetalRender: UIView {
@@ -87,7 +81,7 @@ class AgoraMetalRender: UIView {
     }
 
     func startRender(uid: UInt) {
-       // setupAndStartCaptureSession()
+        // setupAndStartCaptureSession()
         userId = uid
         initializeRenderPipelineState()
 #if os(iOS) && (!arch(i386) && !arch(x86_64))
@@ -119,6 +113,11 @@ func getAgoraRotation(rotation: Int32) -> AgoraVideoRotation? {
 }
 
 extension AgoraMetalRender: AgoraVideoFrameDelegate {
+
+    func getObservedFramePosition() -> AgoraVideoFramePosition {
+        // Frame position: postCapture, preRenderer, preEncoder
+        return AgoraVideoFramePosition.preRenderer
+    }
     func onCapture(_ videoFrame: AgoraOutputVideoFrame) -> Bool {
         return true
     }
@@ -165,7 +164,7 @@ extension AgoraMetalRender: AgoraVideoFrameDelegate {
     }
 
     func getVideoFrameProcessMode() -> AgoraVideoFrameProcessMode {
-        return .readOnly
+        return .readWrite
     }
 
 
@@ -180,7 +179,7 @@ extension AgoraMetalRender: AgoraVideoFrameDelegate {
 
 private extension AgoraMetalRender {
     func initializeMetalView() {
-    #if os(iOS) && (!arch(i386) && !arch(x86_64))
+#if os(iOS) && (!arch(i386) && !arch(x86_64))
         metalView = MTKView(frame: bounds, device: device)
         metalView.framebufferOnly = true
         metalView.colorPixelFormat = .bgra8Unorm
@@ -188,7 +187,7 @@ private extension AgoraMetalRender {
         metalView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(metalView)
         commandQueue = device?.makeCommandQueue()
-    #endif
+#endif
     }
 
     func initializeRenderPipelineState() {
@@ -208,12 +207,12 @@ private extension AgoraMetalRender {
     }
 
     func initializeTextureCache() {
-    #if os(iOS) && (!arch(i386) && !arch(x86_64))
+#if os(iOS) && (!arch(i386) && !arch(x86_64))
         guard let metalDevice = metalDevice,
-            CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, metalDevice, nil, &textureCache) == kCVReturnSuccess else {
+              CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, metalDevice, nil, &textureCache) == kCVReturnSuccess else {
             return
         }
-    #endif
+#endif
     }
 
 #if os(iOS) && (!arch(i386) && !arch(x86_64))
@@ -233,10 +232,10 @@ private extension AgoraMetalRender {
         let result = CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, textureCache, pixelBuffer, nil, pixelFormat, width, height, planeIndex, &imageTexture)
 
         guard let unwrappedImageTexture = imageTexture,
-            let texture = CVMetalTextureGetTexture(unwrappedImageTexture),
-            result == kCVReturnSuccess
-            else {
-                return nil
+              let texture = CVMetalTextureGetTexture(unwrappedImageTexture),
+              result == kCVReturnSuccess
+        else {
+            return nil
         }
 
         return texture
@@ -256,10 +255,12 @@ extension AgoraMetalRender: MTKViewDelegate {
         }
 
         _ = semaphore.wait(timeout: .distantFuture)
-        guard let textures = textures, let device = device,
-            let commandBuffer = commandQueue?.makeCommandBuffer(), let vertexBuffer = vertexBuffer else {
-                semaphore.signal()
-                return
+        guard let textures = textures,
+              let device = device,
+              let commandBuffer = commandQueue?.makeCommandBuffer(),
+              let vertexBuffer = vertexBuffer else {
+            semaphore.signal()
+            return
         }
 
         render(textures: textures, withCommandBuffer: commandBuffer, device: device, vertexBuffer: vertexBuffer)
@@ -267,11 +268,11 @@ extension AgoraMetalRender: MTKViewDelegate {
 
     private func render(textures: [MTLTexture], withCommandBuffer commandBuffer: MTLCommandBuffer, device: MTLDevice, vertexBuffer: MTLBuffer) {
         guard let currentRenderPassDescriptor = metalView.currentRenderPassDescriptor,
-            let currentDrawable = metalView.currentDrawable,
-            let renderPipelineState = renderPipelineState,
-            let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: currentRenderPassDescriptor) else {
-                semaphore.signal()
-                return
+              let currentDrawable = metalView.currentDrawable,
+              let renderPipelineState = renderPipelineState,
+              let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: currentRenderPassDescriptor) else {
+            semaphore.signal()
+            return
         }
 
         encoder.pushDebugGroup("Agora-Custom-Render-Frame")

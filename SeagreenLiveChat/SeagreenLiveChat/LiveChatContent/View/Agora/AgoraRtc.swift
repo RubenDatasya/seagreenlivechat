@@ -10,16 +10,9 @@ import AgoraRtcKit
 
 class AgoraRtc: NSObject {
 
-    var agoraEngine: AgoraRtcEngineKit! {
-        didSet {
-            kit = agoraEngine
-        }
-    }
-
-    private (set) var kit: AgoraRtcEngineKit!
+    var agoraEngine: AgoraRtcEngineKit!
 
     private var userRole: AgoraClientRole = .broadcaster
-
 
     private var encodingConfiguration = AgoraVideoEncoderConfiguration(
         size: AgoraVideoDimension1280x720,
@@ -36,6 +29,11 @@ class AgoraRtc: NSObject {
 
     func initialize() {
         let config = AgoraRtcEngineConfig()
+        let logConfig = AgoraLogConfig()
+        let logFilePath = "\(FileManager().currentDirectoryPath)/logs.log"
+        logConfig.filePath = logFilePath
+        logConfig.fileSizeInKB = 2 * 1024
+        config.logConfig = logConfig
         config.appId = Constants.Secret.appid
         config.channelProfile = .liveBroadcasting
         agoraEngine = AgoraRtcEngineKit.sharedEngine(with: config, delegate: nil)
@@ -43,42 +41,36 @@ class AgoraRtc: NSObject {
 
     func addDelegate(_ delegate : AgoraRtcEngineDelegate) {
         agoraEngine.delegate = delegate
-        agoraEngine.setVideoFrameDelegate(AgoraMetalRender())
     }
 
     func pushFrame(_ frame: AgoraVideoFrame) {
-        guard let agoraEngine = agoraEngine else {
+        guard agoraEngine != nil else {
             fatalError("Agora engine not initialized")
         }
-        agoraEngine.pushExternalVideoFrame(frame)
+        self.agoraEngine.pushExternalVideoFrame(frame)
     }
 
     func start() {
         agoraEngine.enableVideo()
         agoraEngine.setExternalVideoSource(true, useTexture: true, sourceType: .videoFrame)
         agoraEngine.setVideoEncoderConfiguration(encodingConfiguration)
-        agoraEngine.enableMultiCamera(true, config: nil)
-        agoraEngine.setEncodedVideoFrameDelegate(self)
     }
 
     func setupLocalVideo(_ view: UIView){
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
-        videoCanvas.sourceType = .custom
         videoCanvas.view = view
         agoraEngine.setupLocalVideo(videoCanvas)
     }
 
     func setupRemoteVideo(_ view: UIView, uid: UInt){
-        view.backgroundColor = .red
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = uid
         videoCanvas.renderMode = .hidden
-        videoCanvas.sourceType = .remote
         videoCanvas.view = view
-        let setup = agoraEngine.setupRemoteVideo(videoCanvas)
-        print("setupRemoteVideo",setup)
+        let setRemote = agoraEngine.setupRemoteVideo(videoCanvas)
+        print("setRemote succeed", setRemote == 0)
     }
 
     func joinChannel() async throws -> RTCLoginState {
@@ -128,14 +120,5 @@ class AgoraRtc: NSObject {
         enhancements.forEach { improvement in
             agoraEngine.setExtensionPropertyWithVendor(improvement.name, extension: improvement.extension, key: improvement.key, value: improvement.value,sourceType: .remoteVideo)
         }
-    }
-}
-
-extension AgoraRtc: AgoraEncodedVideoFrameDelegate {
-
-    func onEncodedVideoFrameReceived(_ videoData: Data, length: Int, info videoFrameInfo: AgoraEncodedVideoFrameInfo) -> Bool {
-        print("Camera", "frame is encoded")
-        print("videoFrameInfo", videoFrameInfo)
-        return true
     }
 }

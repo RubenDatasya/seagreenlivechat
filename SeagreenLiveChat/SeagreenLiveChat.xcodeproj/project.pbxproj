@@ -109,13 +109,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		821687975BB3D7A5CC674A5B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		877822C72A027B95003C74B7 /* States */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,7 +229,6 @@
 			children = (
 				87EFE60629FE7B020020B2A9 /* SeagreenLiveChat */,
 				87EFE60529FE7B020020B2A9 /* Products */,
-				821687975BB3D7A5CC674A5B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -625,8 +617,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AgoraIO/AgoraRtcEngine_iOS.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				kind = exactVersion;
+				version = 4.1.1;
 			};
 		};
 		87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */ = {

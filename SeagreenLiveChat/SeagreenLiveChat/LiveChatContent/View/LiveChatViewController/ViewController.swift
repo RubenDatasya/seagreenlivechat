@@ -30,9 +30,7 @@ struct VideoChat: UIViewControllerRepresentable {
     typealias UIViewControllerType = ViewController
 }
 
-
 class ViewController: UIViewController {
-
 
     lazy var remoteView: UIView = UIView()
     var localView: CustomVideoSourcePreview = .init()
@@ -77,24 +75,7 @@ class ViewController: UIViewController {
 
 
 
-    func handleCameraState() {
-//        AgoraRtc.shared.kit.switchCamera()
-//
-//        let videoCanvas = AgoraRtcVideoCanvas()
-//        videoCanvas.uid = 0
-//        videoCanvas.renderMode = .hidden
-//        if viewModel.localState.position == .front {
-//            self.localView.isHidden = false
-//            videoCanvas.view = self.localView
-//            AgoraRtc.shared.setupLocalVideo(localView)
-//        } else{
-//            self.localView.isHidden = true
-//            videoCanvas.view = self.remoteView
-//            AgoraRtc.shared.setupLocalVideo(localView)
-//
-//        }
-//        AgoraRtc.shared.kit.setupLocalVideo(videoCanvas)
-    }
+    func handleCameraState() {}
 
 
     func showMessage(title: String, text: String, delay: Int = 2) -> Void {
@@ -117,22 +98,9 @@ class ViewController: UIViewController {
     private func handleHostingState( _ state: HostState) {
         switch state {
         case .received(let uid):
-//            remoteView.animate { view in
-//                self.view.transform = CGAffineTransform(scaleX: 1, y: 1)
-//            }
-         //   setupRemoteView(uid: uid)
-
-           // remoteView.videoView.startRender(uid: uid)
             AgoraRtc.shared.setupRemoteVideo(remoteView, uid: uid)
-            //remoteView.videoView.startRender(uid: uid)
         case .disconnected(let uid), .none(let uid):
-//            remoteView.animate { view in
-//                view.transform = CGAffineTransform(scaleX: 0, y: 0)
-//            }
             AgoraRtc.shared.setupRemoteVideo(.init(), uid: uid)
-     //       remoteView.videoView.stopRender(uid: uid)
-
-            break
         }
     }
 }

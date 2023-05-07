@@ -21,7 +21,6 @@ class LiveChatViewModel: NSObject, ObservableObject {
     var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var hostEvent:  PassthroughSubject<HostState, Never> = .init()
-
     lazy var chatApi = LiveChatTokenAPI()
     lazy var messsagingApi = SignalingTokenAPI()
 
@@ -135,7 +134,7 @@ class LiveChatViewModel: NSObject, ObservableObject {
         case .brightnessDown:
             break
         case .flash:
-            if AgoraRtc.shared.kit.isCameraTorchSupported() {
+            if AgoraRtc.shared.agoraEngine.isCameraTorchSupported() {
                 state.isFlashOn.toggle()
             }
         case .participantShares, .participantStoppedSharring :

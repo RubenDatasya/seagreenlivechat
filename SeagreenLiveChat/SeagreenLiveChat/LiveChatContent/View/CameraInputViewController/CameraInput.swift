@@ -37,19 +37,14 @@ class CameraInput: NSObject {
     }
 
     private func setupAndStartCaptureSession(position: AVCaptureDevice.Position){
-        DispatchQueue.global(qos: .userInitiated).async{
+        DispatchQueue.global(qos: .userInitiated).async{[weak self] in
+            guard let self = self else { return }
             self.captureSession = AVCaptureSession()
             self.captureSession.beginConfiguration()
-            if self.captureSession.canSetSessionPreset(.hd1280x720) {
-                self.captureSession.sessionPreset = .hd1280x720
-            }
-            self.captureSession.automaticallyConfiguresCaptureDeviceForWideColor = true
+            self.sessionPreset()
             self.setupInputs(position: position)
             self.setupOutput()
-            DispatchQueue.main.async {
-                self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-                self.previewSource.insertCaptureVideoPreviewLayer(previewLayer: self.previewLayer)
-            }
+            self.setupLayer()
             self.captureSession.commitConfiguration()
             self.captureSession.startRunning()
         }
@@ -59,6 +54,21 @@ class CameraInput: NSObject {
         let devicesSession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTrueDepthCamera, .builtInDualCamera, .builtInWideAngleCamera], mediaType: .video, position: position)
         let bestCaptureDevice = devicesSession.devices.first
         return bestCaptureDevice
+    }
+
+    private func setupLayer() {
+        DispatchQueue.main.async {
+            self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+            self.previewSource.insertCaptureVideoPreviewLayer(previewLayer: self.previewLayer)
+        }
+    }
+
+    private func sessionPreset() {
+        if self.captureSession.canSetSessionPreset(.hd1280x720) {
+            self.captureSession.sessionPreset = .hd1280x720
+        } else {
+            self.captureSession.sessionPreset = .high
+        }
     }
 
     func setupInputs(position: AVCaptureDevice.Position){
@@ -103,9 +113,13 @@ class CameraInput: NSObject {
 
     func setupOutput(){
         videoOutput = AVCaptureVideoDataOutput()
-        videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
+        let videoSettings: [String: Any] = [
+            kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)
+        ]
+        videoOutput.videoSettings = videoSettings
 
         let videoQueue = DispatchQueue(label: "videoQueue", qos: .userInteractive)
+
         videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
 
         if captureSession.canAddOutput(videoOutput) {
@@ -131,12 +145,17 @@ class CameraInput: NSObject {
         videoOutput.connections.first?.videoOrientation = .portrait
         captureSession.commitConfiguration()
     }
+
+    var videoFrame = AgoraVideoFrame()
+    var cvBuffer: CVImageBuffer?
+
 }
 
 extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let cvBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+        cvBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+        guard let cvBuffer = cvBuffer else {
             return
         }
         let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
@@ -146,18 +165,16 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         let ciImage =  CIImage(cvImageBuffer: cvBuffer)
         let uiImage =  UIImage(ciImage: ciImage)
-
-        let videoFrame = AgoraVideoFrame()
         videoFrame.format = AgoraVideoBitrateStandard
         videoFrame.time = time
-//        videoFrame.strideInPixels = Int32(width)
-//        videoFrame.height = Int32(height)
-//        videoFrame.dataBuf = try? sampleBuffer.dataBuffer?.dataBytes()
+        videoFrame.strideInPixels = Int32(width)
+        videoFrame.height = Int32(height)
+        videoFrame.dataBuf = try? sampleBuffer.dataBuffer?.dataBytes()
         videoFrame.rotation = 0
         videoFrame.image = uiImage
         videoFrame.textureBuf = cvBuffer
 
-        AgoraRtc.shared.pushFrame(videoFrame)
+        AgoraRtc.shared.agoraEngine.pushExternalVideoFrame(videoFrame)
     }
 }
 
