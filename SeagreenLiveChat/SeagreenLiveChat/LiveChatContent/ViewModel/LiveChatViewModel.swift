@@ -15,12 +15,20 @@ class LiveChatViewModel: NSObject, ObservableObject {
 
     @Published var localState: CameraState = .init(position: .front)
     @Published var sharedState: CameraState = .init(position: .front)
-    var receivedMessage: PassthroughSubject<ChannelMessageEvent,Never> = .init()
+
     var isConnected:   PassthroughSubject<RTCLoginState, Never> = .init()
-    var currentCamera: CameraPosition = .front
     var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
-    var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var hostEvent:  PassthroughSubject<HostState, Never> = .init()
+    var zoomIn:  PassthroughSubject<(), Never> = .init()
+    var zoomOut:  PassthroughSubject<(), Never> = .init()
+    var exposureUp:  PassthroughSubject<(), Never> = .init()
+    var exposureDown:  PassthroughSubject<(), Never> = .init()
+    var flashUp:  PassthroughSubject<(), Never> = .init()
+    var flashDown:  PassthroughSubject<(), Never> = .init()
+    var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
+
+
+
     lazy var chatApi = LiveChatTokenAPI()
     lazy var messsagingApi = SignalingTokenAPI()
 
@@ -57,15 +65,10 @@ class LiveChatViewModel: NSObject, ObservableObject {
     }
 
     func toggleCamera() {
-        if localState.position == .front {
-            localState.position = .rear
-            cameraToggle.send(.rear)
-            sendMessage(event: .participantShares)
-        }else {
+        localState.inverse()
+        cameraToggle.send(localState.position)
+        if localState.position == .rear {
             localState.zoom = 0
-            localState.position = .front
-            cameraToggle.send(.front)
-            sendMessage(event: .participantStoppedSharring)
         }
     }
 
@@ -108,35 +111,30 @@ class LiveChatViewModel: NSObject, ObservableObject {
             .store(in: &subscriptions)
     }
 
+    func handleSharedState(_ event: ChannelMessageEvent) {
+        handleState(event, state: &sharedState)
+    }
 
 
     func handleState(_ event: ChannelMessageEvent) {
-        let isLocal = localState.position == .front && sharedState.position == .rear ||
-                        localState.position == .front && sharedState.position == .front
-        if isLocal {
-            handleState(event, state: &localState)
-        }else {
-            handleState(event, state: &sharedState)
-        }
+        handleState(event, state: &localState)
     }
 
 
     private func handleState(_ event: ChannelMessageEvent, state: inout CameraState) {
         switch event {
         case .zoomIn:
-            if state.zoom < 5 {
-                state.zoom += 1
-            }
+            zoomIn.send(())
         case .zoomOut:
-            state.zoom -= 1
+            zoomOut.send(())
         case .brightnessUp:
-            state.brightness += 0.1
+            exposureUp.send(())
         case .brightnessDown:
-            break
+            exposureDown.send(())
         case .flash:
-            if AgoraRtc.shared.agoraEngine.isCameraTorchSupported() {
-                state.isFlashOn.toggle()
-            }
+            flashUp.send(())
+        case .flashDown:
+            flashDown.send(())
         case .participantShares, .participantStoppedSharring :
             state.position = .front
         case .leave:
@@ -164,4 +162,45 @@ extension LiveChatViewModel: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccur errorType: AgoraEncryptionErrorType) {
         print("didOccur AgoraEncryptionErrorType", errorType.rawValue)
     }
+}
+
+extension LiveChatViewModel : AgoraRtmDelegate {
+
+    func rtmKit(_ kit: AgoraRtmKit, connectionStateChanged state: AgoraRtmConnectionState, reason: AgoraRtmConnectionChangeReason) {
+        print("connectionStateChanged", "\(state) \(state.rawValue), \(reason) \(reason.rawValue)")
+    }
+    func rtcEngine(_ engine: AgoraRtcEngineKit, tokenPrivilegeWillExpire token: String) {
+        print("tokenPrivilegeWillExpire")
+    }
+
+    func rtmKitTokenDidExpire(_ kit: AgoraRtmKit) {
+        print("rtmKitTokenDidExpire")
+    }
+
+}
+
+
+extension LiveChatViewModel: AgoraRtmChannelDelegate {
+
+    func channel(_ channel: AgoraRtmChannel, memberCount count: Int32) {
+        print("memberCount, \(count)")
+    }
+
+    func channel(_ channel: AgoraRtmChannel, attributeUpdate attributes: [AgoraRtmChannelAttribute]) {
+        print("attributeUpdate, attributeUpdate")
+    }
+
+    func channel(_ channel: AgoraRtmChannel, memberJoined member: AgoraRtmMember) {
+        print("memberJoined, join")
+    }
+
+    func channel(_ channel: AgoraRtmChannel, memberLeft member: AgoraRtmMember) {
+        print("\(member.userId) left")
+    }
+
+    func channel(_ channel: AgoraRtmChannel, messageReceived message: AgoraRtmMessage, from member: AgoraRtmMember) {
+        print("messageReceived \(message.text) from \(member.userId)")
+        handleSharedState(ChannelMessageEvent.value(message.text))
+    }
+
 }

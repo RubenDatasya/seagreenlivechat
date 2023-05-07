@@ -172,6 +172,21 @@
                   endingLineNumber = "266"
                   offsetFromSymbolStart = "740">
                </Location>
+               <Location
+                  uuid = "8DD90B39-E62A-422E-A03E-8628A6174440 - fe07a65ea2b31a1f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SeagreenLiveChat.AgoraMetalRender.draw(in: __C.MTKView) -&gt; ()"
+                  moduleName = "SeagreenLiveChat"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rubenmimoun/Documents/Github/seagreenlivechat/SeagreenLiveChat/SeagreenLiveChat/LiveChatContent/View/MetalRenderView/AgoraMetalRender.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "712">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

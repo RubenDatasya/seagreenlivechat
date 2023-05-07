@@ -9,11 +9,6 @@ import Foundation
 import UIKit
 import AVFoundation
 import AgoraRtcKit
-import VideoToolbox
-import Accelerate.vImage
-import CoreMedia
-import CoreVideo
-import simd
 
 class CameraInput: NSObject {
 
@@ -51,7 +46,16 @@ class CameraInput: NSObject {
     }
 
     private func getCaptureDevice(_ position : AVCaptureDevice.Position) -> AVCaptureDevice? {
-        let devicesSession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTrueDepthCamera, .builtInDualCamera, .builtInWideAngleCamera], mediaType: .video, position: position)
+        let devicesSession = AVCaptureDevice.DiscoverySession(
+            deviceTypes: [.builtInTripleCamera,
+                          .builtInDualCamera,
+                          .builtInUltraWideCamera,
+                          .builtInWideAngleCamera,
+                          .builtInTrueDepthCamera],
+                        mediaType: .video,
+                        position: position)
+
+        print("getCaptureDevice", devicesSession)
         let bestCaptureDevice = devicesSession.devices.first
         return bestCaptureDevice
     }
@@ -76,6 +80,7 @@ class CameraInput: NSObject {
         //get back camera
         if let device = getCaptureDevice(.back) {
             backCamera = device
+            setContinousExposureMode()
         } else {
             fatalError("no back camera")
         }
@@ -146,16 +151,12 @@ class CameraInput: NSObject {
         captureSession.commitConfiguration()
     }
 
-    var videoFrame = AgoraVideoFrame()
-    var cvBuffer: CVImageBuffer?
-
 }
 
 extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        cvBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
-        guard let cvBuffer = cvBuffer else {
+        guard let cvBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
         let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
@@ -165,7 +166,8 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         let ciImage =  CIImage(cvImageBuffer: cvBuffer)
         let uiImage =  UIImage(ciImage: ciImage)
-        videoFrame.format = AgoraVideoBitrateStandard
+        var videoFrame = AgoraVideoFrame()
+        videoFrame.format = 12
         videoFrame.time = time
         videoFrame.strideInPixels = Int32(width)
         videoFrame.height = Int32(height)
@@ -179,20 +181,69 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 
-class CustomVideoSourcePreview : UIView {
+// Camera Command handling
+extension CameraInput {
 
-    private var previewLayer: AVCaptureVideoPreviewLayer?
 
-    func insertCaptureVideoPreviewLayer(previewLayer: AVCaptureVideoPreviewLayer) {
-        self.previewLayer?.removeFromSuperlayer()
+    func updateFlash(isUp: Bool) {
+        guard let backCamera = backCamera,
+              backCamera.hasFlash else {
+            return
+        }
 
-        previewLayer.frame = bounds
-        layer.insertSublayer(previewLayer, below: layer.sublayers?.first)
-        self.previewLayer = previewLayer
+        var nextTorch = isUp ? backCamera.torchLevel + 0.1 : backCamera.torchLevel - 0.1
+        do {
+            try backCamera.lockForConfiguration()
+            if nextTorch > 0 && nextTorch < 1 {
+                try backCamera.setTorchModeOn(level: nextTorch)
+            }
+        } catch {
+            print("updateFlash", error)
+        }
     }
 
-    override func layoutSublayers(of layer: CALayer) {
-        super.layoutSublayers(of: layer)
-        previewLayer?.frame = bounds
+    func updateExposure(isUp: Bool) {
+        guard let backCamera = backCamera else {
+            return
+        }
+        do {
+            try backCamera.lockForConfiguration()
+            let exposure = backCamera.exposureTargetBias
+            let nextEposure = isUp ? exposure - 0.1 : exposure + 0.1
+            backCamera.setExposureTargetBias(nextEposure)
+            backCamera.unlockForConfiguration()
+        }catch{
+            print("Exposure", error)
+        }
+    }
+
+    func setContinousExposureMode() {
+        guard let backCamera = backCamera else {
+            return
+        }
+        do {
+            try backCamera.lockForConfiguration()
+            backCamera.exposureMode = .continuousAutoExposure
+            backCamera.unlockForConfiguration()
+        }catch{
+            print("Exposure", error)
+        }
+    }
+
+    func updateZoom(isIn: Bool) {
+        guard let backCamera = backCamera else {
+            return
+        }
+        do {
+            try backCamera.lockForConfiguration()
+            var current = backCamera.videoZoomFactor
+            var next = isIn ? current + 1 : current - 1
+            if next > backCamera.minAvailableVideoZoomFactor && next < backCamera.maxAvailableVideoZoomFactor {
+                backCamera.videoZoomFactor = isIn ? current + 1 : current - 1
+            }
+            backCamera.unlockForConfiguration()
+        } catch {
+            print("updateZoom", error)
+        }
     }
 }

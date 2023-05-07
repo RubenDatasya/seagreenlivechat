@@ -15,6 +15,7 @@ enum ChannelMessageEvent : String, Codable  {
     case brightnessUp
     case brightnessDown
     case flash
+    case flashDown
     case leave
     case unknown
 
@@ -34,6 +35,8 @@ enum ChannelMessageEvent : String, Codable  {
             return .brightnessDown
         case  ChannelMessageEvent.flash.rawValue:
             return .flash
+        case  ChannelMessageEvent.flashDown.rawValue:
+            return .flashDown
         case  ChannelMessageEvent.leave.rawValue:
             return .leave
         default:

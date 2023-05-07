@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct CameraState {
+struct CameraState: CameraPositionProtocol {
     var position: CameraPosition
     var zoom: CGFloat = 0.0
     var isFlashOn: Bool = false
     var brightness: Float = 0.5
 }
+

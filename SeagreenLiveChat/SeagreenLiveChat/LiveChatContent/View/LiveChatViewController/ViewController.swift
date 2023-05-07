@@ -41,13 +41,17 @@ class ViewController: UIViewController {
     var subscriptions: Set<AnyCancellable> = .init()
     var viewModel: LiveChatViewModel!
 
+
     override func viewDidLoad() {
-         super.viewDidLoad()
+        super.viewDidLoad()
         viewModel.initializeAgora()
         initViews()
         observeAlert()
         observeNewHost()
         observeCamera()
+        observeZoom()
+        observeFlash()
+        observeExposure()
         joinChannels()
     }
 
@@ -73,9 +77,19 @@ class ViewController: UIViewController {
         decorator.decorate(remoteView: remoteView, in: self.view)
     }
 
-
-
-    func handleCameraState() {}
+    func handleCameraState(state: CameraPosition) {
+        self.localView.translatesAutoresizingMaskIntoConstraints = true
+        if state == .rear {
+            UIView.animate(withDuration: 0.5) {
+                self.localView.frame = CGRect(origin: .zero, size: .init(width: self.view.frame.size.width, height: self.view.frame.size.height))
+            }
+            DispatchQueue.main.async {
+                self.cameraInput.switchCameraInput()
+            }
+        } else {
+            decorator.decorate(localView: localView, in: self.view)
+        }
+    }
 
 
     func showMessage(title: String, text: String, delay: Int = 2) -> Void {
@@ -119,9 +133,7 @@ extension ViewController {
     func observeCamera() {
         viewModel.cameraToggle
             .receive(on: DispatchQueue.main)
-            .sink { state in
-                self.handleCameraState()
-            }
+            .sink(receiveValue: handleCameraState(state:))
             .store(in: &subscriptions)
     }
 
@@ -131,24 +143,52 @@ extension ViewController {
             .sink(receiveValue: handleHostingState(_:))
             .store(in: &subscriptions)
     }
-}
 
+    func observeZoom() {
+        viewModel.zoomIn
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.cameraInput.updateZoom(isIn: true)
+            }
+            .store(in: &subscriptions)
 
-extension UIViewController {
-   func add(_ child: UIViewController, frame: CGRect? = nil) {
-       addChild(child)
+        viewModel.zoomOut
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.cameraInput.updateZoom(isIn: false)
+            }
+            .store(in: &subscriptions)
+    }
 
-       if let frame = frame {
-           child.view.frame = frame
-       }
+    func observeFlash() {
+        viewModel.flashUp
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.cameraInput.updateFlash(isUp: true)
+            }
+            .store(in: &subscriptions)
 
-       view.addSubview(child.view)
-       child.didMove(toParent: self)
-   }
+        viewModel.flashDown
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.cameraInput.updateFlash(isUp: false)
+            }
+            .store(in: &subscriptions)
+    }
 
-   func remove() {
-       willMove(toParent: nil)
-       view.removeFromSuperview()
-       removeFromParent()
-   }
+    func observeExposure() {
+        viewModel.exposureUp
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.cameraInput.updateExposure(isUp: true)
+            }
+            .store(in: &subscriptions)
+
+        viewModel.exposureDown
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.cameraInput.updateExposure(isUp: false)
+            }
+            .store(in: &subscriptions)
+    }
 }

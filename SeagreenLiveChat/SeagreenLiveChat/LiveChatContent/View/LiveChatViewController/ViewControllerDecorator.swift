@@ -11,17 +11,36 @@ import SwiftUI
 
 class ViewControllerDecorator {
 
-
-    func decorate(localView: UIView, in view: UIView) {
+    func decorate(localView: UIView, in view: UIView, isFullScreen: Bool =  false) {
         localView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate ([
+
+        let fixedConstraints = [
             localView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             localView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             localView.widthAnchor.constraint(equalToConstant: 120),
             localView.heightAnchor.constraint(equalToConstant: 200),
-        ])
-        localView.shadowView(parent: view)
-        localView.setBorder(borderColor: Color.pink.cgColor)
+        ]
+
+        let fullScreenConstraint = [
+            localView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            localView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            localView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            localView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ]
+
+        if isFullScreen {
+            NSLayoutConstraint.activate(fullScreenConstraint)
+            NSLayoutConstraint.deactivate(fixedConstraints)
+        } else {
+            NSLayoutConstraint.activate(fixedConstraints)
+            NSLayoutConstraint.deactivate(fullScreenConstraint)
+        }
+
+        localView.layoutIfNeeded()
+        view.layoutIfNeeded()
+
+//        localView.shadowView(parent: view)
+//        localView.setBorder(borderColor: Color.pink.cgColor)
     //    localView.transform = CGAffineTransform(scaleX: 0, y: 0)
     //    localView.transform = CGAffineTransform(translationX: -400, y: 0)
     }

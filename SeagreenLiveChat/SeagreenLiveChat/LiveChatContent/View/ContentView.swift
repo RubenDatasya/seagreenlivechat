@@ -11,10 +11,12 @@ enum CameraActionType : String {
     case zoom = "plus.magnifyingglass"
     case zoomout = "minus.magnifyingglass"
     case brightness = "wand.and.rays"
+    case brightnessDown = "wand.and.rays.inverse"
     case move = "cross.circle"
     case cameraReverse = "arrow.triangle.2.circlepath.camera"
     case shut = "iphone.gen2.slash"
     case flash = "lightbulb"
+    case flashDown = "lightbulb.led"
 }
 
 struct ContentView: View {
@@ -22,10 +24,21 @@ struct ContentView: View {
     @StateObject var viewModel = LiveChatViewModel()
 
     var body: some View {
-        VideoChat(viewModel: viewModel)
-            .ignoresSafeArea()
+        Camera()
+        .ignoresSafeArea()
         .overlay(alignment: .top,content: Header)
         .overlay(alignment: .bottomTrailing, content: CameraActionView)
+    }
+
+
+    @ViewBuilder
+    func Camera() -> some View {
+#if targetEnvironment(simulator)
+        Rectangle()
+            .fill(Color.purple)
+#else
+        VideoChat(viewModel: viewModel)
+#endif
     }
 
     @ViewBuilder
@@ -47,27 +60,38 @@ struct ContentView: View {
 
     @ViewBuilder
     func CameraActionView() -> some View {
-        VStack(alignment: .trailing, spacing: 8) {
-            CameraActionButton(image: .zoom) {
-                viewModel.sendMessage(event: .zoomIn)
-            }
+        ScrollView {
+            VStack(alignment: .trailing, spacing: 8) {
+                CameraActionButton(image: .zoom) {
+                    viewModel.sendMessage(event: .zoomIn)
+                }
 
-            CameraActionButton(image: .zoomout) {
-                viewModel.sendMessage(event: .zoomOut)
-            }
+                CameraActionButton(image: .zoomout) {
+                    viewModel.sendMessage(event: .zoomOut)
+                }
 
-            CameraActionButton(image: .brightness) {
-                viewModel.sendMessage(event: .brightnessUp)
-            }
+                CameraActionButton(image: .brightness) {
+                    viewModel.sendMessage(event: .brightnessUp)
+                }
 
-            CameraActionButton(image: .move) {
+                CameraActionButton(image: .brightnessDown) {
+                    viewModel.sendMessage(event: .brightnessDown)
+                }
 
-            }
+                CameraActionButton(image: .move) {
 
-            CameraActionButton(image: .flash) {
-                viewModel.sendMessage(event: .flash)
+                }
+
+                CameraActionButton(image: .flash) {
+                    viewModel.sendMessage(event: .flash)
+                }
+
+                CameraActionButton(image: .flashDown) {
+                    viewModel.sendMessage(event: .flashDown)
+                }
             }
         }
+        .frame(height: 300)
         .padding(.trailing, 20)
 
     }
@@ -77,20 +101,22 @@ struct ContentView: View {
         image: CameraActionType,
         color: Color = Color.white.opacity(0.6),
         action : @escaping()->Void) -> some View {
-        Button {
-            action()
-        } label: {
-            Image(systemName: image.rawValue)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 30, height: 30)
+            Button {
+                action()
+            } label: {
+                Image(systemName: image.rawValue)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+            }
+            .padding()
+            .foregroundColor(color)
+            .background(Color.purple)
+            .clipShape(Circle())
         }
-        .padding()
-        .foregroundColor(color)
-        .background(Color.purple)
-        .clipShape(Circle())
-    }
+
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
