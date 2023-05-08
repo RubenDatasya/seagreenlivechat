@@ -43,6 +43,7 @@
 		877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822DE2A0289CD003C74B7 /* enum HostState.swift */; };
 		877822F12A035037003C74B7 /* CameraInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F02A035037003C74B7 /* CameraInput.swift */; };
 		878801C02A09256500EF524A /* JsonHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801BF2A09256500EF524A /* JsonHandler.swift */; };
+		878801C22A0936B000EF524A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801C12A0936B000EF524A /* Logger.swift */; };
 		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
 		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
 		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
@@ -86,6 +87,7 @@
 		877822DE2A0289CD003C74B7 /* enum HostState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "enum HostState.swift"; sourceTree = "<group>"; };
 		877822F02A035037003C74B7 /* CameraInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInput.swift; sourceTree = "<group>"; };
 		878801BF2A09256500EF524A /* JsonHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHandler.swift; sourceTree = "<group>"; };
+		878801C12A0936B000EF524A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
 		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
 		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */,
 				8733E97D2A0153FE00DFDDF0 /* AgoraImprovements.swift */,
 				878801BF2A09256500EF524A /* JsonHandler.swift */,
+				878801C12A0936B000EF524A /* Logger.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				8715D2F42A08DD91003CC974 /* LiveChatHeaderStreaming.swift in Sources */,
 				8715D2F02A08D428003CC974 /* HeaderTest.swift in Sources */,
 				87A2D00329FF9F9300AEAB4D /* Constants.swift in Sources */,
+				878801C22A0936B000EF524A /* Logger.swift in Sources */,
 				87A2D01529FFB7CE00AEAB4D /* SignalingToken.swift in Sources */,
 				87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */,
 				87A2D01029FFAD4000AEAB4D /* ChannelMessage.swift in Sources */,

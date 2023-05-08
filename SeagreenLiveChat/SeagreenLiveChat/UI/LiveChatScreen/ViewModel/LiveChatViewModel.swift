@@ -92,7 +92,7 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
                     do {
                         try await AgoraRtm.shared.joinMessageChannel(delegate: self)
                     } catch {
-                        print("observeRtcLoginState", error)
+                        Logger.severe("observeRtcLoginState",error: error)
                     }
                 }
             }
@@ -116,7 +116,6 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     }
 
     private func handleUnknownMessage(_ text: String) {
-        print("handlingUnknown",text )
         if let point : CGPoint = JsonHandler.decode(text) {
             cameraInput.focus(at: point)
         }
@@ -144,7 +143,7 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
         case .focus:
             break
         default:
-            print(event,"Not meant to be handled")
+            Logger.info("handleState \(event) Not meant to be handled")
         }
     }
 }
@@ -203,25 +202,25 @@ extension LiveChatViewModel: AgoraRtcEngineDelegate {
     }
 
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
-        print("didOccurError AgoraErrorCode", errorCode.rawValue)
+        Logger.info("didOccurError AgoraErrorCode \(errorCode.rawValue)")
     }
 
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccur errorType: AgoraEncryptionErrorType) {
-        print("didOccur AgoraEncryptionErrorType", errorType.rawValue)
+        Logger.info("didOccur AgoraEncryptionErrorType \(errorType.rawValue)")
     }
 }
 
 extension LiveChatViewModel : AgoraRtmDelegate {
 
     func rtmKit(_ kit: AgoraRtmKit, connectionStateChanged state: AgoraRtmConnectionState, reason: AgoraRtmConnectionChangeReason) {
-        print("connectionStateChanged", "\(state) \(state.rawValue), \(reason) \(reason.rawValue)")
+        Logger.info("didOccur connectionStateChanged, \(state)")
     }
     func rtcEngine(_ engine: AgoraRtcEngineKit, tokenPrivilegeWillExpire token: String) {
-        print("tokenPrivilegeWillExpire")
+        Logger.info("tokenPrivilegeWillExpire")
     }
 
     func rtmKitTokenDidExpire(_ kit: AgoraRtmKit) {
-        print("rtmKitTokenDidExpire")
+        Logger.info("rtmKitTokenDidExpire")
     }
 
 }
@@ -230,23 +229,24 @@ extension LiveChatViewModel : AgoraRtmDelegate {
 extension LiveChatViewModel: AgoraRtmChannelDelegate {
 
     func channel(_ channel: AgoraRtmChannel, memberCount count: Int32) {
-        print("memberCount, \(count)")
+        Logger.info("memberCount, \(count)")
     }
 
     func channel(_ channel: AgoraRtmChannel, attributeUpdate attributes: [AgoraRtmChannelAttribute]) {
-        print("attributeUpdate, attributeUpdate")
+        Logger.info("attributeUpdate")
     }
 
     func channel(_ channel: AgoraRtmChannel, memberJoined member: AgoraRtmMember) {
-        print("memberJoined, join")
+        Logger.info("memberJoined join \(member.description)")
+
     }
 
     func channel(_ channel: AgoraRtmChannel, memberLeft member: AgoraRtmMember) {
-        print("\(member.userId) left")
+        Logger.info("memberJoined left \(member.description)")
     }
 
     func channel(_ channel: AgoraRtmChannel, messageReceived message: AgoraRtmMessage, from member: AgoraRtmMember) {
-        print("messageReceived \(message.text) from \(member.userId)")
+        Logger.info("messageReceived \(message.text) from \(member.userId)")
         let event = ChannelMessageEvent.value(message.text)
         if event == ChannelMessageEvent.unknown {
             handleUnknownMessage(message.text)

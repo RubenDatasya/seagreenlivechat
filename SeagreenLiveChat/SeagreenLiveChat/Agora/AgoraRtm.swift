@@ -41,23 +41,24 @@ class AgoraRtm {
         if login == .ok {
             try createMessageChannel(delegate: delegate)
             let result = await rtmChannel?.join()
-            print("joinMessageChannel", "success \(result?.rawValue ?? -1)" )
+            Logger.info("joinMessageChannel, success")
             return true
         } else {
-            print("joinMessageChannel", " AgoraRtmLoginErrorCode failure \(login)")
+            Logger.info("joinMessageChannel  AgoraRtmLoginErrorCode failure \(login)")
             return false
         }
     }
 
     func sendMessage(event: ChannelMessageEvent) {
         self.rtmChannel?.send(AgoraRtmMessage(text: event.title )){ error in
-            print("sendMessage \(error)", error.rawValue)
+            Logger.error("sendMessage \(error)")
+
         }
     }
 
     func leaveChannel() {
          rtmChannel?.leave { (error) in
-             print("leave channel error:\(error.rawValue)")
+             Logger.error("leaveChannel \(error)")
          }
         rtmChannel = nil
      }

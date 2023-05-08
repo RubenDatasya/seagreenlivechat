@@ -16,7 +16,7 @@ struct JsonHandler {
             let json = String(data: jsonData, encoding: String.Encoding.utf8)
             return json
         }catch{
-            print("JsonEncoder encode", error)
+            Logger.severe("JsonEncoder encode, \(error)")
             return nil
         }
     }
@@ -27,7 +27,7 @@ struct JsonHandler {
             let decoded = try JSONDecoder().decode(T.self, from: data)
             return decoded
         }catch {
-            print("JsonEncoder decode", error)
+            Logger.severe("JsonEncoder decode, \(error)")
             return nil
         }
     }

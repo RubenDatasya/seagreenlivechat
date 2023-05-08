@@ -198,7 +198,7 @@ extension CameraInput: CameraControlProtocol {
                 backCamera.focusMode = .autoFocus
                 backCamera.unlockForConfiguration()
             } catch {
-                print("focus",error)
+                Logger.severe("focus", error: error)
             }
     }
 
@@ -214,7 +214,7 @@ extension CameraInput: CameraControlProtocol {
                 try backCamera.setTorchModeOn(level: nextTorch)
             }
         } catch {
-            print("updateFlash", error)
+            Logger.severe("updateFlash", error: error)
         }
     }
 
@@ -229,7 +229,7 @@ extension CameraInput: CameraControlProtocol {
             backCamera.setExposureTargetBias(nextEposure)
             backCamera.unlockForConfiguration()
         }catch{
-            print("Exposure", error)
+            Logger.severe("Exposure", error: error)
         }
     }
 
@@ -242,7 +242,7 @@ extension CameraInput: CameraControlProtocol {
             backCamera.exposureMode = .continuousAutoExposure
             backCamera.unlockForConfiguration()
         }catch{
-            print("Exposure", error)
+            Logger.severe("exposure", error: error)
         }
     }
 
@@ -259,7 +259,7 @@ extension CameraInput: CameraControlProtocol {
             }
             backCamera.unlockForConfiguration()
         } catch {
-            print("updateZoom", error)
+            Logger.severe("updatezoom", error: error)
         }
     }
 
