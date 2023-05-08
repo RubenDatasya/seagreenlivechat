@@ -37,9 +37,9 @@ struct SoundButton: View {
             speakerState.image
                 .foregroundColor(Color.white)
                 .frame(width: 56, height: 56)
-                .background(Colors.transparentGray)
-                .clipShape(Circle())
         }
+        .background(Color.gray.opacity(0.5))
+        .clipShape(Circle())
     }
 
     func toggleState() {

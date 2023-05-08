@@ -14,7 +14,7 @@ struct LiveChatHeaderStreaming: View {
     var body: some View {
         ZStack {
             RemoteHeader {
-
+                viewModel.toggleCamera()
             }
 
             HStack {

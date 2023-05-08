@@ -18,6 +18,7 @@ protocol CameraControlProtocol {
     func updateExposure(isUp: Bool)
     func updateZoom(isIn: Bool)
     func switchCameraInput()
+    func focus(at: CGPoint)
 }
 
 class CameraInput: NSObject {
@@ -59,8 +60,12 @@ class CameraInput: NSObject {
                         mediaType: .video,
                         position: position)
 
-        print("getCaptureDevice", devicesSession)
-        let bestCaptureDevice = devicesSession.devices.first
+        var bestCaptureDevice : AVCaptureDevice?
+        if position == .back {
+            bestCaptureDevice = devicesSession.devices.first(where: \.isFocusPointOfInterestSupported)
+        }else{
+            bestCaptureDevice = devicesSession.devices.first
+        }
         return bestCaptureDevice
     }
 
@@ -79,8 +84,15 @@ class CameraInput: NSObject {
         }
     }
 
-    private func setupInputs(position: AVCaptureDevice.Position){
+    private func removeInputs() {
+        if let inputs = captureSession.inputs as? [AVCaptureDeviceInput] {
+            for input in inputs {
+                captureSession.removeInput(input)
+            }
+        }
+    }
 
+    private func setupInputs(position: AVCaptureDevice.Position){
         //get back camera
         if let device = getCaptureDevice(.back) {
             backCamera = device
@@ -152,7 +164,8 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 
         let ciImage =  CIImage(cvImageBuffer: cvBuffer)
         let uiImage =  UIImage(ciImage: ciImage)
-        var videoFrame = AgoraVideoFrame()
+
+        let videoFrame = AgoraVideoFrame()
         videoFrame.format = 12
         videoFrame.time = time
         videoFrame.strideInPixels = Int32(width)
@@ -171,11 +184,22 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 // Camera Command handling
 extension CameraInput: CameraControlProtocol {
 
-
-    func setup(position: AVCaptureDevice.Position,
-               locaPreview: CustomVideoSourcePreview) {
+    func setup(position: AVCaptureDevice.Position, locaPreview: CustomVideoSourcePreview) {
+        guard previewSource == nil else { return }
         self.previewSource = locaPreview
         setupAndStartCaptureSession(position: position)
+    }
+
+    func focus(at point: CGPoint) {
+        guard let backCamera = getCaptureDevice(.back) else {  return }
+            do {
+                try backCamera.lockForConfiguration()
+                backCamera.focusPointOfInterest = point
+                backCamera.focusMode = .autoFocus
+                backCamera.unlockForConfiguration()
+            } catch {
+                print("focus",error)
+            }
     }
 
     func updateFlash(isUp: Bool) {
@@ -183,8 +207,7 @@ extension CameraInput: CameraControlProtocol {
               backCamera.hasFlash else {
             return
         }
-
-        var nextTorch = isUp ? backCamera.torchLevel + 0.1 : backCamera.torchLevel - 0.1
+        let nextTorch = isUp ? backCamera.torchLevel + 0.1 : backCamera.torchLevel - 0.1
         do {
             try backCamera.lockForConfiguration()
             if nextTorch > 0 && nextTorch < 1 {
@@ -241,17 +264,18 @@ extension CameraInput: CameraControlProtocol {
     }
 
     func switchCameraInput(){
-        captureSession.beginConfiguration()
-        if backCameraOn {
-            captureSession.removeInput(backInput)
-            captureSession.addInput(frontInput)
-            backCameraOn = false
-        } else {
-            captureSession.removeInput(frontInput)
-            captureSession.addInput(backInput)
-            backCameraOn = true
-        }
-        videoOutput.connections.first?.videoOrientation = .portrait
-        captureSession.commitConfiguration()
+        guard let captureSession = captureSession else { return }
+            captureSession.beginConfiguration()
+            if backCameraOn {
+                removeInputs()
+                captureSession.addInput(frontInput)
+                backCameraOn = false
+            } else {
+              removeInputs()
+                captureSession.addInput(backInput)
+                backCameraOn = true
+            }
+            videoOutput.connections.first?.videoOrientation = .portrait
+            captureSession.commitConfiguration()
     }
 }

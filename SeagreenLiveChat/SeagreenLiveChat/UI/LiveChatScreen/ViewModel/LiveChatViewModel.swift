@@ -38,7 +38,9 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
 
     @Published var localState: CameraState = .init(position: .front)
     @Published var sharedState: CameraState = .init(position: .front)
+    @Published var hostState: HostState = .disconnected
 
+    var cameraInput : CameraControlProtocol = CameraInput()
     var isConnected:   PassthroughSubject<RTCLoginState, Never> = .init()
     var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
     var hostEvent:  PassthroughSubject<HostState, Never> = .init()
@@ -50,12 +52,11 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     var flashDown:  PassthroughSubject<(), Never> = .init()
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
 
-
-
     lazy var chatApi = LiveChatTokenAPI()
     lazy var messsagingApi = SignalingTokenAPI()
 
     var subscriptions: Set<AnyCancellable> = .init()
+
 
     func initializeAgora() {
         AgoraRtc.shared.initialize()
@@ -114,6 +115,14 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
         handleState(event, state: &localState)
     }
 
+    private func handleUnknownMessage(_ text: String) {
+        print("handlingUnknown",text )
+        if let point : CGPoint = JsonHandler.decode(text) {
+            cameraInput.focus(at: point)
+        }
+    }
+
+
     private func handleState(_ event: ChannelMessageEvent, state: inout CameraState) {
         switch event {
         case .zoomIn:
@@ -132,8 +141,10 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
             state.position = .front
         case .leave:
             break
-        case .unknown:
+        case .focus:
             break
+        default:
+            print(event,"Not meant to be handled")
         }
     }
 }
@@ -162,6 +173,7 @@ extension LiveChatViewModel: LiveChatControlProtocol {
 
     func toggleCamera() {
         localState.inverse()
+        cameraInput.switchCameraInput()
         cameraToggle.send(localState.position)
         if localState.position == .rear {
             localState.zoom = 0
@@ -181,11 +193,13 @@ extension LiveChatViewModel: SendMessageProtocol {
 extension LiveChatViewModel: AgoraRtcEngineDelegate {
 
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
+        hostState = .received(uid: uid)
         hostEvent.send(.received(uid: uid))
     }
 
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {
-        hostEvent.send(.disconnected(uid: uid))
+        hostState = .disconnected
+        hostEvent.send(.disconnected)
     }
 
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
@@ -233,7 +247,12 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
 
     func channel(_ channel: AgoraRtmChannel, messageReceived message: AgoraRtmMessage, from member: AgoraRtmMember) {
         print("messageReceived \(message.text) from \(member.userId)")
-        handleSharedState(ChannelMessageEvent.value(message.text))
+        let event = ChannelMessageEvent.value(message.text)
+        if event == ChannelMessageEvent.unknown {
+            handleUnknownMessage(message.text)
+        } else {
+            handleSharedState(event)
+        }
     }
 
 }

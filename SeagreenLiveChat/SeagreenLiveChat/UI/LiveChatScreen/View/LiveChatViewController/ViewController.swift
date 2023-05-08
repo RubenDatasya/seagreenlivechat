@@ -41,7 +41,6 @@ class ViewController: UIViewController {
     var subscriptions: Set<AnyCancellable> = .init()
     var viewModel: LiveChatViewModel!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.initializeAgora()
@@ -54,7 +53,6 @@ class ViewController: UIViewController {
         observeExposure()
         joinChannels()
     }
-
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -73,24 +71,19 @@ class ViewController: UIViewController {
         self.view.addSubview(remoteView)
         self.view.addSubview(localView)
         cameraInput.setup(position: .front, locaPreview: localView)
-        decorator.decorate(localView: localView, in: self.view)
-        decorator.decorate(remoteView: remoteView, in: self.view)
+        decorator.decorate(preview: localView, in: self.view)
+        decorator.decorate(preview: remoteView, in: self.view, isFullScreen: true)
+        let tapgesture =  UITapGestureRecognizer(target: self, action: #selector(handleTapToFocus))
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapgesture)
     }
 
     private func handleCameraState(state: CameraPosition) {
         self.localView.translatesAutoresizingMaskIntoConstraints = true
-        if state == .rear {
-            UIView.animate(withDuration: 0.5) {
-                self.localView.frame = CGRect(origin: .zero, size: .init(width: self.view.frame.size.width, height: self.view.frame.size.height))
-            }
-            DispatchQueue.main.async {
-                self.cameraInput.switchCameraInput()
-            }
-        } else {
-            decorator.decorate(localView: localView, in: self.view)
-        }
+        cameraInput.switchCameraInput()
+        decorator.decorate(preview: remoteView, in: self.view, isFullScreen: state == .front)
+        decorator.decorate(preview: localView, in: self.view, isFullScreen: state == .rear)
     }
-
 
     private func showMessage(title: String, text: String, delay: Int = 2) -> Void {
         let deadlineTime = DispatchTime.now() + .seconds(delay)
@@ -113,8 +106,18 @@ class ViewController: UIViewController {
         switch state {
         case .received(let uid):
             AgoraRtc.shared.setupRemoteVideo(remoteView, uid: uid)
-        case .disconnected(let uid), .none(let uid):
-            AgoraRtc.shared.setupRemoteVideo(.init(), uid: uid)
+        case .disconnected:
+            AgoraRtc.shared.setupRemoteVideo(.init(), uid: 0)
+        }
+    }
+
+    @objc func handleTapToFocus(sender: UITapGestureRecognizer) {
+        let focusPoint = sender.location(in: self.view)
+        let focusScaledPointX = focusPoint.x / view.frame.size.width
+        let focusScaledPointY = focusPoint.y / view.frame.size.height
+        let point = CGPoint(x: focusScaledPointX, y: focusScaledPointY)
+        if let json = JsonHandler.encode(point) {
+            viewModel.sendMessage(event: .focus(jsonPoint: json))
         }
     }
 }

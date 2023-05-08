@@ -11,49 +11,29 @@ import SwiftUI
 
 class ViewControllerDecorator {
 
-    func decorate(localView: UIView, in view: UIView, isFullScreen: Bool =  false) {
-        localView.translatesAutoresizingMaskIntoConstraints = false
+    func decorate(preview: UIView, in view: UIView, isFullScreen: Bool =  false) {
+        preview.translatesAutoresizingMaskIntoConstraints = true
+        let size = CGSize(width: 120, height: 200)
 
-        let fixedConstraints = [
-            localView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            localView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-            localView.widthAnchor.constraint(equalToConstant: 120),
-            localView.heightAnchor.constraint(equalToConstant: 200),
-        ]
-
-        let fullScreenConstraint = [
-            localView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            localView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            localView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            localView.heightAnchor.constraint(equalTo: view.heightAnchor)
-        ]
-
-        if isFullScreen {
-            NSLayoutConstraint.activate(fullScreenConstraint)
-            NSLayoutConstraint.deactivate(fixedConstraints)
-        } else {
-            NSLayoutConstraint.activate(fixedConstraints)
-            NSLayoutConstraint.deactivate(fullScreenConstraint)
+        UIView.animate(withDuration: 0.5) {
+            var newFrame: CGRect
+            if isFullScreen {
+                newFrame = view.frame
+            } else {
+                newFrame = CGRect(origin: .init(x: view.frame.width - 140, y: view.frame.height - 240), size: size)
+                view.bringSubviewToFront(preview)
+            }
+            preview.frame = newFrame
         }
 
-        localView.layoutIfNeeded()
-        view.layoutIfNeeded()
-
-        localView.shadowView(parent: view)
-        localView.setBorder(borderColor: Color.pink.cgColor)
-    //    localView.transform = CGAffineTransform(scaleX: 0, y: 0)
-    //    localView.transform = CGAffineTransform(translationX: -400, y: 0)
+        preview.shadowView(parent: view)
+        preview.rounded()
     }
 
-    func decorate(remoteView: UIView, in view: UIView) {
-        remoteView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate ([
-            remoteView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            remoteView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            remoteView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            remoteView.heightAnchor.constraint(equalTo: view.heightAnchor)
-        ])
-      //  remoteView.transform = CGAffineTransform(scaleX: 0, y: 0)
+    func decorate(view: UIView, with selector : Selector) {
+        let tapgesture =  UITapGestureRecognizer(target: view, action: selector)
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapgesture)
     }
 }
 
@@ -69,16 +49,16 @@ extension UIView {
         let cornerContainer =  UIView(frame: self.frame)
         cornerContainer.layer.cornerRadius =  cornerRadius
         cornerContainer.layer.masksToBounds = true
-        addSubview(cornerContainer)
-
-        cornerContainer.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate ([
-            cornerContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            cornerContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            cornerContainer.widthAnchor.constraint(equalTo: widthAnchor),
-            cornerContainer.heightAnchor.constraint(equalTo: heightAnchor),
-        ])
+//        addSubview(cornerContainer)
+//
+//        cornerContainer.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate ([
+//            cornerContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            cornerContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            cornerContainer.widthAnchor.constraint(equalTo: widthAnchor),
+//            cornerContainer.heightAnchor.constraint(equalTo: heightAnchor),
+//        ])
     }
 
     func shadowView(
@@ -94,8 +74,8 @@ extension UIView {
     }
 
     func setBorder(
-        borderWidth: CGFloat = 1,
-        borderColor: CGColor? = UIColor.black.cgColor) {
+        borderWidth: CGFloat = 2,
+        borderColor: CGColor?) {
             self.layer.borderColor = borderColor
             self.layer.borderWidth = borderWidth
         }

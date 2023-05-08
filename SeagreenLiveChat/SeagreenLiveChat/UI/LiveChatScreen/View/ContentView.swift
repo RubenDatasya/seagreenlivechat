@@ -11,7 +11,11 @@ struct ContentView: View {
 
     @StateObject var viewModel = LiveChatViewModel()
 
+
     var body: some View {
+
+//        LiveChatScreen()
+//            .environmentObject(viewModel)
         CameraChatView(viewModel: viewModel)
             .ignoresSafeArea()
             .overlay(alignment: .top,content: Header)
@@ -25,6 +29,7 @@ struct ContentView: View {
             LiveChatHeaderView()
         } else {
             HeaderStreaming()
+                .zIndex(12)
         }
     }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ChannelMessageEvent : String, Codable  {
+enum ChannelMessageEvent: Codable, Hashable  {
     case participantShares
     case participantStoppedSharring
     case zoomIn
@@ -17,27 +17,55 @@ enum ChannelMessageEvent : String, Codable  {
     case flash
     case flashDown
     case leave
+    case focus(jsonPoint: String)
     case unknown
+
+    var title: String {
+        switch self {
+        case .participantShares:
+            return "participantShares"
+        case .participantStoppedSharring:
+            return "participantStoppedSharring"
+        case .zoomIn:
+            return "zoomIn"
+        case .zoomOut:
+            return "zoomOut"
+        case .brightnessUp:
+            return "brightnessUp"
+        case .brightnessDown:
+            return "brightnessDown"
+        case .flash:
+            return "flash"
+        case .flashDown:
+            return "flashDown"
+        case .leave:
+            return "leave"
+        case .focus(let json):
+            return json
+        case .unknown:
+            return "unknown"
+        }
+    }
 
     static func value( _ from : String) -> Self{
         switch from {
-        case  ChannelMessageEvent.participantStoppedSharring.rawValue:
+        case  ChannelMessageEvent.participantStoppedSharring.title:
             return .participantStoppedSharring
-        case  ChannelMessageEvent.participantShares.rawValue:
+        case  ChannelMessageEvent.participantShares.title:
             return .participantShares
-        case ChannelMessageEvent.zoomIn.rawValue:
+        case ChannelMessageEvent.zoomIn.title:
             return .zoomIn
-        case  ChannelMessageEvent.zoomOut.rawValue:
+        case  ChannelMessageEvent.zoomOut.title:
             return .zoomOut
-        case  ChannelMessageEvent.brightnessUp.rawValue:
+        case  ChannelMessageEvent.brightnessUp.title:
             return .brightnessUp
-        case  ChannelMessageEvent.brightnessDown.rawValue:
+        case  ChannelMessageEvent.brightnessDown.title:
             return .brightnessDown
-        case  ChannelMessageEvent.flash.rawValue:
+        case  ChannelMessageEvent.flash.title:
             return .flash
-        case  ChannelMessageEvent.flashDown.rawValue:
+        case  ChannelMessageEvent.flashDown.title:
             return .flashDown
-        case  ChannelMessageEvent.leave.rawValue:
+        case  ChannelMessageEvent.leave.title:
             return .leave
         default:
             return .unknown

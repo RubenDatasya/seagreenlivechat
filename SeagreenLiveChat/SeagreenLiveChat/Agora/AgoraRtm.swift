@@ -44,13 +44,13 @@ class AgoraRtm {
             print("joinMessageChannel", "success \(result?.rawValue ?? -1)" )
             return true
         } else {
-            print("joinMessageChannel", "failure \(login)")
+            print("joinMessageChannel", " AgoraRtmLoginErrorCode failure \(login)")
             return false
         }
     }
 
     func sendMessage(event: ChannelMessageEvent) {
-        self.rtmChannel?.send(AgoraRtmMessage(text: event.rawValue )){ error in
+        self.rtmChannel?.send(AgoraRtmMessage(text: event.title )){ error in
             print("sendMessage \(error)", error.rawValue)
         }
     }

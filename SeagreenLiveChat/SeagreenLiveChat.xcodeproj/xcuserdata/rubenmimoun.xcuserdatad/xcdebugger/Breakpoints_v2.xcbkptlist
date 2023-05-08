@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "793B7532-39C8-484A-9724-FEEEE93B60D5"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SeagreenLiveChat/LiveChatContent/View/MetalRenderView/AgoraMetalRender.swift"
@@ -101,7 +101,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "8DD90B39-E62A-422E-A03E-8628A6174440"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SeagreenLiveChat/LiveChatContent/View/MetalRenderView/AgoraMetalRender.swift"

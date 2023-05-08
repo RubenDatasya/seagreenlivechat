@@ -7,8 +7,16 @@
 
 import Foundation
 
-enum HostState {
-    case none(uid: UInt)
+enum HostState: Hashable {
     case received(uid : UInt)
-    case disconnected(uid : UInt)
+    case disconnected
+
+    var isConnected: Bool {
+        switch self {
+        case .received:
+            return true
+        case .disconnected:
+            return false
+        }
+    }
 }
