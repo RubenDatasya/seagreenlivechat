@@ -10,6 +10,16 @@ import UIKit
 import AVFoundation
 import AgoraRtcKit
 
+protocol CameraControlProtocol {
+
+    func setup(position: AVCaptureDevice.Position,
+               locaPreview: CustomVideoSourcePreview)
+    func updateFlash(isUp: Bool)
+    func updateExposure(isUp: Bool)
+    func updateZoom(isIn: Bool)
+    func switchCameraInput()
+}
+
 class CameraInput: NSObject {
 
     var captureSession : AVCaptureSession!
@@ -24,12 +34,6 @@ class CameraInput: NSObject {
     var previewSource: CustomVideoSourcePreview!
 
     var backCameraOn = false
-
-    func setup(position: AVCaptureDevice.Position,
-               locaPreview: CustomVideoSourcePreview) {
-        self.previewSource = locaPreview
-        setupAndStartCaptureSession(position: position)
-    }
 
     private func setupAndStartCaptureSession(position: AVCaptureDevice.Position){
         DispatchQueue.global(qos: .userInitiated).async{[weak self] in
@@ -75,12 +79,11 @@ class CameraInput: NSObject {
         }
     }
 
-    func setupInputs(position: AVCaptureDevice.Position){
+    private func setupInputs(position: AVCaptureDevice.Position){
 
         //get back camera
         if let device = getCaptureDevice(.back) {
             backCamera = device
-            setContinousExposureMode()
         } else {
             fatalError("no back camera")
         }
@@ -116,7 +119,7 @@ class CameraInput: NSObject {
         }
     }
 
-    func setupOutput(){
+    private func setupOutput(){
         videoOutput = AVCaptureVideoDataOutput()
         let videoSettings: [String: Any] = [
             kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)
@@ -134,23 +137,6 @@ class CameraInput: NSObject {
         }
         videoOutput.connections.first?.videoOrientation = .portrait
     }
-
-
-    func switchCameraInput(){
-        captureSession.beginConfiguration()
-        if backCameraOn {
-            captureSession.removeInput(backInput)
-            captureSession.addInput(frontInput)
-            backCameraOn = false
-        } else {
-            captureSession.removeInput(frontInput)
-            captureSession.addInput(backInput)
-            backCameraOn = true
-        }
-        videoOutput.connections.first?.videoOrientation = .portrait
-        captureSession.commitConfiguration()
-    }
-
 }
 
 extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -181,9 +167,16 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 
-// Camera Command handling
-extension CameraInput {
 
+// Camera Command handling
+extension CameraInput: CameraControlProtocol {
+
+
+    func setup(position: AVCaptureDevice.Position,
+               locaPreview: CustomVideoSourcePreview) {
+        self.previewSource = locaPreview
+        setupAndStartCaptureSession(position: position)
+    }
 
     func updateFlash(isUp: Bool) {
         guard let backCamera = backCamera,
@@ -236,8 +229,8 @@ extension CameraInput {
         }
         do {
             try backCamera.lockForConfiguration()
-            var current = backCamera.videoZoomFactor
-            var next = isIn ? current + 1 : current - 1
+            let current = backCamera.videoZoomFactor
+            let next = isIn ? current + 1 : current - 1
             if next > backCamera.minAvailableVideoZoomFactor && next < backCamera.maxAvailableVideoZoomFactor {
                 backCamera.videoZoomFactor = isIn ? current + 1 : current - 1
             }
@@ -245,5 +238,20 @@ extension CameraInput {
         } catch {
             print("updateZoom", error)
         }
+    }
+
+    func switchCameraInput(){
+        captureSession.beginConfiguration()
+        if backCameraOn {
+            captureSession.removeInput(backInput)
+            captureSession.addInput(frontInput)
+            backCameraOn = false
+        } else {
+            captureSession.removeInput(frontInput)
+            captureSession.addInput(backInput)
+            backCameraOn = true
+        }
+        videoOutput.connections.first?.videoOrientation = .portrait
+        captureSession.commitConfiguration()
     }
 }

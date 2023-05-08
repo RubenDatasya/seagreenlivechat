@@ -34,7 +34,7 @@ class ViewController: UIViewController {
 
     lazy var remoteView: UIView = UIView()
     var localView: CustomVideoSourcePreview = .init()
-    var cameraInput = CameraInput()
+    var cameraInput : CameraControlProtocol = CameraInput()
 
     lazy var decorator: ViewControllerDecorator = .init()
     var joinButton: UIButton!
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         DispatchQueue.global(qos: .userInitiated).async {AgoraRtcEngineKit.destroy()}
     }
 
-    func initViews() {
+    private func initViews() {
         self.view.backgroundColor = UIColor(Colors.transparentGray)
         self.view.addSubview(remoteView)
         self.view.addSubview(localView)
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
         decorator.decorate(remoteView: remoteView, in: self.view)
     }
 
-    func handleCameraState(state: CameraPosition) {
+    private func handleCameraState(state: CameraPosition) {
         self.localView.translatesAutoresizingMaskIntoConstraints = true
         if state == .rear {
             UIView.animate(withDuration: 0.5) {
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
     }
 
 
-    func showMessage(title: String, text: String, delay: Int = 2) -> Void {
+    private func showMessage(title: String, text: String, delay: Int = 2) -> Void {
         let deadlineTime = DispatchTime.now() + .seconds(delay)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
             let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
         })
     }
 
-    func joinChannels() {
+    private func joinChannels() {
         Task {
             await viewModel.joinChannel()
         }
