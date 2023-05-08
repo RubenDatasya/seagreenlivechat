@@ -19,7 +19,7 @@ enum Constants {
         static let currentUser =  UIDevice.current.identifierForVendor?.uuidString ?? ""
         static let rtmUser =  UUID().uuidString
         static let channel: String = "seagreenlivechat_4"
-        static let token: String  = "007eJxTYLh8PkDINLeXb9uNJwaqsQ7CaWfE6sLyb/7aIn+9nU8g/ZcCg4GBhaWZiaGppYWxgYmRuVliknGqWVJimqGJYbKBkanFa8fwlIZARoYpn1sYGKEQxBdiKE5NTC9KTc3LySxLTc5ILIk3YWAAALYEI6o="
+        static let token: String  = "007eJxTYNgfypRT9izl7Ge1HE3tEnOmjgsLZj6fmti27U+rGItCcJMCg4GBhaWZiaGppYWxgYmRuVliknGqWVJimqGJYbKBkanFrjURKQ2BjAxh2hOYGRkgEMQXYihOTUwvSk3Ny8ksS03OSCyJN2FgAACotiL3"
     }
 
     struct API {
