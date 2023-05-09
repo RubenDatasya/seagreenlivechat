@@ -18,6 +18,10 @@ enum ChannelMessageEvent: Codable, Hashable  {
     case flashDown
     case leave
     case focus(jsonPoint: String)
+    case resetFocus
+    case resetZoom
+    case resetFlash
+    case resetExposure
     case unknown
 
     var title: String {
@@ -42,6 +46,14 @@ enum ChannelMessageEvent: Codable, Hashable  {
             return "leave"
         case .focus(let json):
             return json
+        case .resetZoom:
+            return "resetZoom"
+        case .resetFlash:
+            return "resetFlash"
+        case .resetFocus:
+            return "resetFocus"
+        case .resetExposure:
+            return "resetExposure"
         case .unknown:
             return "unknown"
         }
@@ -67,6 +79,14 @@ enum ChannelMessageEvent: Codable, Hashable  {
             return .flashDown
         case  ChannelMessageEvent.leave.title:
             return .leave
+        case  ChannelMessageEvent.resetZoom.title:
+            return .resetZoom
+        case  ChannelMessageEvent.resetFlash.title:
+            return .resetFlash
+        case  ChannelMessageEvent.resetFocus.title:
+            return .resetFocus
+        case  ChannelMessageEvent.resetExposure.title:
+            return .resetExposure
         default:
             return .unknown
         }
