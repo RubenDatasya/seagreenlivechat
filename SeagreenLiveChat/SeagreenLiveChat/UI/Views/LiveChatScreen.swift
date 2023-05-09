@@ -8,38 +8,80 @@
 import SwiftUI
 import Combine
 
-#if os(simulator)
-typealias CameraDisplay = RoundedRectangle
+#if targetEnvironment(simulator)
+typealias CameraDisplay = Rectangle
 #else
 typealias CameraDisplay = CameraPreviewLayer
 #endif
 
-
 struct LiveChatScreen: View {
 
     @EnvironmentObject var viewModel: LiveChatViewModel
-
-    @State var LocalDisplay = CameraDisplay(isRemote: false)
-    @State var RemoteDisplay = CameraDisplay(isRemote: true)
+    
+     var LocalDisplay  = CameraDisplay()
+     var RemoteDisplay = RemotePreviewLayer()
 
     var body: some View {
         Preview()
-            .environmentObject(viewModel)
             .onAppear {
                 AgoraRtc.shared.start()
             }
-            .task {
-                await viewModel.joinChannel()
-            }
+//
+//        GeometryReader { proxy in
+//            let globalFrame = proxy.frame(in: .global)
+//            let bigFrame   : CGRect = .init(origin: .zero, size: globalFrame.size)
+//            let smallFrame : CGRect = .init(x: globalFrame.size.width - 100,
+//                                            y: globalFrame.size.height - 140,
+//                                            width: 120,
+//                                            height: 200)
+//
+//#if targetEnvironment(simulator)
+//            let fullScreenDisplay = viewModel.localCameraPosition == .rear ?
+//            Rectangle().fill(Color.blue) : Rectangle().fill(Color.red)
+//            let iconDisplay =  viewModel.localCameraPosition == .rear ?
+//            Rectangle().fill(Color.red) : Rectangle().fill(Color.blue)
+//#else
+//
+//            let remoteFrame = viewModel.localCameraPosition == .rear ?
+//            smallFrame : bigFrame
+//            let localFrame =  viewModel.localCameraPosition == .rear ?
+//            bigFrame : smallFrame
+//
+//
+//            let remotePosition: CGPoint = viewModel.localCameraPosition == .rear ?
+//            CGPoint(x: globalFrame.width - 100, y: globalFrame.height - 140) : CGPoint(x: bigFrame.width / 2, y: globalFrame.height / 2)
+//
+//            let localPosition: CGPoint = viewModel.localCameraPosition == .rear ?
+//            CGPoint(x: bigFrame.width / 2, y: bigFrame.height / 2) : CGPoint(x: localFrame.minX, y: localFrame.minY)
+//#endif
+//
+//            Text("\(globalFrame.debugDescription)")
+//                .position(x: 100, y: 200)
+//
+//            RemoteDisplay
+//                .frame(width: remoteFrame.width, height: remoteFrame.height)
+//                .position(x: remotePosition.x, y: remotePosition.y)
+//
+//            LocalDisplay
+//                .frame(width: localFrame.width, height: localFrame.height)
+//                .position(x: localPosition.x, y: localPosition.y )
+//
+//
+//        }
+        .animation(.spring(), value: viewModel.localCameraPosition)
+        .task {
+            await viewModel.joinChannel()
+        }
     }
+
 
     @ViewBuilder
     func Preview() -> some View {
         if viewModel.localCameraPosition == .front {
-            ChatPreview(LocalDisplay: $LocalDisplay, RemoteDisplay: $RemoteDisplay)
+            ChatPreview(LocalDisplay: LocalDisplay, RemoteDisplay: RemoteDisplay)
                 .environmentObject(viewModel)
-        }else {
-            ShareScreenPreview(LocalDisplay: $LocalDisplay, RemoteDisplay: $RemoteDisplay)
+        } else {
+            ShareScreenPreview(LocalDisplay: LocalDisplay, RemoteDisplay: RemoteDisplay)
                 .environmentObject(viewModel)
         }
     }
@@ -52,8 +94,7 @@ struct LiveChatScreen_Previews: PreviewProvider {
     }
 }
 
-
-struct CameraPreviewLayer: UIViewRepresentable {
+struct RemotePreviewLayer: UIViewRepresentable {
 
     @EnvironmentObject var viewModel: LiveChatViewModel
 
@@ -61,11 +102,9 @@ struct CameraPreviewLayer: UIViewRepresentable {
         return viewModel.cameraInput
     }
 
-    var isRemote: Bool = false
-
     func makeUIView(context: Context) -> CustomVideoSourcePreview {
         let sourceView =  CustomVideoSourcePreview(frame: .zero)
-        configLocalPreview(sourceView: sourceView)
+        configRemote(uiView: sourceView)
         return sourceView
     }
 
@@ -73,15 +112,7 @@ struct CameraPreviewLayer: UIViewRepresentable {
         configRemote(uiView: uiView)
     }
 
-    private func configLocalPreview(sourceView: CustomVideoSourcePreview) {
-        if !isRemote {
-            AgoraRtc.shared.setupLocalVideo(sourceView)
-            cameraInput.setup(position: .front, locaPreview: sourceView)
-        }
-    }
-
     private func configRemote(uiView: CustomVideoSourcePreview) {
-        guard isRemote else { return }
         switch viewModel.hostState {
         case .received(let uid):
             AgoraRtc.shared.setupRemoteVideo(uiView, uid: uid)
@@ -92,12 +123,61 @@ struct CameraPreviewLayer: UIViewRepresentable {
 }
 
 
+
+struct CameraPreviewLayer: UIViewRepresentable, Equatable {
+
+    static func == (lhs: CameraPreviewLayer, rhs: CameraPreviewLayer) -> Bool {
+        return true
+    }
+
+    @EnvironmentObject var viewModel: LiveChatViewModel
+
+    var cameraInput: CameraControlProtocol {
+        return viewModel.cameraInput
+    }
+
+    func makeUIView(context: Context) -> CustomVideoSourcePreview {
+        Logger.debug("called")
+        let sourceView =  CustomVideoSourcePreview(frame: .zero)
+        configLocalPreview(sourceView: sourceView)
+        return sourceView
+    }
+
+    func updateUIView(_ uiView: CustomVideoSourcePreview, context: Context) {
+        configLocalPreview(sourceView: uiView)
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+
+    static func dismantleUIView(_ uiView: CustomVideoSourcePreview, coordinator: Coordinator) {
+        Logger.debug("called")
+    }
+
+    private func configLocalPreview(sourceView: CustomVideoSourcePreview) {
+        AgoraRtc.shared.setupLocalVideo(sourceView)
+        cameraInput.setup(position: .front, locaPreview: sourceView)
+    }
+
+    class Coordinator: NSObject {
+         var parent: CameraPreviewLayer
+
+         init(_ parent: CameraPreviewLayer) {
+             self.parent = parent
+             super.init()
+         }
+     }
+
+}
+
+
 struct ChatPreview: View {
 
     @EnvironmentObject var viewModel: LiveChatViewModel
 
-    @Binding var LocalDisplay : CameraDisplay
-    @Binding var RemoteDisplay : CameraDisplay
+    var LocalDisplay  : CameraDisplay
+    var RemoteDisplay : RemotePreviewLayer
 
     var body: some View {
         RemotePreview()
@@ -137,8 +217,8 @@ struct ShareScreenPreview: View {
 
     @EnvironmentObject var viewModel: LiveChatViewModel
 
-    @Binding var LocalDisplay : CameraDisplay
-    @Binding var RemoteDisplay : CameraDisplay
+    var LocalDisplay : CameraDisplay
+    var RemoteDisplay : RemotePreviewLayer
     
     var body: some View {
         GeometryReader { proxy in
@@ -162,7 +242,7 @@ struct ShareScreenPreview: View {
 
     @ViewBuilder
     func RemotePreview() -> some View {
-        LocalDisplay
+        RemoteDisplay
             .frame(width: 120, height: 200)
             .background(Color.red)
             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -173,7 +253,7 @@ struct ShareScreenPreview: View {
 
     @ViewBuilder
     func LocalPreview() -> some View {
-        RemoteDisplay
+        LocalDisplay
             .environmentObject(viewModel)
     }
 

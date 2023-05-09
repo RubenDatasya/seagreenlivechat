@@ -14,12 +14,17 @@ import AgoraRtcKit
 protocol LiveChatStateProtocol {
     var localState: CameraState { get set }
     var sharedState: CameraState { get set }
+    var hostState: HostState { get set }
 }
 
 extension LiveChatStateProtocol {
     var localCameraPosition: CameraPosition {
         get { localState.position }
         set { localState.position = newValue }
+    }
+
+    var isLiveStreaming: Bool {
+        get { localState.position == .rear && hostState.isConnected  }
     }
 }
 
@@ -36,26 +41,31 @@ protocol SendMessageProtocol {
 
 class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
 
-    @Published var localState: CameraState = .init(position: .front)
+    @Published var localState : CameraState = .init(position: .front)
     @Published var sharedState: CameraState = .init(position: .front)
-    @Published var hostState: HostState = .disconnected
+    @Published var hostState  : HostState   = .disconnected
 
     var cameraInput : CameraControlProtocol = CameraInput()
-    var isConnected:   PassthroughSubject<RTCLoginState, Never> = .init()
+    var isConnected :   PassthroughSubject<RTCLoginState, Never> = .init()
     var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
-    var hostEvent:  PassthroughSubject<HostState, Never> = .init()
-    var zoomIn:  PassthroughSubject<(), Never> = .init()
-    var zoomOut:  PassthroughSubject<(), Never> = .init()
-    var exposureUp:  PassthroughSubject<(), Never> = .init()
+    var hostEvent   :  PassthroughSubject<HostState, Never> = .init()
+    var zoomIn      :  PassthroughSubject<(), Never> = .init()
+    var zoomOut     :  PassthroughSubject<(), Never> = .init()
+    var exposureUp  :  PassthroughSubject<(), Never> = .init()
     var exposureDown:  PassthroughSubject<(), Never> = .init()
-    var flashUp:  PassthroughSubject<(), Never> = .init()
-    var flashDown:  PassthroughSubject<(), Never> = .init()
+    var flashUp     :  PassthroughSubject<(), Never> = .init()
+    var flashDown   :  PassthroughSubject<(), Never> = .init()
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
 
     lazy var chatApi = LiveChatTokenAPI()
     lazy var messsagingApi = SignalingTokenAPI()
 
     var subscriptions: Set<AnyCancellable> = .init()
+
+    override init() {
+        super.init()
+        initializeAgora()
+    }
 
 
     func initializeAgora() {
@@ -67,7 +77,10 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
         observeCameraState()
     }
 
-    private func observeCameraState() {
+}
+
+private extension LiveChatViewModel {
+    func observeCameraState() {
         $sharedState
             .receive(on: DispatchQueue.main)
             .sink { state in
@@ -83,7 +96,7 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
             .store(in: &subscriptions)
     }
 
-    private func observeRtcLoginState() {
+    func observeRtcLoginState() {
         let connection = isConnected.share()
         connection
             .filter { $0 == .connected }
@@ -106,23 +119,23 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
             .store(in: &subscriptions)
     }
 
-    private func handleSharedState(_ event: ChannelMessageEvent) {
+    func handleSharedState(_ event: ChannelMessageEvent) {
         handleState(event, state: &sharedState)
     }
 
 
-    private func handleState(_ event: ChannelMessageEvent) {
+    func handleState(_ event: ChannelMessageEvent) {
         handleState(event, state: &localState)
     }
 
-    private func handleUnknownMessage(_ text: String) {
+    func handleUnknownMessage(_ text: String) {
         if let point : CGPoint = JsonHandler.decode(text) {
             cameraInput.focus(at: point)
         }
     }
 
 
-    private func handleState(_ event: ChannelMessageEvent, state: inout CameraState) {
+    func handleState(_ event: ChannelMessageEvent, state: inout CameraState) {
         switch event {
         case .zoomIn:
             zoomIn.send(())

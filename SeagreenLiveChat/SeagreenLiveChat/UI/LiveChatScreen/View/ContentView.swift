@@ -14,12 +14,12 @@ struct ContentView: View {
 
     var body: some View {
 
-//        LiveChatScreen()
-//            .environmentObject(viewModel)
-        CameraChatView(viewModel: viewModel)
+        LiveChatScreen()
+            .environmentObject(viewModel)
+//        CameraChatView(viewModel: viewModel)
             .ignoresSafeArea()
-            .overlay(alignment: .top,content: Header)
-            .overlay(alignment: .bottomLeading, content: CommandSlides)
+//            .overlay(alignment: .top,content: Header)
+//            .overlay(alignment: .bottomLeading, content: CommandSlides)
     }
 
 

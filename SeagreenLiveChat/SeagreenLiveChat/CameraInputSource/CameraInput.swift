@@ -149,6 +149,12 @@ class CameraInput: NSObject {
         }
         videoOutput.connections.first?.videoOrientation = .portrait
     }
+
+
+    private func changeLocalPreview(locaPreview: CustomVideoSourcePreview) {
+        self.previewSource = locaPreview
+    }
+
 }
 
 extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -185,11 +191,13 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
 extension CameraInput: CameraControlProtocol {
 
     func setup(position: AVCaptureDevice.Position, locaPreview: CustomVideoSourcePreview) {
-        guard previewSource == nil else { return }
+        guard previewSource == nil else {
+            changeLocalPreview(locaPreview: locaPreview)
+            return
+        }
         self.previewSource = locaPreview
         setupAndStartCaptureSession(position: position)
     }
-
     func focus(at point: CGPoint) {
         guard let backCamera = getCaptureDevice(.back) else {  return }
             do {
