@@ -83,7 +83,6 @@ class ViewController: UIViewController, GestureHandler {
     }
 
     private func handleCameraState(state: CameraPosition) {
-        self.localView.translatesAutoresizingMaskIntoConstraints = true
         decorator.decorate(preview: remoteView, in: self.view, isFullScreen: state == .front)
         decorator.decorate(preview: localView, in: self.view, isFullScreen: state == .rear)
     }
