@@ -21,6 +21,16 @@ protocol CameraControlProtocol {
     func focus(at: CGPoint)
 }
 
+protocol ResetCameraControlProtocol {
+
+    func setup(position: AVCaptureDevice.Position,
+               locaPreview: CustomVideoSourcePreview)
+    func resetFlash()
+    func resetExposure()
+    func resetZoom()
+    func resetFocus()
+}
+
 class CameraInput: NSObject {
 
     var captureSession : AVCaptureSession!
@@ -96,6 +106,7 @@ class CameraInput: NSObject {
         //get back camera
         if let device = getCaptureDevice(.back) {
             backCamera = device
+            setContinousExposureMode(device: backCamera)
         } else {
             fatalError("no back camera")
         }
@@ -131,6 +142,16 @@ class CameraInput: NSObject {
         }
     }
 
+    private func setContinousExposureMode(device: AVCaptureDevice) {
+        do {
+            try device.lockForConfiguration()
+            device.exposureMode = .continuousAutoExposure
+            device.unlockForConfiguration()
+        }catch{
+            Logger.severe("exposure", error: error)
+        }
+    }
+
     private func setupOutput(){
         videoOutput = AVCaptureVideoDataOutput()
         let videoSettings: [String: Any] = [
@@ -149,6 +170,19 @@ class CameraInput: NSObject {
         }
         videoOutput.connections.first?.videoOrientation = .portrait
     }
+
+    private func prepareForChange(change: @escaping (AVCaptureDevice) throws -> Void) {
+        guard let backCamera = backCamera else {
+            return
+        }
+        do {
+            try backCamera.lockForConfiguration()
+            try change(backCamera)
+            backCamera.unlockForConfiguration()
+        } catch {
+            Logger.severe("prepareForChange", error: error)
+        }
+    }
 }
 
 extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -158,10 +192,9 @@ extension CameraInput: AVCaptureVideoDataOutputSampleBufferDelegate {
             return
         }
         let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-        // Get the width and height of the pixel buffer
+
         let width = CVPixelBufferGetWidth(cvBuffer)
         let height = CVPixelBufferGetHeight(cvBuffer)
-
         let ciImage =  CIImage(cvImageBuffer: cvBuffer)
         let uiImage =  UIImage(ciImage: ciImage)
 
@@ -191,75 +224,36 @@ extension CameraInput: CameraControlProtocol {
     }
 
     func focus(at point: CGPoint) {
-        guard let backCamera = getCaptureDevice(.back) else {  return }
-            do {
-                try backCamera.lockForConfiguration()
-                backCamera.focusPointOfInterest = point
-                backCamera.focusMode = .autoFocus
-                backCamera.unlockForConfiguration()
-            } catch {
-                Logger.severe("focus", error: error)
-            }
+        prepareForChange { device in
+            device.focusPointOfInterest = point
+            device.focusMode = .autoFocus
+        }
     }
 
     func updateFlash(isUp: Bool) {
-        guard let backCamera = backCamera,
-              backCamera.hasFlash else {
-            return
-        }
-        let nextTorch = isUp ? backCamera.torchLevel + 0.1 : backCamera.torchLevel - 0.1
-        do {
-            try backCamera.lockForConfiguration()
+        prepareForChange { device in
+            let nextTorch = isUp ? device.torchLevel + 0.1 : device.torchLevel - 0.1
             if nextTorch > 0 && nextTorch < 1 {
-                try backCamera.setTorchModeOn(level: nextTorch)
+                try device.setTorchModeOn(level: nextTorch)
             }
-        } catch {
-            Logger.severe("updateFlash", error: error)
         }
     }
 
     func updateExposure(isUp: Bool) {
-        guard let backCamera = backCamera else {
-            return
-        }
-        do {
-            try backCamera.lockForConfiguration()
-            let exposure = backCamera.exposureTargetBias
+        prepareForChange { device in
+            let exposure = device.exposureTargetBias
             let nextEposure = isUp ? exposure - 0.1 : exposure + 0.1
-            backCamera.setExposureTargetBias(nextEposure)
-            backCamera.unlockForConfiguration()
-        }catch{
-            Logger.severe("Exposure", error: error)
-        }
-    }
-
-    func setContinousExposureMode() {
-        guard let backCamera = backCamera else {
-            return
-        }
-        do {
-            try backCamera.lockForConfiguration()
-            backCamera.exposureMode = .continuousAutoExposure
-            backCamera.unlockForConfiguration()
-        }catch{
-            Logger.severe("exposure", error: error)
+            device.setExposureTargetBias(nextEposure)
         }
     }
 
     func updateZoom(isIn: Bool) {
-        guard let backCamera = backCamera else {
-            return
-        }
-        do {
-            try backCamera.lockForConfiguration()
-            let current = backCamera.videoZoomFactor
+        prepareForChange { device in
+            let current = device.videoZoomFactor
             let next = isIn ? current + 1 : current - 1
-            if next > backCamera.minAvailableVideoZoomFactor && next < backCamera.maxAvailableVideoZoomFactor {
-                backCamera.videoZoomFactor = isIn ? current + 1 : current - 1
+            if next > device.minAvailableVideoZoomFactor && next < device.maxAvailableVideoZoomFactor {
+                device.videoZoomFactor = isIn ? current + 1 : current - 1
             }
-            backCamera.unlockForConfiguration()
-        } catch {
-            Logger.severe("updatezoom", error: error)
         }
     }
 
@@ -278,4 +272,34 @@ extension CameraInput: CameraControlProtocol {
             videoOutput.connections.first?.videoOrientation = .portrait
             captureSession.commitConfiguration()
     }
+}
+
+
+extension CameraInput: ResetCameraControlProtocol {
+    func resetFlash() {
+        prepareForChange { device in
+            try device.setTorchModeOn(level: 0)
+        }
+    }
+
+    func resetExposure() {
+        prepareForChange { device in
+            device.exposureMode = .continuousAutoExposure
+        }
+    }
+
+    func resetZoom() {
+        prepareForChange { device in
+            device.videoZoomFactor = device.minAvailableVideoZoomFactor
+        }
+    }
+
+    func resetFocus() {
+        prepareForChange { device in
+            device.focusPointOfInterest = CGPoint(x: 0.5, y: 0.5)
+            device.focusMode = .continuousAutoFocus
+        }
+    }
+
+
 }
