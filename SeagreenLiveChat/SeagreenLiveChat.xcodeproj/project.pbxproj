@@ -44,6 +44,8 @@
 		877822F12A035037003C74B7 /* CameraInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F02A035037003C74B7 /* CameraInput.swift */; };
 		878801C02A09256500EF524A /* JsonHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801BF2A09256500EF524A /* JsonHandler.swift */; };
 		878801C22A0936B000EF524A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801C12A0936B000EF524A /* Logger.swift */; };
+		878801C42A0A1AB400EF524A /* CameraActionViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801C32A0A1AB400EF524A /* CameraActionViewTest.swift */; };
+		878801C62A0A1B4800EF524A /* VideoChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801C52A0A1B4800EF524A /* VideoChat.swift */; };
 		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
 		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
 		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
@@ -88,6 +90,8 @@
 		877822F02A035037003C74B7 /* CameraInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInput.swift; sourceTree = "<group>"; };
 		878801BF2A09256500EF524A /* JsonHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHandler.swift; sourceTree = "<group>"; };
 		878801C12A0936B000EF524A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		878801C32A0A1AB400EF524A /* CameraActionViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActionViewTest.swift; sourceTree = "<group>"; };
+		878801C52A0A1B4800EF524A /* VideoChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChat.swift; sourceTree = "<group>"; };
 		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
 		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
 		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -163,6 +167,8 @@
 				8715D2F12A08D894003CC974 /* LiveChatHeader.swift */,
 				8715D2F32A08DD91003CC974 /* LiveChatHeaderStreaming.swift */,
 				8715D2F52A08EB0D003CC974 /* LiveChatScreen.swift */,
+				878801C32A0A1AB400EF524A /* CameraActionViewTest.swift */,
+				878801C52A0A1B4800EF524A /* VideoChat.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -419,6 +425,7 @@
 				8715D2EC2A08D30E003CC974 /* CameraActionButton.swift in Sources */,
 				877822F12A035037003C74B7 /* CameraInput.swift in Sources */,
 				8715D2F62A08EB0D003CC974 /* LiveChatScreen.swift in Sources */,
+				878801C42A0A1AB400EF524A /* CameraActionViewTest.swift in Sources */,
 				877822CB2A027BB7003C74B7 /* RTCLoginState.swift in Sources */,
 				877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */,
 				8715D2EA2A08D0B6003CC974 /* AgoraRtc.swift in Sources */,
@@ -427,6 +434,7 @@
 				878801C02A09256500EF524A /* JsonHandler.swift in Sources */,
 				87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */,
 				8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */,
+				878801C62A0A1B4800EF524A /* VideoChat.swift in Sources */,
 				87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */,
 				8715D2F22A08D894003CC974 /* LiveChatHeader.swift in Sources */,
 				87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */,

@@ -25,11 +25,11 @@ struct ContentView: View {
 
     @ViewBuilder
     func Header() -> some View {
-        if viewModel.localCameraPosition == .front {
-            LiveChatHeaderView()
-        } else {
+        if viewModel.showSharedCommand {
             HeaderStreaming()
                 .zIndex(12)
+        } else {
+            LiveChatHeaderView()
         }
     }
 
@@ -47,7 +47,7 @@ struct ContentView: View {
 
     @ViewBuilder
     func CommandSlides() -> some View {
-        if viewModel.localCameraPosition == .rear {
+        if viewModel.showSharedCommand {
             VStack(spacing: 0) {
                 SlidingView(action: .flash) { value in
                     if value < 0 {
@@ -56,7 +56,7 @@ struct ContentView: View {
                         viewModel.sendMessage(event: .flashDown)
                     }
                 } onReset: {
-
+                    viewModel.sendMessage(event: .resetFlash)
                 }
 
                 SlidingView(action: .brightness) { value in
@@ -66,7 +66,7 @@ struct ContentView: View {
                         viewModel.sendMessage(event: .brightnessDown)
                     }
                 } onReset: {
-
+                    viewModel.sendMessage(event: .resetExposure)
                 }
 
                 SlidingView(action: .zoom) { value in
@@ -76,50 +76,12 @@ struct ContentView: View {
                         viewModel.sendMessage(event: .zoomOut)
                     }
                 } onReset: {
-
+                    viewModel.sendMessage(event: .resetZoom)
                 }
             }
             .padding(.leading, 20)
             .zIndex(10)
         }
-    }
-
-    @ViewBuilder
-    func CameraActionView() -> some View {
-        ScrollView {
-            VStack(alignment: .trailing, spacing: 8) {
-                CameraActionButton(image: .zoom) {
-                    viewModel.sendMessage(event: .zoomIn)
-                }
-
-                CameraActionButton(image: .zoomout) {
-                    viewModel.sendMessage(event: .zoomOut)
-                }
-
-                CameraActionButton(image: .brightness) {
-                    viewModel.sendMessage(event: .brightnessUp)
-                }
-
-                CameraActionButton(image: .brightnessDown) {
-                    viewModel.sendMessage(event: .brightnessDown)
-                }
-
-                CameraActionButton(image: .move) {
-
-                }
-
-                CameraActionButton(image: .flash) {
-                    viewModel.sendMessage(event: .flash)
-                }
-
-                CameraActionButton(image: .flashDown) {
-                    viewModel.sendMessage(event: .flashDown)
-                }
-            }
-        }
-        .frame(height: 300)
-        .padding(.trailing, 20)
-
     }
 
 }

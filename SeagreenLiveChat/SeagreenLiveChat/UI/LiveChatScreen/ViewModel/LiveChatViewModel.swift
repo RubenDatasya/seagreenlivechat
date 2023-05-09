@@ -21,6 +21,14 @@ extension LiveChatStateProtocol {
         get { localState.position }
         set { localState.position = newValue }
     }
+
+    var isParticipantSharing: Bool {
+        get { sharedState.isSharing }
+    }
+
+    var showSharedCommand: Bool {
+        get {isParticipantSharing || localCameraPosition == .rear}
+    }
 }
 
 protocol LiveChatControlProtocol {
@@ -38,18 +46,29 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
 
     @Published var localState: CameraState = .init(position: .front)
     @Published var sharedState: CameraState = .init(position: .front)
+    @Published var isSharing: Bool =  false
     @Published var hostState: HostState = .disconnected
 
-    var cameraInput : CameraControlProtocol = CameraInput()
+    let cameraInput : CameraControlProtocol & ResetCameraControlProtocol = CameraInput()
+
     var isConnected:   PassthroughSubject<RTCLoginState, Never> = .init()
     var cameraToggle:  PassthroughSubject<CameraPosition, Never> = .init()
     var hostEvent:  PassthroughSubject<HostState, Never> = .init()
+    var channelMessage : PassthroughSubject<ChannelMessageEvent, Never> = .init()
+
     var zoomIn:  PassthroughSubject<(), Never> = .init()
     var zoomOut:  PassthroughSubject<(), Never> = .init()
     var exposureUp:  PassthroughSubject<(), Never> = .init()
     var exposureDown:  PassthroughSubject<(), Never> = .init()
     var flashUp:  PassthroughSubject<(), Never> = .init()
     var flashDown:  PassthroughSubject<(), Never> = .init()
+
+    var resetExposure: PassthroughSubject<(),Never> = .init()
+    var resetZoom: PassthroughSubject<(),Never> = .init()
+    var resetFocus: PassthroughSubject<(),Never> = .init()
+    var resetFlash: PassthroughSubject<(),Never> = .init()
+
+
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
 
     lazy var chatApi = LiveChatTokenAPI()
@@ -64,23 +83,6 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
         AgoraRtm.shared.initalize()
         AgoraRtm.shared.setDelegate(self)
         observeRtcLoginState()
-        observeCameraState()
-    }
-
-    private func observeCameraState() {
-        $sharedState
-            .receive(on: DispatchQueue.main)
-            .sink { state in
-                AgoraRtc.shared.activate(state: state)
-            }
-            .store(in: &subscriptions)
-
-        $localState
-            .receive(on: DispatchQueue.main)
-            .sink { state in
-                AgoraRtc.shared.activate(state: state)
-            }
-            .store(in: &subscriptions)
     }
 
     private func observeRtcLoginState() {
@@ -106,15 +108,6 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
             .store(in: &subscriptions)
     }
 
-    private func handleSharedState(_ event: ChannelMessageEvent) {
-        handleState(event, state: &sharedState)
-    }
-
-
-    private func handleState(_ event: ChannelMessageEvent) {
-        handleState(event, state: &localState)
-    }
-
     private func handleUnknownMessage(_ text: String) {
         if let point : CGPoint = JsonHandler.decode(text) {
             cameraInput.focus(at: point)
@@ -125,22 +118,30 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     private func handleState(_ event: ChannelMessageEvent, state: inout CameraState) {
         switch event {
         case .zoomIn:
-            zoomIn.send(())
+            cameraInput.updateZoom(isIn: true)
         case .zoomOut:
-            zoomOut.send(())
+            cameraInput.updateZoom(isIn: false)
         case .brightnessUp:
-            exposureUp.send(())
+            cameraInput.updateExposure(isUp: true)
         case .brightnessDown:
-            exposureDown.send(())
+            cameraInput.updateExposure(isUp: false)
         case .flash:
-            flashUp.send(())
+            cameraInput.updateFlash(isUp: true)
         case .flashDown:
-            flashDown.send(())
-        case .participantShares, .participantStoppedSharring :
-            state.position = .front
+            cameraInput.updateFlash(isUp: false)
+        case .resetZoom:
+            cameraInput.resetZoom()
+        case .resetFlash:
+            cameraInput.resetFlash()
+        case .resetFocus:
+            cameraInput.resetFocus()
+        case .resetExposure:
+            cameraInput.resetExposure()
+        case .participantShares:
+            state.isSharing = true
+        case .participantStoppedSharring:
+            state.isSharing = false
         case .leave:
-            break
-        case .focus:
             break
         default:
             Logger.info("handleState \(event) Not meant to be handled")
@@ -175,7 +176,11 @@ extension LiveChatViewModel: LiveChatControlProtocol {
         cameraInput.switchCameraInput()
         cameraToggle.send(localState.position)
         if localState.position == .rear {
-            localState.zoom = 0
+            localState.isSharing = true
+            sendMessage(event: .participantShares)
+        } else {
+            localState.isSharing = false
+            sendMessage(event: .participantStoppedSharring)
         }
     }
 }
@@ -184,7 +189,6 @@ extension LiveChatViewModel: SendMessageProtocol {
 
     func sendMessage(event: ChannelMessageEvent) {
         AgoraRtm.shared.sendMessage(event: event)
-        handleState(event)
     }
 
 }
@@ -251,7 +255,7 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
         if event == ChannelMessageEvent.unknown {
             handleUnknownMessage(message.text)
         } else {
-            handleSharedState(event)
+            handleState(event, state: &sharedState)
         }
     }
 

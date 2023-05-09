@@ -6,40 +6,48 @@
 //
 
 import Foundation
-import AVFoundation
 import Combine
 import UIKit
-import AgoraRtcKit
-import AgoraRtmKit
-import SwiftUI
 
-struct VideoChat: UIViewControllerRepresentable {
-
-    @ObservedObject var viewModel: LiveChatViewModel
-
-    func makeUIViewController(context: Context) -> ViewController {
-        let vc: ViewController = .init(nibName: nil, bundle: nil)
-        vc.viewModel = viewModel
-        return vc
-    }
-
-    func updateUIViewController(_ uiViewController: ViewController, context: Context) {
-
-    }
-
-    typealias UIViewControllerType = ViewController
+@objc protocol GestureHandler {
+    var resetGesture: UILongPressGestureRecognizer { get }
+    var tapgesture:  UITapGestureRecognizer { get }
+    func handleLongGesture(sender: UITapGestureRecognizer)
+    func handleTapToFocus(sender: UITapGestureRecognizer)
 }
 
-class ViewController: UIViewController {
+
+class ViewController: UIViewController, GestureHandler {
 
     lazy var remoteView: UIView = UIView()
     var localView: CustomVideoSourcePreview = .init()
-    var cameraInput : CameraControlProtocol = CameraInput()
-
     lazy var decorator: ViewControllerDecorator = .init()
     var joinButton: UIButton!
     var subscriptions: Set<AnyCancellable> = .init()
-    var viewModel: LiveChatViewModel!
+    var viewModel: LiveChatViewModel
+
+    lazy var resetGesture: UILongPressGestureRecognizer = {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture))
+        gesture.minimumPressDuration = 0.5
+        gesture.delegate = self
+        return gesture
+    }()
+
+    lazy var tapgesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTapToFocus))
+        gesture.delegate = self
+        return gesture
+    }()
+
+
+    init(viewModel: LiveChatViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +56,6 @@ class ViewController: UIViewController {
         observeAlert()
         observeNewHost()
         observeCamera()
-        observeZoom()
-        observeFlash()
-        observeExposure()
         joinChannels()
     }
 
@@ -63,24 +68,22 @@ class ViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.leaveChannels()
-        DispatchQueue.global(qos: .userInitiated).async {AgoraRtcEngineKit.destroy()}
+        DispatchQueue.global(qos: .userInitiated).async { AgoraRtc.shared.destroy() }
     }
 
     private func initViews() {
         self.view.backgroundColor = UIColor(Colors.transparentGray)
         self.view.addSubview(remoteView)
         self.view.addSubview(localView)
-        cameraInput.setup(position: .front, locaPreview: localView)
+        self.view.addGestureRecognizer(tapgesture)
+        self.view.addGestureRecognizer(resetGesture)
+        viewModel.cameraInput.setup(position: .front, locaPreview: localView)
         decorator.decorate(preview: localView, in: self.view)
         decorator.decorate(preview: remoteView, in: self.view, isFullScreen: true)
-        let tapgesture =  UITapGestureRecognizer(target: self, action: #selector(handleTapToFocus))
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(tapgesture)
     }
 
     private func handleCameraState(state: CameraPosition) {
         self.localView.translatesAutoresizingMaskIntoConstraints = true
-        cameraInput.switchCameraInput()
         decorator.decorate(preview: remoteView, in: self.view, isFullScreen: state == .front)
         decorator.decorate(preview: localView, in: self.view, isFullScreen: state == .rear)
     }
@@ -109,6 +112,10 @@ class ViewController: UIViewController {
         case .disconnected:
             AgoraRtc.shared.setupRemoteVideo(.init(), uid: 0)
         }
+    }
+
+    @objc func handleLongGesture(sender: UITapGestureRecognizer) {
+        viewModel.sendMessage(event: .resetFocus)
     }
 
     @objc func handleTapToFocus(sender: UITapGestureRecognizer) {
@@ -147,51 +154,13 @@ extension ViewController {
             .store(in: &subscriptions)
     }
 
-    func observeZoom() {
-        viewModel.zoomIn
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.cameraInput.updateZoom(isIn: true)
-            }
-            .store(in: &subscriptions)
+}
 
-        viewModel.zoomOut
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.cameraInput.updateZoom(isIn: false)
-            }
-            .store(in: &subscriptions)
+
+extension ViewController : UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return gestureRecognizer is UILongPressGestureRecognizer && otherGestureRecognizer is UITapGestureRecognizer ||
+            otherGestureRecognizer is UILongPressGestureRecognizer && gestureRecognizer is UITapGestureRecognizer
     }
 
-    func observeFlash() {
-        viewModel.flashUp
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.cameraInput.updateFlash(isUp: true)
-            }
-            .store(in: &subscriptions)
-
-        viewModel.flashDown
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.cameraInput.updateFlash(isUp: false)
-            }
-            .store(in: &subscriptions)
-    }
-
-    func observeExposure() {
-        viewModel.exposureUp
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.cameraInput.updateExposure(isUp: true)
-            }
-            .store(in: &subscriptions)
-
-        viewModel.exposureDown
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.cameraInput.updateExposure(isUp: false)
-            }
-            .store(in: &subscriptions)
-    }
 }

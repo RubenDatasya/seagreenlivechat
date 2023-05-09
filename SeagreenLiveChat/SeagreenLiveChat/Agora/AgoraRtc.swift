@@ -100,11 +100,6 @@ class AgoraRtc: NSObject {
          }
     }
 
-    func activate(state: CameraState) {
-        self.agoraEngine.setCameraTorchOn(state.isFlashOn)
-        self.agoraEngine.setCameraZoomFactor(state.zoom)
-    }
-
     func toggleAudio() {
         if audioEnabled {
             agoraEngine.disableAudio()
@@ -114,6 +109,10 @@ class AgoraRtc: NSObject {
     }
     func stop() {
         agoraEngine.stopPreview()
+    }
+
+    func destroy() {
+        AgoraRtcEngineKit.destroy()
     }
 
     @discardableResult
