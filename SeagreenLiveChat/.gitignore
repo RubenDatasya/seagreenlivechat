@@ -74,3 +74,6 @@ Pods/
 
 # Packages
 package-lock.json
+
+# Google-info.plist
+GoogleService-Info.plist
