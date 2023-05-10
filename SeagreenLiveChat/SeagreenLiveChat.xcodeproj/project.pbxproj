@@ -41,7 +41,6 @@
 		878802242A0A6C5500EF524A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 878802232A0A6C5500EF524A /* GoogleService-Info.plist */; };
 		878802272A0A6D0000EF524A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 878802262A0A6D0000EF524A /* FirebaseAnalytics */; };
 		8788022F2A0A6D0000EF524A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 8788022E2A0A6D0000EF524A /* FirebaseFunctions */; };
-		878802342A0A6DF600EF524A /* FirestoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878802332A0A6DF600EF524A /* FirestoreData.swift */; };
 		878802382A0A6E6100EF524A /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878802372A0A6E6100EF524A /* FirebaseError.swift */; };
 		8788023D2A0A72A100EF524A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788023C2A0A72A100EF524A /* Token.swift */; };
 		878802452A0A72F500EF524A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878802442A0A72F500EF524A /* String+Extension.swift */; };
@@ -101,7 +100,6 @@
 		8788021F2A0A656A00EF524A /* AgoraChatCallKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgoraChatCallKitManager.swift; sourceTree = "<group>"; };
 		878802212A0A6AED00EF524A /* UserInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoStore.swift; sourceTree = "<group>"; };
 		878802232A0A6C5500EF524A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		878802332A0A6DF600EF524A /* FirestoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreData.swift; sourceTree = "<group>"; };
 		878802372A0A6E6100EF524A /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		8788023C2A0A72A100EF524A /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		878802442A0A72F500EF524A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -254,7 +252,6 @@
 		878802322A0A6DE600EF524A /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				878802332A0A6DF600EF524A /* FirestoreData.swift */,
 				8788024F2A0A931B00EF524A /* CloudFunctions.swift */,
 			);
 			path = Firebase;
@@ -586,7 +583,6 @@
 				8715D2EA2A08D0B6003CC974 /* AgoraRtc.swift in Sources */,
 				8715D2E52A07FD8B003CC974 /* MoveButton.swift in Sources */,
 				8715D2CA2A07B175003CC974 /* CustomVideoSourcePreview.swift in Sources */,
-				878802342A0A6DF600EF524A /* FirestoreData.swift in Sources */,
 				878801C02A09256500EF524A /* JsonHandler.swift in Sources */,
 				87F5721B2A0B8494004FCEC3 /* LiveChat.swift in Sources */,
 				87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */,
