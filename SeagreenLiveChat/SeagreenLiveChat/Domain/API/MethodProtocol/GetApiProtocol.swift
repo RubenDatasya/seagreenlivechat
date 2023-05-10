@@ -13,24 +13,6 @@ protocol GetApiProtocol: AnyObject {
     var endpoint: String { get }
 }
 
-extension GetApiProtocol where Value : FirebaseCodable {
-
-    func fetch(openedBy: String) async throws -> Value {
-        let fetcher = FirestoreData(.chatChannel)
-        return try await fetcher.getEntry(id: openedBy, field: "openedBy")
-    }
-
-    func fetch(by channel: String) async throws -> Value {
-        let fetcher = FirestoreData(.chatChannel)
-        return try await fetcher.getEntry(id: channel, field: "name")
-    }
-
-    func fetchAll() async throws -> [Value] {
-        let fetcher = FirestoreData(.chatChannel)
-        return try await fetcher.getEntries()
-    }
-}
-
 extension GetApiProtocol {
     func fetch(_ cloud : CloudFunction) async throws -> Value {
        try await withCheckedThrowingContinuation { continuation in

@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func voipRegistration() {
+    private func voipRegistration() {
         let mainQueue = DispatchQueue.main
         let voipRegistry: PKPushRegistry = PKPushRegistry(queue: mainQueue)
         voipRegistry.delegate = self

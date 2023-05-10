@@ -72,13 +72,6 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var subscriptions: Set<AnyCancellable> = .init()
 
-    let chatRepository: any ChatChannelRepositoryProtocol
-
-    init(chatRepository: any ChatChannelRepositoryProtocol = ChatChannelRepository()) {
-        self.chatRepository = chatRepository
-        super.init()
-    }
-
 
     func initializeAgora() {
         AgoraRtc.shared.initialize()
@@ -202,16 +195,6 @@ extension LiveChatViewModel: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
         hostState = .received(uid: uid)
         hostEvent.send(.received(uid: uid))
-        Task {
-            do {
-                if var chat = try await chatRepository.getAll().first as? ChatChannel {
-                    chat.peer = Constants.Credentials.currentUser
-                    try await chatRepository.updateChat(at: chat.id, and: chat)
-                }
-            } catch {
-                Logger.severe("\(error)")
-            }
-        }
     }
 
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {

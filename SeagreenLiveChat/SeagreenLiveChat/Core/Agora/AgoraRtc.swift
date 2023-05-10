@@ -71,7 +71,7 @@ class AgoraRtc: NSObject {
         videoCanvas.uid = uid
         videoCanvas.renderMode = .hidden
         videoCanvas.view = view
-        let setRemote = agoraEngine.setupRemoteVideo(videoCanvas)
+        agoraEngine.setupRemoteVideo(videoCanvas)
     }
 
     func joinChannel() async throws -> RTCLoginState {
