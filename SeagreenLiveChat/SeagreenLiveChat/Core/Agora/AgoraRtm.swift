@@ -19,7 +19,7 @@ class AgoraRtm {
     }
 
     private(set) var kit: AgoraRtmKit!
-    private lazy var messageApi = SignalingTokenAPI()
+    lazy var tokenRepository = AgoraTokenRepository()
     private var rtmChannel: AgoraRtmChannel?
 
 
@@ -35,7 +35,7 @@ class AgoraRtm {
 
     @discardableResult
     func joinMessageChannel(delegate: AgoraRtmChannelDelegate) async throws -> Bool  {
-        let token = try await messageApi.fetch(.getRtmToken(userid: Constants.Credentials.currentUser))
+        let token = try await tokenRepository.getRtmToken(with: Constants.Credentials.currentUser)
         let login = await agoraRtm.login(byToken: token.value, user: Constants.Credentials.currentUser)
 
         if login == .ok {

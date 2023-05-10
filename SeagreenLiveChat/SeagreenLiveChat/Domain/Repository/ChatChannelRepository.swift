@@ -9,13 +9,16 @@ import Foundation
 
 
 protocol ChatChannelRepositoryProtocol {
-    associatedtype API = (any GetApiProtocol & PostApiProtocol & UpdateApiProtocol)
+    associatedtype API where API : GetApiProtocol & PostApiProtocol & UpdateApiProtocol,
+                             API.PostValue : FirebaseCodable,
+                             API.Value : FirebaseCodable,
+                             API.UpdateValue : FirebaseCodable
     var api:  API { get }
-    func getAll() async throws -> [ChatChannel]
-    func getChat(openedBy: String) async throws -> ChatChannel
-    func getChat(by channel: String) async throws -> ChatChannel
-    func createChat(with chat: ChatChannel) async throws -> ChatChannel
-    func updateChat(at chatId: String, and model: ChatChannel) async throws  -> ChatChannel
+    func getAll() async throws -> [API.Value]
+    func getChat(openedBy: String) async throws -> API.Value
+    func getChat(by channel: String) async throws -> API.Value
+    func createChat(with chat: ChatChannel) async throws -> API.PostValue
+    func updateChat(at chatId: String, and model: ChatChannel) async throws  -> API.UpdateValue
 }
 
 class ChatChannelRepository: ChatChannelRepositoryProtocol {

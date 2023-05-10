@@ -204,7 +204,7 @@ extension LiveChatViewModel: AgoraRtcEngineDelegate {
         hostEvent.send(.received(uid: uid))
         Task {
             do {
-                if var chat = try await chatRepository.getAll().first {
+                if var chat = try await chatRepository.getAll().first as? ChatChannel {
                     chat.peer = Constants.Credentials.currentUser
                     try await chatRepository.updateChat(at: chat.id, and: chat)
                 }

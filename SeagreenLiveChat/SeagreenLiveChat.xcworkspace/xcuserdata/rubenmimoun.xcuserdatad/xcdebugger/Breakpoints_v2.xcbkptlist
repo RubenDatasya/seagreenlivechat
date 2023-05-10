@@ -14,8 +14,8 @@
             filePath = "SeagreenLiveChat/Core/Agora/AgoraRtc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "joinChannel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,73 +30,10 @@
             filePath = "SeagreenLiveChat/Core/Agora/AgoraRtc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "joinChannel()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "17934F9C-2BDD-4B17-882E-05C631559F42"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SeagreenLiveChat/Core/Agora/AgoraRtc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "joinChannel()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "17934F9C-2BDD-4B17-882E-05C631559F42 - e99dba53eea4127e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for SeagreenLiveChat.AgoraRtc.joinChannel() async throws -&gt; SeagreenLiveChat.RTCLoginState"
-                  moduleName = "SeagreenLiveChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rubenmimoun/Documents/Github/seagreenlivechat/SeagreenLiveChat/SeagreenLiveChat/Core/Agora/AgoraRtc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "144">
-               </Location>
-               <Location
-                  uuid = "17934F9C-2BDD-4B17-882E-05C631559F42 - 510c0a9039fc5103"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) await resume partial function for SeagreenLiveChat.AgoraRtc.joinChannel() async throws -&gt; SeagreenLiveChat.RTCLoginState"
-                  moduleName = "SeagreenLiveChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rubenmimoun/Documents/Github/seagreenlivechat/SeagreenLiveChat/SeagreenLiveChat/Core/Agora/AgoraRtc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "44">
-               </Location>
-               <Location
-                  uuid = "17934F9C-2BDD-4B17-882E-05C631559F42 - e8eeef77d4fb5678"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(5) suspend resume partial function for SeagreenLiveChat.AgoraRtc.joinChannel() async throws -&gt; SeagreenLiveChat.RTCLoginState"
-                  moduleName = "SeagreenLiveChat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rubenmimoun/Documents/Github/seagreenlivechat/SeagreenLiveChat/SeagreenLiveChat/Core/Agora/AgoraRtc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "82"
-                  endingLineNumber = "82"
-                  offsetFromSymbolStart = "104">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -109,8 +46,8 @@
             filePath = "SeagreenLiveChat/Core/Agora/AgoraRtc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "joinChannel()"
             landmarkType = "7">
             <Locations>

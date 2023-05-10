@@ -8,6 +8,7 @@
 import Foundation
 
 enum FirebaseError: LocalizedError {
+    case nodatareturned
     case decodeError(String)
     case firebaseError(Error)
 }

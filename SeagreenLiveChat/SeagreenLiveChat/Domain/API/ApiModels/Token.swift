@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct LiveChatToken: Codable{
+struct Token: CloudCodable{
     let value: String
 }

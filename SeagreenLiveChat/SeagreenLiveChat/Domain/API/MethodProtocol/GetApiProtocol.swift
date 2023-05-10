@@ -13,7 +13,6 @@ protocol GetApiProtocol: AnyObject {
     var endpoint: String { get }
 }
 
-
 extension GetApiProtocol where Value : FirebaseCodable {
 
     func fetch(openedBy: String) async throws -> Value {
@@ -48,13 +47,10 @@ extension GetApiProtocol {
                        let decoded = try JSONDecoder().decode(Value.self, from: serialized)
                        continuation.resume(with: .success(decoded))
                    }catch {
-                       Logger.severe("\(error)")
                        continuation.resume(throwing: FirebaseError.decodeError(error.localizedDescription))
                    }
                }else{
-                   Logger.severe("No data")
-                   continuation.resume(throwing: FirebaseError.decodeError("no data"))
-
+                   continuation.resume(throwing: FirebaseError.nodatareturned)
                }
            }
         }

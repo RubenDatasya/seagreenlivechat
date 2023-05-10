@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LiveChatTokenAPI: GetApiProtocol {
-    typealias Value = LiveChatToken
-    let endpoint: String = "/chatToken"
+class AgoraTokenApi: GetApiProtocol {
+    typealias Value = Token
+    let endpoint: String = .firebase
 }
