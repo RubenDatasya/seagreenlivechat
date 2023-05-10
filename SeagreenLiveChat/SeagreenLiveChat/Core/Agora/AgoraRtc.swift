@@ -75,7 +75,9 @@ class AgoraRtc: NSObject {
     }
 
     func joinChannel() async throws -> RTCLoginState {
-        let token = await chatApi.fetch(userid: Constants.Credentials.currentUser)
+
+        let token = try await chatApi.fetch(.getRtcToken(channelName: Constants.Credentials.channel,
+                                                            uid: 0))
 
         if await !AVPermissionManager.shared.checkForPermissions() {
             throw LiveChatAlert.permissionError
@@ -90,7 +92,7 @@ class AgoraRtc: NSObject {
         option.channelProfile = .liveBroadcasting
 
          let result = agoraEngine.joinChannel(
-            byToken: Constants.Credentials.token, channelId: Constants.Credentials.channel, uid: 0, mediaOptions: option,
+            byToken: token.value, channelId: Constants.Credentials.channel, uid: 0, mediaOptions: option,
             joinSuccess: { (channel, uid, elapsed) in
             })
          if result == 0 {

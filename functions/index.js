@@ -5,6 +5,7 @@ const { initializeApp } = require('firebase-admin/app');
 const {
     RtcTokenBuilder,
     RtcRole,
+    RtmRole,
     RtmTokenBuilder
 } = require('agora-access-token');
 
@@ -15,10 +16,6 @@ const appCertificate = "12e9058b7aa64cd6898f2ab446f3e31f";
 // // Create and deploy your first functions
 // // https://firebase.google.com/docs/functions/get-started
 //
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
 
 const defaultApp = initializeApp()
 const db = admin.firestore()
@@ -58,13 +55,16 @@ exports.getRtcToken = functions.https.onCall((data, context) => {
 })
 
 exports.getRtmToken = functions.https.onCall((data, context) => {
+
+    const userAccount = data.userid
+
     try {
         const token =  RtmTokenBuilder.buildToken(
             appID,
             appCertificate,
-            data.userid,
-            Role.PUBLISHER,
-            getTimeStamp(3600)
+            userAccount,
+            RtmRole.Rtm_User,
+            getTimeStamp(1446455471)
         )
     
         return {

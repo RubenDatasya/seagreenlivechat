@@ -19,7 +19,7 @@ class AgoraRtm {
     }
 
     private(set) var kit: AgoraRtmKit!
-    private lazy var chatApi = LiveChatTokenAPI()
+    private lazy var messageApi = SignalingTokenAPI()
     private var rtmChannel: AgoraRtmChannel?
 
 
@@ -35,12 +35,12 @@ class AgoraRtm {
 
     @discardableResult
     func joinMessageChannel(delegate: AgoraRtmChannelDelegate) async throws -> Bool  {
-        let token = await chatApi.fetch(userid:  Constants.Credentials.currentUser)
+        let token = try await messageApi.fetch(.getRtmToken(userid: Constants.Credentials.currentUser))
         let login = await agoraRtm.login(byToken: token.value, user: Constants.Credentials.currentUser)
 
         if login == .ok {
             try createMessageChannel(delegate: delegate)
-            let result = await rtmChannel?.join()
+            await rtmChannel?.join()
             Logger.info("joinMessageChannel, success")
             return true
         } else {
