@@ -14,7 +14,7 @@ struct SeagreenLiveChatApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            VideoChatScreen()
         }
     }
 }

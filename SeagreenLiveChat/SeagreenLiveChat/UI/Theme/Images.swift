@@ -36,4 +36,5 @@ enum Images {
     static let shut              : Image = Image(systemName: "iphone.gen2.slash")
     static let flash             : Image = Image(systemName: "lightbulb")
     static let flashDown         : Image = Image(systemName: "lightbulb.led")
+    static let phoneConnection   : Image = Image(systemName: "phone.connection.fill")
 }

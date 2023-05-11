@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1079722637719-ttqgknfkvpq9fq9bj8t814f2uclha315.apps.googleusercontent.com</string>
+	<string>1079722637719-iekdreralm39337sc2flnc8huqn3amr9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1079722637719-ttqgknfkvpq9fq9bj8t814f2uclha315</string>
+	<string>com.googleusercontent.apps.1079722637719-iekdreralm39337sc2flnc8huqn3amr9</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDxKcgwGBlP1NVQ8o0W8cC6f_IQlFgrY9w</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.datasya.seagreen.livechat.SeagreenLiveChat</string>
+	<string>com.datasya.seagreenlivevideo</string>
 	<key>PROJECT_ID</key>
 	<string>seagreen-livechat</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1079722637719:ios:19163190d367504acc2cd2</string>
+	<string>1:1079722637719:ios:bb304ebd7375789ccc2cd2</string>
 </dict>
 </plist>

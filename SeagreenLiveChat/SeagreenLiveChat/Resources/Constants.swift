@@ -11,11 +11,13 @@ import UIKit
 enum Constants {
     struct Secret {
         static var appid: String = ""
-        static var certificate: String = ""
     }
 
     struct Credentials {
+        static var appName: String = ""
         static var currentUser =  ""
+        static var uid: UInt =  UInt(abs(currentUser.hashValue))
         static var channel: String = ""
+        static var remoteUser: UInt = 0
     }
 }

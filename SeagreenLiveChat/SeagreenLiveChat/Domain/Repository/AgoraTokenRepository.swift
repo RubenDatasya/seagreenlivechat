@@ -29,7 +29,7 @@ class AgoraTokenRepository: AgoraTokenRepositoryProtocol {
     }
 
     func getRtcToken(with channel: String, uid: UInt) async throws -> Token {
-        try await api.fetch(.getRtcToken(channelName: channel, uid: uid))
+        try await api.fetch(.getRtcToken(channelName: channel, uid: 0))
     }
 
 }

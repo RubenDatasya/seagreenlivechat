@@ -32,6 +32,7 @@ struct LiveChatHeader: View {
 
             Spacer()
 
+            DemoCallButton()
 
             Button {
 
@@ -47,6 +48,23 @@ struct LiveChatHeader: View {
         }
         .frame(height: Values.Dimensions.viewHeight)
         .background(Colors.primary)
+    }
+
+    @ViewBuilder
+    func DemoCallButton() -> some View {
+        if LiveChat.shared.isDemo() {
+            Button {
+                Task {
+                    let isRequestSent =  await viewModel.callCommand.executeCall()
+                    if isRequestSent {
+                        viewModel.callProvider.startCall(to: "")
+                    }
+                }
+            } label: {
+                Images.phoneConnection
+                    .foregroundColor(Color.white)
+            }
+        }
     }
 }
 

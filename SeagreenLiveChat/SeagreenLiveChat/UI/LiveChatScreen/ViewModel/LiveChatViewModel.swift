@@ -27,7 +27,7 @@ extension LiveChatStateProtocol {
     }
 
     var showSharedCommand: Bool {
-        get {isParticipantSharing || localCameraPosition == .rear}
+        get { isParticipantSharing || localCameraPosition == .rear}
     }
 }
 
@@ -48,6 +48,9 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     @Published var sharedState: CameraState = .init(position: .front)
     @Published var isSharing: Bool =  false
     @Published var hostState: HostState = .disconnected
+
+    let callProvider = CallProvider()
+    let callCommand = CallRequestApi()
 
     let cameraInput : CameraControlProtocol & ResetCameraControlProtocol = CameraInput()
 
@@ -72,8 +75,10 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var subscriptions: Set<AnyCancellable> = .init()
 
-
     func initializeAgora() {
+        LiveChat.configure()
+        LiveChat.setCurrentUser()
+        LiveChat.setLiveChatChannel()
         AgoraRtc.shared.initialize()
         AgoraRtc.shared.addDelegate(self)
         AgoraRtm.shared.initalize()
@@ -89,7 +94,6 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
                 Task {
                     do {
                         try await AgoraRtm.shared.joinMessageChannel(delegate: self)
-//                        try await self.chatRepository.createChat(with: .init(name: Constants.Credentials.channel, openedBy: Constants.Credentials.currentUser, peer: nil))
                     } catch {
                         Logger.severe("observeRtcLoginState",error: error)
                     }
@@ -239,7 +243,6 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
 
     func channel(_ channel: AgoraRtmChannel, memberJoined member: AgoraRtmMember) {
         Logger.info("memberJoined join \(member.description)")
-
     }
 
     func channel(_ channel: AgoraRtmChannel, memberLeft member: AgoraRtmMember) {
@@ -256,4 +259,17 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
         }
     }
 
+}
+
+extension LiveChatViewModel: AgoraRtmInviterDelegate {
+
+    func inviter(_ inviter: AgoraRtmCallKit, didReceivedIncoming invitation: AgoraRtmInvitation) {
+        //self.performSegue(withIdentifier: "MainToDial", sender: invitation.caller)
+        LiveChat.shared.showIncomingCall(of: invitation.caller, withData: [:])
+
+    }
+
+    func inviter(_ inviter: AgoraRtmCallKit, remoteDidCancelIncoming invitation: AgoraRtmInvitation) {
+
+    }
 }

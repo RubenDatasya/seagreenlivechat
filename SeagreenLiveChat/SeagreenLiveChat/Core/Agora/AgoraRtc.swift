@@ -75,7 +75,7 @@ class AgoraRtc: NSObject {
     }
 
     func joinChannel() async throws -> RTCLoginState {
-        let token = try await tokenRepository.getRtcToken(with: Constants.Credentials.channel, uid: 0)
+        let token = try await tokenRepository.getRtcToken(with: Constants.Credentials.channel, uid: Constants.Credentials.uid)
 
         if await !AVPermissionManager.shared.checkForPermissions() {
             throw LiveChatAlert.permissionError

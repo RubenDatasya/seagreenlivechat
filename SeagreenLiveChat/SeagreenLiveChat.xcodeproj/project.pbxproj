@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		34D5B39FA45695F41D6D8A20 /* Pods_SeagreenLiveChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2897234FB6D086180846C289 /* Pods_SeagreenLiveChat.framework */; };
 		8715D2CA2A07B175003CC974 /* CustomVideoSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715D2C92A07B175003CC974 /* CustomVideoSourcePreview.swift */; };
-		8715D2CC2A07D929003CC974 /* ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8715D2CB2A07D929003CC974 /* ViewController.storyboard */; };
 		8715D2D02A07DCFC003CC974 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715D2CF2A07DCFC003CC974 /* Images.swift */; };
 		8715D2D32A07DDBB003CC974 /* SlidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715D2D22A07DDBB003CC974 /* SlidingView.swift */; };
 		8715D2DD2A07ECA1003CC974 /* RemoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715D2DC2A07ECA1003CC974 /* RemoteHeader.swift */; };
@@ -31,20 +29,29 @@
 		877822DA2A0282CD003C74B7 /* Bundle + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */; };
 		877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822DE2A0289CD003C74B7 /* enum HostState.swift */; };
 		877822F12A035037003C74B7 /* CameraInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F02A035037003C74B7 /* CameraInput.swift */; };
+		877A8F132A0BBA9500484D46 /* CallCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A8F122A0BBA9500484D46 /* CallCenter.swift */; };
+		877A8F1B2A0BE91200484D46 /* RtcBasic in Frameworks */ = {isa = PBXBuildFile; productRef = 877A8F1A2A0BE91200484D46 /* RtcBasic */; };
+		877A8F432A0CAC5400484D46 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A8F422A0CAC5400484D46 /* Models.swift */; };
+		877A8F462A0CACA100484D46 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 877A8F452A0CACA100484D46 /* FirebaseFirestoreSwift */; };
+		877A8F482A0CACE700484D46 /* FirestoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A8F472A0CACE700484D46 /* FirestoreData.swift */; };
+		877A8F4A2A0CACFB00484D46 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 877A8F492A0CACFB00484D46 /* FirebaseFirestore */; };
+		877A8F4C2A0CAD3300484D46 /* FirebaseApis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A8F4B2A0CAD3300484D46 /* FirebaseApis.swift */; };
+		877A8F4E2A0CB06200484D46 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 877A8F4D2A0CB06200484D46 /* FirebaseAuth */; };
+		877A8F502A0CB66A00484D46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877A8F4F2A0CB66A00484D46 /* GoogleService-Info.plist */; };
 		878801C02A09256500EF524A /* JsonHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801BF2A09256500EF524A /* JsonHandler.swift */; };
 		878801C22A0936B000EF524A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801C12A0936B000EF524A /* Logger.swift */; };
 		878801C42A0A1AB400EF524A /* CameraActionViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801C32A0A1AB400EF524A /* CameraActionViewTest.swift */; };
 		878801C62A0A1B4800EF524A /* VideoChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878801C52A0A1B4800EF524A /* VideoChat.swift */; };
 		8788021E2A0A633A00EF524A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788021D2A0A633A00EF524A /* AppDelegate.swift */; };
-		878802202A0A656A00EF524A /* AgoraChatCallKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788021F2A0A656A00EF524A /* AgoraChatCallKitManager.swift */; };
 		878802222A0A6AED00EF524A /* UserInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878802212A0A6AED00EF524A /* UserInfoStore.swift */; };
-		878802242A0A6C5500EF524A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 878802232A0A6C5500EF524A /* GoogleService-Info.plist */; };
 		878802272A0A6D0000EF524A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 878802262A0A6D0000EF524A /* FirebaseAnalytics */; };
 		8788022F2A0A6D0000EF524A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 8788022E2A0A6D0000EF524A /* FirebaseFunctions */; };
 		878802382A0A6E6100EF524A /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878802372A0A6E6100EF524A /* FirebaseError.swift */; };
 		8788023D2A0A72A100EF524A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788023C2A0A72A100EF524A /* Token.swift */; };
 		878802452A0A72F500EF524A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878802442A0A72F500EF524A /* String+Extension.swift */; };
 		878802502A0A931B00EF524A /* CloudFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788024F2A0A931B00EF524A /* CloudFunctions.swift */; };
+		87981FC42A0CBA7600705BAC /* CallProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FC32A0CBA7600705BAC /* CallProvider.swift */; };
+		87981FC62A0CE41F00705BAC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 87981FC52A0CE41F00705BAC /* FirebaseMessaging */; };
 		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
 		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
 		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
@@ -52,11 +59,10 @@
 		87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D00829FFA1E200AEAB4D /* LiveChatAlert.swift */; };
 		87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */; };
 		87A2D01029FFAD4000AEAB4D /* ChannelMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D00F29FFAD4000AEAB4D /* ChannelMessage.swift */; };
-		87A2D01329FFB7BA00AEAB4D /* AgoraTokenApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01229FFB7BA00AEAB4D /* AgoraTokenApi.swift */; };
+		87A2D01329FFB7BA00AEAB4D /* CloudFunctionApis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01229FFB7BA00AEAB4D /* CloudFunctionApis.swift */; };
 		87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */; };
-		87A2D0242A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87A2D0222A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld */; };
 		87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */; };
-		87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60929FE7B020020B2A9 /* ContentView.swift */; };
+		87EFE60A29FE7B020020B2A9 /* VideoChatScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE60929FE7B020020B2A9 /* VideoChatScreen.swift */; };
 		87EFE60C29FE7B040020B2A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87EFE60B29FE7B040020B2A9 /* Assets.xcassets */; };
 		87EFE61029FE7B040020B2A9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87EFE60F29FE7B040020B2A9 /* Preview Assets.xcassets */; };
 		87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EFE63D29FE7CD10020B2A9 /* ViewController.swift */; };
@@ -66,9 +72,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2897234FB6D086180846C289 /* Pods_SeagreenLiveChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeagreenLiveChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8715D2C92A07B175003CC974 /* CustomVideoSourcePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoSourcePreview.swift; sourceTree = "<group>"; };
-		8715D2CB2A07D929003CC974 /* ViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ViewController.storyboard; sourceTree = "<group>"; };
 		8715D2CF2A07DCFC003CC974 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		8715D2D22A07DDBB003CC974 /* SlidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingView.swift; sourceTree = "<group>"; };
 		8715D2DC2A07ECA1003CC974 /* RemoteHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteHeader.swift; sourceTree = "<group>"; };
@@ -90,6 +94,11 @@
 		877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Extensions.swift"; sourceTree = "<group>"; };
 		877822DE2A0289CD003C74B7 /* enum HostState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "enum HostState.swift"; sourceTree = "<group>"; };
 		877822F02A035037003C74B7 /* CameraInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInput.swift; sourceTree = "<group>"; };
+		877A8F122A0BBA9500484D46 /* CallCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCenter.swift; sourceTree = "<group>"; };
+		877A8F422A0CAC5400484D46 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		877A8F472A0CACE700484D46 /* FirestoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreData.swift; sourceTree = "<group>"; };
+		877A8F4B2A0CAD3300484D46 /* FirebaseApis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseApis.swift; sourceTree = "<group>"; };
+		877A8F4F2A0CB66A00484D46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		878801BF2A09256500EF524A /* JsonHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonHandler.swift; sourceTree = "<group>"; };
 		878801C12A0936B000EF524A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		878801C32A0A1AB400EF524A /* CameraActionViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActionViewTest.swift; sourceTree = "<group>"; };
@@ -97,25 +106,23 @@
 		878801D22A0A607100EF524A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SeagreenLiveChat/Info.plist; sourceTree = SOURCE_ROOT; };
 		8788021B2A0A612B00EF524A /* SeagreenLiveChat_bridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeagreenLiveChat_bridgingHeader.h; sourceTree = "<group>"; };
 		8788021D2A0A633A00EF524A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8788021F2A0A656A00EF524A /* AgoraChatCallKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgoraChatCallKitManager.swift; sourceTree = "<group>"; };
 		878802212A0A6AED00EF524A /* UserInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoStore.swift; sourceTree = "<group>"; };
-		878802232A0A6C5500EF524A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		878802372A0A6E6100EF524A /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		8788023C2A0A72A100EF524A /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		878802442A0A72F500EF524A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8788024F2A0A931B00EF524A /* CloudFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFunctions.swift; sourceTree = "<group>"; };
+		87981FC32A0CBA7600705BAC /* CallProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallProvider.swift; sourceTree = "<group>"; };
 		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
 		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
 		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		87A2D00829FFA1E200AEAB4D /* LiveChatAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatAlert.swift; sourceTree = "<group>"; };
 		87A2D00B29FFA26500AEAB4D /* AVPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPermissionManager.swift; sourceTree = "<group>"; };
 		87A2D00F29FFAD4000AEAB4D /* ChannelMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMessage.swift; sourceTree = "<group>"; };
-		87A2D01229FFB7BA00AEAB4D /* AgoraTokenApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraTokenApi.swift; sourceTree = "<group>"; };
+		87A2D01229FFB7BA00AEAB4D /* CloudFunctionApis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFunctionApis.swift; sourceTree = "<group>"; };
 		87A2D01629FFB7E400AEAB4D /* GetApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApiProtocol.swift; sourceTree = "<group>"; };
-		87A2D0232A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SeagreenLiveChat.xcdatamodel; sourceTree = "<group>"; };
 		87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeagreenLiveChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeagreenLiveChatApp.swift; sourceTree = "<group>"; };
-		87EFE60929FE7B020020B2A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		87EFE60929FE7B020020B2A9 /* VideoChatScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatScreen.swift; sourceTree = "<group>"; };
 		87EFE60B29FE7B040020B2A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		87EFE60D29FE7B040020B2A9 /* SeagreenLiveChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SeagreenLiveChat.entitlements; sourceTree = "<group>"; };
 		87EFE60F29FE7B040020B2A9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -123,8 +130,6 @@
 		87F572122A0B616E004FCEC3 /* AgoraTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraTokenRepository.swift; sourceTree = "<group>"; };
 		87F572142A0B61B8004FCEC3 /* CloudCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudCodable.swift; sourceTree = "<group>"; };
 		87F5721A2A0B8494004FCEC3 /* LiveChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChat.swift; sourceTree = "<group>"; };
-		87F8A0AB66F8CD1E7A6B15BE /* Pods-SeagreenLiveChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeagreenLiveChat.release.xcconfig"; path = "Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat.release.xcconfig"; sourceTree = "<group>"; };
-		BBD4AD27CDF9645D9BC30221 /* Pods-SeagreenLiveChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeagreenLiveChat.debug.xcconfig"; path = "Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,24 +137,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87981FC62A0CE41F00705BAC /* FirebaseMessaging in Frameworks */,
+				877A8F462A0CACA100484D46 /* FirebaseFirestoreSwift in Frameworks */,
 				87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */,
 				8788022F2A0A6D0000EF524A /* FirebaseFunctions in Frameworks */,
-				34D5B39FA45695F41D6D8A20 /* Pods_SeagreenLiveChat.framework in Frameworks */,
 				878802272A0A6D0000EF524A /* FirebaseAnalytics in Frameworks */,
+				877A8F1B2A0BE91200484D46 /* RtcBasic in Frameworks */,
+				877A8F4E2A0CB06200484D46 /* FirebaseAuth in Frameworks */,
+				877A8F4A2A0CACFB00484D46 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7A0CF12612B36AB23335E01B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2897234FB6D086180846C289 /* Pods_SeagreenLiveChat.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		8715D2CD2A07DCE2003CC974 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +194,6 @@
 			children = (
 				8715D2E72A08D0B6003CC974 /* AgoraRtm.swift */,
 				8715D2E82A08D0B6003CC974 /* AgoraRtc.swift */,
-				8788021F2A0A656A00EF524A /* AgoraChatCallKitManager.swift */,
 				878802212A0A6AED00EF524A /* UserInfoStore.swift */,
 			);
 			path = Agora;
@@ -227,6 +227,22 @@
 			path = CameraInputSource;
 			sourceTree = "<group>";
 		};
+		877A8F112A0BBA8700484D46 /* CallCenter */ = {
+			isa = PBXGroup;
+			children = (
+				877A8F122A0BBA9500484D46 /* CallCenter.swift */,
+				87981FC32A0CBA7600705BAC /* CallProvider.swift */,
+			);
+			path = CallCenter;
+			sourceTree = "<group>";
+		};
+		877A8F442A0CACA100484D46 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		878802302A0A6D0A00EF524A /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +269,8 @@
 			isa = PBXGroup;
 			children = (
 				8788024F2A0A931B00EF524A /* CloudFunctions.swift */,
+				877A8F422A0CAC5400484D46 /* Models.swift */,
+				877A8F472A0CACE700484D46 /* FirestoreData.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -303,8 +321,8 @@
 		87A2D00129FF9F8000AEAB4D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				877A8F4F2A0CB66A00484D46 /* GoogleService-Info.plist */,
 				87EFE60B29FE7B040020B2A9 /* Assets.xcassets */,
-				878802232A0A6C5500EF524A /* GoogleService-Info.plist */,
 				87A2D00229FF9F9300AEAB4D /* Constants.swift */,
 				8788021B2A0A612B00EF524A /* SeagreenLiveChat_bridgingHeader.h */,
 			);
@@ -323,7 +341,7 @@
 		87A2D00529FFA1B900AEAB4D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				87EFE60929FE7B020020B2A9 /* ContentView.swift */,
+				87EFE60929FE7B020020B2A9 /* VideoChatScreen.swift */,
 				87EFE63C29FE7CBE0020B2A9 /* LiveChatViewController */,
 				8715D2C92A07B175003CC974 /* CustomVideoSourcePreview.swift */,
 			);
@@ -355,7 +373,8 @@
 			children = (
 				878802462A0A731C00EF524A /* MethodProtocol */,
 				8788023B2A0A729500EF524A /* ApiModels */,
-				87A2D01229FFB7BA00AEAB4D /* AgoraTokenApi.swift */,
+				87A2D01229FFB7BA00AEAB4D /* CloudFunctionApis.swift */,
+				877A8F4B2A0CAD3300484D46 /* FirebaseApis.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -366,7 +385,7 @@
 				87EFE60629FE7B020020B2A9 /* SeagreenLiveChat */,
 				87EFE60529FE7B020020B2A9 /* Products */,
 				A852ADED905112A68DF5C286 /* Pods */,
-				7A0CF12612B36AB23335E01B /* Frameworks */,
+				877A8F442A0CACA100484D46 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -381,6 +400,7 @@
 		87EFE60629FE7B020020B2A9 /* SeagreenLiveChat */ = {
 			isa = PBXGroup;
 			children = (
+				877A8F112A0BBA8700484D46 /* CallCenter */,
 				878801D22A0A607100EF524A /* Info.plist */,
 				878802312A0A6D2000EF524A /* Domain */,
 				878802302A0A6D0A00EF524A /* Core */,
@@ -389,7 +409,6 @@
 				87EFE60729FE7B020020B2A9 /* SeagreenLiveChatApp.swift */,
 				87EFE60D29FE7B040020B2A9 /* SeagreenLiveChat.entitlements */,
 				87EFE60E29FE7B040020B2A9 /* Preview Content */,
-				87A2D0222A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld */,
 				8788021D2A0A633A00EF524A /* AppDelegate.swift */,
 				87F5721A2A0B8494004FCEC3 /* LiveChat.swift */,
 			);
@@ -409,7 +428,6 @@
 			children = (
 				87EFE63D29FE7CD10020B2A9 /* ViewController.swift */,
 				87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */,
-				8715D2CB2A07D929003CC974 /* ViewController.storyboard */,
 			);
 			path = LiveChatViewController;
 			sourceTree = "<group>";
@@ -417,8 +435,6 @@
 		A852ADED905112A68DF5C286 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BBD4AD27CDF9645D9BC30221 /* Pods-SeagreenLiveChat.debug.xcconfig */,
-				87F8A0AB66F8CD1E7A6B15BE /* Pods-SeagreenLiveChat.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -430,12 +446,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87EFE61329FE7B040020B2A9 /* Build configuration list for PBXNativeTarget "SeagreenLiveChat" */;
 			buildPhases = (
-				6AEF08A32F1C85DE57A08D3B /* [CP] Check Pods Manifest.lock */,
 				87EFE60029FE7B020020B2A9 /* Sources */,
 				87EFE60129FE7B020020B2A9 /* Frameworks */,
 				87EFE60229FE7B020020B2A9 /* Resources */,
-				C55E4412BB5FB1FF81018C75 /* [CP] Embed Pods Frameworks */,
-				8D1F686A0D1AF1EA161E9C67 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -446,6 +459,11 @@
 				87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */,
 				878802262A0A6D0000EF524A /* FirebaseAnalytics */,
 				8788022E2A0A6D0000EF524A /* FirebaseFunctions */,
+				877A8F1A2A0BE91200484D46 /* RtcBasic */,
+				877A8F452A0CACA100484D46 /* FirebaseFirestoreSwift */,
+				877A8F492A0CACFB00484D46 /* FirebaseFirestore */,
+				877A8F4D2A0CB06200484D46 /* FirebaseAuth */,
+				87981FC52A0CE41F00705BAC /* FirebaseMessaging */,
 			);
 			productName = SeagreenLiveChat;
 			productReference = 87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */;
@@ -480,6 +498,7 @@
 			packageReferences = (
 				87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */,
 				878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				877A8F192A0BE91100484D46 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */,
 			);
 			productRefGroup = 87EFE60529FE7B020020B2A9 /* Products */;
 			projectDirPath = "";
@@ -496,72 +515,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				87EFE61029FE7B040020B2A9 /* Preview Assets.xcassets in Resources */,
-				878802242A0A6C5500EF524A /* GoogleService-Info.plist in Resources */,
 				87EFE60C29FE7B040020B2A9 /* Assets.xcassets in Resources */,
-				8715D2CC2A07D929003CC974 /* ViewController.storyboard in Resources */,
+				877A8F502A0CB66A00484D46 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		6AEF08A32F1C85DE57A08D3B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SeagreenLiveChat-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8D1F686A0D1AF1EA161E9C67 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C55E4412BB5FB1FF81018C75 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SeagreenLiveChat/Pods-SeagreenLiveChat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		87EFE60029FE7B020020B2A9 /* Sources */ = {
@@ -579,6 +538,7 @@
 				878802452A0A72F500EF524A /* String+Extension.swift in Sources */,
 				877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */,
 				8788021E2A0A633A00EF524A /* AppDelegate.swift in Sources */,
+				877A8F4C2A0CAD3300484D46 /* FirebaseApis.swift in Sources */,
 				878802502A0A931B00EF524A /* CloudFunctions.swift in Sources */,
 				8715D2EA2A08D0B6003CC974 /* AgoraRtc.swift in Sources */,
 				8715D2E52A07FD8B003CC974 /* MoveButton.swift in Sources */,
@@ -588,19 +548,20 @@
 				87A2D00C29FFA26500AEAB4D /* AVPermissionManager.swift in Sources */,
 				8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */,
 				878801C62A0A1B4800EF524A /* VideoChat.swift in Sources */,
+				877A8F432A0CAC5400484D46 /* Models.swift in Sources */,
 				878802222A0A6AED00EF524A /* UserInfoStore.swift in Sources */,
 				87F572152A0B61B8004FCEC3 /* CloudCodable.swift in Sources */,
 				87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */,
-				878802202A0A656A00EF524A /* AgoraChatCallKitManager.swift in Sources */,
 				8715D2F22A08D894003CC974 /* LiveChatHeader.swift in Sources */,
-				87EFE60A29FE7B020020B2A9 /* ContentView.swift in Sources */,
-				87A2D01329FFB7BA00AEAB4D /* AgoraTokenApi.swift in Sources */,
+				87EFE60A29FE7B020020B2A9 /* VideoChatScreen.swift in Sources */,
+				87A2D01329FFB7BA00AEAB4D /* CloudFunctionApis.swift in Sources */,
 				8715D2EE2A08D3CB003CC974 /* CameraChatView.swift in Sources */,
 				87F572132A0B616E004FCEC3 /* AgoraTokenRepository.swift in Sources */,
 				8715D2DF2A07ED24003CC974 /* Colors.swift in Sources */,
 				8715D2E92A08D0B6003CC974 /* AgoraRtm.swift in Sources */,
 				87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */,
 				8715D2DD2A07ECA1003CC974 /* RemoteHeader.swift in Sources */,
+				877A8F482A0CACE700484D46 /* FirestoreData.swift in Sources */,
 				8715D2D02A07DCFC003CC974 /* Images.swift in Sources */,
 				8715D2F42A08DD91003CC974 /* LiveChatHeaderStreaming.swift in Sources */,
 				8715D2F02A08D428003CC974 /* HeaderTest.swift in Sources */,
@@ -608,13 +569,14 @@
 				878801C22A0936B000EF524A /* Logger.swift in Sources */,
 				87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */,
 				87A2D01029FFAD4000AEAB4D /* ChannelMessage.swift in Sources */,
+				877A8F132A0BBA9500484D46 /* CallCenter.swift in Sources */,
 				87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */,
 				8788023D2A0A72A100EF524A /* Token.swift in Sources */,
 				877822DA2A0282CD003C74B7 /* Bundle + Extensions.swift in Sources */,
 				87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */,
 				877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */,
+				87981FC42A0CBA7600705BAC /* CallProvider.swift in Sources */,
 				87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */,
-				87A2D0242A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld in Sources */,
 				8715D2D32A07DDBB003CC974 /* SlidingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -733,7 +695,6 @@
 		};
 		87EFE61429FE7B040020B2A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BBD4AD27CDF9645D9BC30221 /* Pods-SeagreenLiveChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -747,6 +708,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SeagreenLiveChat/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera usage is needed";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone usage is needed";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -764,7 +726,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreen.livechat.SeagreenLiveChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreenlivevideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -777,7 +739,6 @@
 		};
 		87EFE61529FE7B040020B2A9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87F8A0AB66F8CD1E7A6B15BE /* Pods-SeagreenLiveChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -791,6 +752,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SeagreenLiveChat/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera usage is needed";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone usage is needed";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -808,7 +770,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreen.livechat.SeagreenLiveChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreenlivevideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -842,6 +804,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		877A8F192A0BE91100484D46 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AgoraIO/AgoraRtcEngine_iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -861,6 +831,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		877A8F1A2A0BE91200484D46 /* RtcBasic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 877A8F192A0BE91100484D46 /* XCRemoteSwiftPackageReference "AgoraRtcEngine_iOS" */;
+			productName = RtcBasic;
+		};
+		877A8F452A0CACA100484D46 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		877A8F492A0CACFB00484D46 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		877A8F4D2A0CB06200484D46 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		878802262A0A6D0000EF524A /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -871,25 +861,17 @@
 			package = 878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFunctions;
 		};
+		87981FC52A0CE41F00705BAC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 878802252A0A6D0000EF524A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 87A2CFF929FF9EB800AEAB4D /* XCRemoteSwiftPackageReference "AgoraRtm_iOS" */;
 			productName = AgoraRtmKit;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		87A2D0222A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				87A2D0232A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodel */,
-			);
-			currentVersion = 87A2D0232A000AF700AEAB4D /* SeagreenLiveChat.xcdatamodel */;
-			path = SeagreenLiveChat.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 87EFE5FC29FE7B020020B2A9 /* Project object */;
 }

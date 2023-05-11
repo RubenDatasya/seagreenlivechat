@@ -7,19 +7,20 @@
 
 import SwiftUI
 
-struct ContentView: View {
+public struct VideoChatScreen: View {
 
     @StateObject var viewModel = LiveChatViewModel()
 
+    public init() {    }
 
-    var body: some View {
+    public var body: some View {
+        ZStack {
+            CameraChatView(viewModel: viewModel)
+                .ignoresSafeArea()
+                .overlay(alignment: .top,content: Header)
+                .overlay(alignment: .bottomLeading, content: CommandSlides)
 
-//        LiveChatScreen()
-//            .environmentObject(viewModel)
-        CameraChatView(viewModel: viewModel)
-            .ignoresSafeArea()
-            .overlay(alignment: .top,content: Header)
-            .overlay(alignment: .bottomLeading, content: CommandSlides)
+        }
     }
 
 
@@ -89,7 +90,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        VideoChatScreen()
     }
 }
 
