@@ -50,7 +50,6 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     @Published var hostState: HostState = .disconnected
 
     let callProvider = CallProvider()
-    let callCommand = CallRequestApi()
 
     let cameraInput : CameraControlProtocol & ResetCameraControlProtocol = CameraInput()
 

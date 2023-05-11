@@ -12,6 +12,7 @@ class CallProvider: NSObject,  CXProviderDelegate {
 
     var provider: CXProvider
     let callController: CXCallController
+    private let callCommand = CallRequestApi()
 
     override init() {
         let config = CallKit.CXProviderConfiguration()
@@ -27,19 +28,16 @@ class CallProvider: NSObject,  CXProviderDelegate {
     }
 
 
-    func startCall(to contactName: String) {
+    func startCall(to contactName: String) async throws {
+
+        let isRequestSent =  await callCommand.executeCall()
+
         let callId = UUID()
         let recipient = CXHandle(type: .generic, value: contactName)
         let startAction = CXStartCallAction(call: callId, handle: recipient)
         let transaction = CXTransaction(action: startAction)
 
-        callController.request(transaction) { error in
-            if let error =  error {
-                print("startCall", error.localizedDescription)
-            } else {
-                print("startCall", "failed")
-            }
-        }
+        try await callController.request(transaction)
     }
 
     func handleIncomingCall(from : String) {

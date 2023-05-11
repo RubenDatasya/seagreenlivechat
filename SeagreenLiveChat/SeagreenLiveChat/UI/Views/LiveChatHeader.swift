@@ -55,9 +55,10 @@ struct LiveChatHeader: View {
         if LiveChat.shared.isDemo() {
             Button {
                 Task {
-                    let isRequestSent =  await viewModel.callCommand.executeCall()
-                    if isRequestSent {
-                        viewModel.callProvider.startCall(to: "")
+                    do {
+                        try await viewModel.callProvider.startCall(to: "")
+                    } catch {
+                        //Handle startCall error
                     }
                 }
             } label: {
