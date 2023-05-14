@@ -1,28 +1,19 @@
 
 const admin = require('firebase-admin');
-const { v4: uuidv4 } = require('uuid');
 const apn = require('apn');
 const { getCertificatesOptions } = require('./Utils')
 
 const LOG_TAG =  "PushHandlers"
 
 
-function sendVoipPushToApns(deviceToken,callerid,channel, callername, bundleid, callState) {
+function sendVoipPushToApns(deviceToken,payload) {
     console.log(LOG_TAG + " sendVoipPushToApns");
       var apnProvider = new apn.Provider(getCertificatesOptions());
       var note = new apn.Notification();
-      note.body = "Call entering";
-      note.topic = `${bundleid}.voip`;
 
-      note.payload = {
-          "aps": { "content-available": 1 },
-          "handle"    : "1111111",
-          "callerName": callername,
-          "callerId"  : callerid,
-          "channel"   : channel,
-          "bundleId"  : bundleid,
-          "callState" : callState
-      };
+      note.body = "Call entering";
+      note.topic = `${payload.bundleId}.voip`;
+      note.payload = payload
 
       apnProvider.send(note, deviceToken).then( (result) => {
          console.log(LOG_TAG + " Push send result: " + result)

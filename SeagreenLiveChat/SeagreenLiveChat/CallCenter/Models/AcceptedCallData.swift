@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct AnswerCallData {
+struct AcceptedCallData {
     var bundleId  : String
     var channel   : String
+    var callId    : UUID
     var callerid  : String
-    var callState : CallState = .answered
+    var calleeid  : String
 }

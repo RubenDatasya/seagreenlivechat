@@ -25,10 +25,15 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>SeagreenDirectory.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>SeagreenLiveChat.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<key>Stream (Playground) 1.xcscheme</key>
 		<dict>

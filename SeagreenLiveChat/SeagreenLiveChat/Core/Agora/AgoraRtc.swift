@@ -25,7 +25,7 @@ class AgoraRtc: NSObject {
 
     lazy var tokenRepository = AgoraTokenRepository()
 
-    private var audioEnabled: Bool = true
+    private var audioEnabled: Bool = false
 
     private override init() {}
 

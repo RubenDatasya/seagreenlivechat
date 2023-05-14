@@ -7,8 +7,8 @@ const pushCollection = 'pushtokens';
 const LOG_TAG =  "CallHandlers"
 
 const callState = {
-    pending     : 'PENDING',
-    answered    : 'ANSWERED',
+    incoming    : 'INCOMING',
+    accepted    : 'ACCEPTED',
     declined    : 'DECLINED',
     notAnswered : 'NOT_ANSWERED',
     ended       : 'ENDED'
@@ -16,10 +16,10 @@ const callState = {
 
 const getCallState = (from) => {
     switch (from) {
-        case callState.answered:
-            return callState.answered
-        case callState.pending:
-            return callState.pending
+        case callState.accepted:
+            return callState.accepted
+        case callState.incoming:
+            return callState.incoming
         case callState.declined:
             return callState.declined
         case callState.notAnswered:
@@ -27,7 +27,7 @@ const getCallState = (from) => {
         case callState.ended:
             return callState.ended
         default:
-            return callState.pending
+            return callState.incoming
     }
 }
 
@@ -36,12 +36,84 @@ const findPushReceiver = (id) => {
     return tokensPath
 }
 
-const handlePush = (targetDeviceOS,calleeToken,callerid,channel, callername, bundleId, callState) => {
+const handlePush = (
+    targetDeviceOS,
+    deviceToken, 
+    callerid, 
+    calleeId, 
+    channel, 
+    callername, 
+    callId,
+    bundleId ) => {
     if(targetDeviceOS == "iOS"){
-        sendVoipPushToApns(calleeToken,callerid,channel, callername, bundleId, callState)
-       }else if (targetDeviceOS == "Android"){
+
+        var payload = {
+            "aps": { "content-available": 1 },
+            "callerName": callername,
+            "callerId"  : callerid,
+            "calleeId"  : calleeId,
+            "channel"   : channel,
+            "bundleId"  : bundleId,
+            "callId"    : callId,
+            "callState" : callState.incoming
+        };
+
+        sendVoipPushToApns(deviceToken,payload)
+       } else if (targetDeviceOS == "Android"){
+         sendPushToFirebase(deviceToken,callerid,channel)
+       }
+}
+
+const handleAnswerPush = (
+        targetDeviceOS,
+        deviceToken,
+        channel ,
+        otherUser,
+        callId,
+        bundleId
+      ) => {
+    if(targetDeviceOS == "iOS"){
+
+        var payload = {
+            "aps": { "content-available": 1 },
+            "otherUser" : otherUser,
+            "channel"   : channel,
+            "bundleId"  : bundleId,
+            "callId"    : callId,
+            "callState" : callState.accepted
+        };
+
+        sendVoipPushToApns(deviceToken,payload)
+
+       } else if (targetDeviceOS == "Android"){
+
          sendPushToFirebase(calleeToken,callerid,channel)
        }
+}
+
+const handleEndPush = (
+    targetDeviceOS,
+    deviceToken,
+    callerId,
+    calleeId,
+    bundleId
+  ) => {
+if(targetDeviceOS == "iOS"){
+
+    var payload = {
+        "aps": { "content-available": 1 },
+        "callerId" : callerId,
+        "calleeId"   : calleeId,
+        "bundleId"  : bundleId,
+        "callState" : callState.ended
+    };
+
+    sendVoipPushToApns(deviceToken,payload)
+
+   } else if (targetDeviceOS == "Android"){
+
+     sendPushToFirebase(calleeToken,callerid,channel)
+   }
 }
 
 
@@ -49,13 +121,17 @@ const callRequest = functions.https.onCall( async (data) => {
 
     console.log(LOG_TAG + " callRequest data " + data)
 
-    const calleeid   = data.calleeId;
+    const callId     = data.callId
+    const calleeid   = data.calleeId
     const callerid   = data.callerId
     const callername = data.callerName
     const calleename = data.calleeName
     const channel    = data.channel
     const bundleId   = data.bundleId
     const tokensPath = findPushReceiver(calleeid)
+
+    console.log(LOG_TAG + "callRequest  callid: ", callId)
+
 
     const promise = tokensPath.then(snapshot => {
         console.log(LOG_TAG + " doc: ", snapshot.docs.length)
@@ -66,31 +142,37 @@ const callRequest = functions.https.onCall( async (data) => {
             const targetDeviceOS = data["deviceOS"]
             console.log(LOG_TAG + " receiverToken(callee): ", calleeToken)
 
-            handlePush(targetDeviceOS,
+            handlePush( targetDeviceOS,
                         calleeToken,
                         callerid,
+                        calleeid,
                         channel,
                         calleename,
-                        bundleId,
-                        callState.pending)
+                        callId,
+                        bundleId)
         })
     });
     promise.catch(error => {
-       // Need to have better error management
         console.error(error);
     });
     await Promise.all([promise])
 })
 
-const callAnsweredRequest =  functions.https.onCall(async(data) => {
+const callAcceptedRequest =  functions.https.onCall(async(data) => {
 
     const callerId  = data.callerId
+    const callId    = data.callId
     const channel   = data.channel
     const bundleId  = data.bundleId
+    const calleeId  = data.calleeId
     const callState = getCallState(data.callState)
-    const tokensPath = findPushReceiver(callerId)
+    const callerTokensPath = findPushReceiver(callerId)
+    const calleeTokensPath = findPushReceiver(calleeId)
 
-    const promise = tokensPath.then(snapshot => {
+    console.log(LOG_TAG + "callAcceptedRequest  callid: ", callId)
+
+
+    const callerPromise = callerTokensPath.then(snapshot => {
         console.log(LOG_TAG + " doc: ", snapshot.docs.length)
         snapshot.docs.forEach( doc => {
             const data           = doc.data()
@@ -98,25 +180,102 @@ const callAnsweredRequest =  functions.https.onCall(async(data) => {
             const targetDeviceOS = data["deviceOS"]
             console.log(LOG_TAG + " receiverToken(caller): ", deviceToken)
 
-            handlePush(targetDeviceOS,
-                        deviceToken,
-                        callerId,
-                        channel,
-                        '',
-                        bundleId,
-                        callState)
+            handleAnswerPush(targetDeviceOS,
+                            deviceToken,
+                            channel,
+                            calleeId,
+                            callId,
+                            bundleId)
         })
     });
 
-    promise.catch(error => {
-       // Need to have better error management
-        console.error(error);
+    const calleePromise = calleeTokensPath.then(snapshot => {
+        console.log(LOG_TAG + " doc: ", snapshot.docs.length)
+        snapshot.docs.forEach( doc => {
+            const data           = doc.data()
+            const deviceToken    = data["pushToken"]
+            const targetDeviceOS = data["deviceOS"]
+            console.log(LOG_TAG + " receiverToken(caller): ", deviceToken)
+
+            handleAnswerPush(
+                targetDeviceOS,
+                deviceToken,
+                channel,
+                callerId,
+                callId,
+                bundleId)
+        })
     });
-    await Promise.all([promise])
+
+
+
+    callerPromise.catch(error => {
+        console.error(`callerPromise ${error}`);
+    });
+
+    calleePromise.catch(error => {
+        console.error(`calleePromise ${error}`);
+    });
+
+    await Promise.all([callerPromise, callerPromise])
+
+})
+
+const endCallRequest =  functions.https.onCall(async(data) => {
+
+    const callerId  = data.callerId
+    const bundleId  = data.bundleId
+    const calleeId  = data.calleeId
+    const callerTokensPath = findPushReceiver(callerId)
+    const calleeTokensPath = findPushReceiver(calleeId)
+
+    const callerPromise = callerTokensPath.then(snapshot => {
+        console.log(LOG_TAG + " endCallRequest  doc: ", snapshot.docs.length)
+        snapshot.docs.forEach( doc => {
+            const data           = doc.data()
+            const deviceToken    = data["pushToken"]
+            const targetDeviceOS = data["deviceOS"]
+            console.log(LOG_TAG + " receiverToken(caller): ", deviceToken)
+
+            handleEndPush(targetDeviceOS,
+                            deviceToken,
+                            callerId,
+                            calleeId,
+                            bundleId)
+        })
+    });
+
+    const calleePromise = calleeTokensPath.then(snapshot => {
+        console.log(LOG_TAG + " doc: ", snapshot.docs.length)
+        snapshot.docs.forEach( doc => {
+            const data           = doc.data()
+            const deviceToken    = data["pushToken"]
+            const targetDeviceOS = data["deviceOS"]
+            console.log(LOG_TAG + " receiverToken(caller): ", deviceToken)
+
+            handleEndPush(
+                targetDeviceOS,
+                deviceToken,
+                callerId,
+                calleeId,
+                bundleId)
+        })
+    });
+
+    callerPromise.catch(error => {
+        console.error(`callerPromise ${error}`);
+    });
+
+    calleePromise.catch(error => {
+        console.error(`calleePromise ${error}`);
+    });
+
+    await Promise.all([callerPromise, callerPromise])
 
 })
 
 module.exports = {
     callRequest,
-    callAnsweredRequest
+    callAcceptedRequest,
+    endCallRequest
 }

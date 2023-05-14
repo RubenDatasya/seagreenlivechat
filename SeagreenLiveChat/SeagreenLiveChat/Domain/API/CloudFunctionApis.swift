@@ -12,9 +12,7 @@ class AgoraTokenApi: GetApiProtocol {
     let endpoint: String = .firebase
 }
 
-
 class CallRequestApi: CommandRequestProtocol {
-
     @discardableResult
     func executeCall(startCallData: StartCallData) async  -> Bool {
         do {
@@ -29,12 +27,15 @@ class CallRequestApi: CommandRequestProtocol {
 
 class AnswerRequestApi: CommandRequestProtocol {
     @discardableResult
-    func answerCall(_ callData: CallData, callState: CallState = .answered) async -> Bool {
+    func answerCall(_ callData: CallData, callState: CallStatus = .accepted) async -> Bool {
         do {
-            let result = try await command(.callAnswered(answerCallData: .init(
+            let result = try await command(.callAccepted(answerCallData: .init(
                 bundleId: callData.bundleId,
                 channel : callData.channel,
-                callerid: callData.callerid)))
+                callId  : callData.callId,
+                callerid: callData.callerid,
+                calleeid: callData.calleeid))
+            )
             return result
         } catch {
             print("answerCall", error)
@@ -42,3 +43,19 @@ class AnswerRequestApi: CommandRequestProtocol {
         }
     }
 }
+
+class EndCallRequestApi: CommandRequestProtocol {
+    @discardableResult
+    func endCall(_ callData: EndCallData) async -> Bool {
+        do {
+            let result = try await command(.endCallRequest(endCallData: callData))
+            return result
+        } catch {
+            print("answerCall", error)
+            return false
+        }
+    }
+}
+
+
+

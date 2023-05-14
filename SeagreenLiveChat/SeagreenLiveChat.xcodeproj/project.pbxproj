@@ -29,7 +29,6 @@
 		877822DA2A0282CD003C74B7 /* Bundle + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */; };
 		877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822DE2A0289CD003C74B7 /* enum HostState.swift */; };
 		877822F12A035037003C74B7 /* CameraInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F02A035037003C74B7 /* CameraInput.swift */; };
-		877A8F132A0BBA9500484D46 /* CallCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A8F122A0BBA9500484D46 /* CallCenter.swift */; };
 		877A8F1B2A0BE91200484D46 /* RtcBasic in Frameworks */ = {isa = PBXBuildFile; productRef = 877A8F1A2A0BE91200484D46 /* RtcBasic */; };
 		877A8F432A0CAC5400484D46 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A8F422A0CAC5400484D46 /* Models.swift */; };
 		877A8F462A0CACA100484D46 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 877A8F452A0CACA100484D46 /* FirebaseFirestoreSwift */; };
@@ -50,16 +49,19 @@
 		8788023D2A0A72A100EF524A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788023C2A0A72A100EF524A /* Token.swift */; };
 		878802452A0A72F500EF524A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878802442A0A72F500EF524A /* String+Extension.swift */; };
 		878802502A0A931B00EF524A /* CloudFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788024F2A0A931B00EF524A /* CloudFunctions.swift */; };
-		87981FC42A0CBA7600705BAC /* CallProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FC32A0CBA7600705BAC /* CallProvider.swift */; };
 		87981FC62A0CE41F00705BAC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 87981FC52A0CE41F00705BAC /* FirebaseMessaging */; };
-		87981FC92A0CFAF300705BAC /* CallNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FC82A0CFAF300705BAC /* CallNotification.swift */; };
-		87981FCB2A0CFBED00705BAC /* CallNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FCA2A0CFBED00705BAC /* CallNotificationObserver.swift */; };
-		87981FCD2A0CFDAE00705BAC /* NotificationCenter + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FCC2A0CFDAE00705BAC /* NotificationCenter + Extension.swift */; };
 		87981FCF2A0D025E00705BAC /* StartCallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FCE2A0D025E00705BAC /* StartCallData.swift */; };
 		87981FD12A0D03E500705BAC /* UserDefaults + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FD02A0D03E500705BAC /* UserDefaults + Extensions.swift */; };
 		87981FD32A0D082800705BAC /* CallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FD22A0D082800705BAC /* CallData.swift */; };
-		87981FD52A10AC5E00705BAC /* CallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FD42A10AC5E00705BAC /* CallState.swift */; };
-		87981FDA2A10BFBD00705BAC /* AnswerCallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FD92A10BFBD00705BAC /* AnswerCallData.swift */; };
+		87981FDA2A10BFBD00705BAC /* AcceptedCallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FD92A10BFBD00705BAC /* AcceptedCallData.swift */; };
+		87981FDC2A10E8DA00705BAC /* EndCallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FDB2A10E8DA00705BAC /* EndCallData.swift */; };
+		87981FDF2A11203400705BAC /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FDD2A11203400705BAC /* CallManager.swift */; };
+		87981FE02A11203400705BAC /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FDE2A11203400705BAC /* Call.swift */; };
+		87981FE22A1120C900705BAC /* ProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FE12A1120C900705BAC /* ProviderDelegate.swift */; };
+		87981FE42A1120EF00705BAC /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FE32A1120EF00705BAC /* Audio.swift */; };
+		87981FEC2A112DF100705BAC /* CallDirectoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FEB2A112DF100705BAC /* CallDirectoryHandler.swift */; };
+		87981FF02A112DF100705BAC /* SeagreenDirectory.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 87981FE92A112DF100705BAC /* SeagreenDirectory.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		87981FF62A11328F00705BAC /* CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87981FF52A11328F00705BAC /* CallStatus.swift */; };
 		87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */; };
 		87A2CFFB29FF9EB800AEAB4D /* AgoraRtmKit in Frameworks */ = {isa = PBXBuildFile; productRef = 87A2CFFA29FF9EB800AEAB4D /* AgoraRtmKit */; };
 		87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */; };
@@ -78,6 +80,30 @@
 		87F572152A0B61B8004FCEC3 /* CloudCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F572142A0B61B8004FCEC3 /* CloudCodable.swift */; };
 		87F5721B2A0B8494004FCEC3 /* LiveChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5721A2A0B8494004FCEC3 /* LiveChat.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		87981FEE2A112DF100705BAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87EFE5FC29FE7B020020B2A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87981FE82A112DF100705BAC;
+			remoteInfo = SeagreenDirectory;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		87981FF42A112DF100705BAC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				87981FF02A112DF100705BAC /* SeagreenDirectory.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8715D2C92A07B175003CC974 /* CustomVideoSourcePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoSourcePreview.swift; sourceTree = "<group>"; };
@@ -102,7 +128,6 @@
 		877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Extensions.swift"; sourceTree = "<group>"; };
 		877822DE2A0289CD003C74B7 /* enum HostState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "enum HostState.swift"; sourceTree = "<group>"; };
 		877822F02A035037003C74B7 /* CameraInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInput.swift; sourceTree = "<group>"; };
-		877A8F122A0BBA9500484D46 /* CallCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCenter.swift; sourceTree = "<group>"; };
 		877A8F422A0CAC5400484D46 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		877A8F472A0CACE700484D46 /* FirestoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreData.swift; sourceTree = "<group>"; };
 		877A8F4B2A0CAD3300484D46 /* FirebaseApis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseApis.swift; sourceTree = "<group>"; };
@@ -118,15 +143,19 @@
 		8788023C2A0A72A100EF524A /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		878802442A0A72F500EF524A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8788024F2A0A931B00EF524A /* CloudFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFunctions.swift; sourceTree = "<group>"; };
-		87981FC32A0CBA7600705BAC /* CallProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallProvider.swift; sourceTree = "<group>"; };
-		87981FC82A0CFAF300705BAC /* CallNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallNotification.swift; sourceTree = "<group>"; };
-		87981FCA2A0CFBED00705BAC /* CallNotificationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallNotificationObserver.swift; sourceTree = "<group>"; };
-		87981FCC2A0CFDAE00705BAC /* NotificationCenter + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter + Extension.swift"; sourceTree = "<group>"; };
 		87981FCE2A0D025E00705BAC /* StartCallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCallData.swift; sourceTree = "<group>"; };
 		87981FD02A0D03E500705BAC /* UserDefaults + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Extensions.swift"; sourceTree = "<group>"; };
 		87981FD22A0D082800705BAC /* CallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallData.swift; sourceTree = "<group>"; };
-		87981FD42A10AC5E00705BAC /* CallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallState.swift; sourceTree = "<group>"; };
-		87981FD92A10BFBD00705BAC /* AnswerCallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerCallData.swift; sourceTree = "<group>"; };
+		87981FD92A10BFBD00705BAC /* AcceptedCallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedCallData.swift; sourceTree = "<group>"; };
+		87981FDB2A10E8DA00705BAC /* EndCallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallData.swift; sourceTree = "<group>"; };
+		87981FDD2A11203400705BAC /* CallManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
+		87981FDE2A11203400705BAC /* Call.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
+		87981FE12A1120C900705BAC /* ProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDelegate.swift; sourceTree = "<group>"; };
+		87981FE32A1120EF00705BAC /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		87981FE92A112DF100705BAC /* SeagreenDirectory.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SeagreenDirectory.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		87981FEB2A112DF100705BAC /* CallDirectoryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDirectoryHandler.swift; sourceTree = "<group>"; };
+		87981FED2A112DF100705BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87981FF52A11328F00705BAC /* CallStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallStatus.swift; sourceTree = "<group>"; };
 		87A2CFF729FF88D600AEAB4D /* ViewControllerDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerDecorator.swift; sourceTree = "<group>"; };
 		87A2CFFD29FF9EFF00AEAB4D /* LiveChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveChatViewModel.swift; sourceTree = "<group>"; };
 		87A2D00229FF9F9300AEAB4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -148,6 +177,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		87981FE62A112DF100705BAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87EFE60129FE7B020020B2A9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,10 +282,12 @@
 		877A8F112A0BBA8700484D46 /* CallCenter */ = {
 			isa = PBXGroup;
 			children = (
+				87981FF52A11328F00705BAC /* CallStatus.swift */,
+				87981FDE2A11203400705BAC /* Call.swift */,
+				87981FDD2A11203400705BAC /* CallManager.swift */,
 				87981FD82A10BFA900705BAC /* Models */,
-				877A8F122A0BBA9500484D46 /* CallCenter.swift */,
-				87981FC32A0CBA7600705BAC /* CallProvider.swift */,
-				87981FD42A10AC5E00705BAC /* CallState.swift */,
+				87981FE12A1120C900705BAC /* ProviderDelegate.swift */,
+				87981FE32A1120EF00705BAC /* Audio.swift */,
 			);
 			path = CallCenter;
 			sourceTree = "<group>";
@@ -275,7 +313,6 @@
 		878802312A0A6D2000EF524A /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				87981FC72A0CFAD500705BAC /* Notification */,
 				8788024C2A0A755D00EF524A /* Repository */,
 				878802352A0A6E4700EF524A /* Errors */,
 				87A2D01129FFB79F00AEAB4D /* API */,
@@ -327,24 +364,24 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		87981FC72A0CFAD500705BAC /* Notification */ = {
-			isa = PBXGroup;
-			children = (
-				87981FC82A0CFAF300705BAC /* CallNotification.swift */,
-				87981FCA2A0CFBED00705BAC /* CallNotificationObserver.swift */,
-				87981FCC2A0CFDAE00705BAC /* NotificationCenter + Extension.swift */,
-			);
-			path = Notification;
-			sourceTree = "<group>";
-		};
 		87981FD82A10BFA900705BAC /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				87981FD22A0D082800705BAC /* CallData.swift */,
 				87981FCE2A0D025E00705BAC /* StartCallData.swift */,
-				87981FD92A10BFBD00705BAC /* AnswerCallData.swift */,
+				87981FD92A10BFBD00705BAC /* AcceptedCallData.swift */,
+				87981FDB2A10E8DA00705BAC /* EndCallData.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		87981FEA2A112DF100705BAC /* SeagreenDirectory */ = {
+			isa = PBXGroup;
+			children = (
+				87981FEB2A112DF100705BAC /* CallDirectoryHandler.swift */,
+				87981FED2A112DF100705BAC /* Info.plist */,
+			);
+			path = SeagreenDirectory;
 			sourceTree = "<group>";
 		};
 		87A2CFFC29FF9EE700AEAB4D /* LiveChatScreen */ = {
@@ -421,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				87EFE60629FE7B020020B2A9 /* SeagreenLiveChat */,
+				87981FEA2A112DF100705BAC /* SeagreenDirectory */,
 				87EFE60529FE7B020020B2A9 /* Products */,
 				A852ADED905112A68DF5C286 /* Pods */,
 				877A8F442A0CACA100484D46 /* Frameworks */,
@@ -431,6 +469,7 @@
 			isa = PBXGroup;
 			children = (
 				87EFE60429FE7B020020B2A9 /* SeagreenLiveChat.app */,
+				87981FE92A112DF100705BAC /* SeagreenDirectory.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -480,6 +519,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		87981FE82A112DF100705BAC /* SeagreenDirectory */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87981FF12A112DF100705BAC /* Build configuration list for PBXNativeTarget "SeagreenDirectory" */;
+			buildPhases = (
+				87981FE52A112DF100705BAC /* Sources */,
+				87981FE62A112DF100705BAC /* Frameworks */,
+				87981FE72A112DF100705BAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SeagreenDirectory;
+			productName = SeagreenDirectory;
+			productReference = 87981FE92A112DF100705BAC /* SeagreenDirectory.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		87EFE60329FE7B020020B2A9 /* SeagreenLiveChat */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87EFE61329FE7B040020B2A9 /* Build configuration list for PBXNativeTarget "SeagreenLiveChat" */;
@@ -487,10 +543,12 @@
 				87EFE60029FE7B020020B2A9 /* Sources */,
 				87EFE60129FE7B020020B2A9 /* Frameworks */,
 				87EFE60229FE7B020020B2A9 /* Resources */,
+				87981FF42A112DF100705BAC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				87981FEF2A112DF100705BAC /* PBXTargetDependency */,
 			);
 			name = SeagreenLiveChat;
 			packageProductDependencies = (
@@ -517,6 +575,9 @@
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					87981FE82A112DF100705BAC = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					87EFE60329FE7B020020B2A9 = {
 						CreatedOnToolsVersion = 14.3;
 						LastSwiftMigration = 1430;
@@ -543,11 +604,19 @@
 			projectRoot = "";
 			targets = (
 				87EFE60329FE7B020020B2A9 /* SeagreenLiveChat */,
+				87981FE82A112DF100705BAC /* SeagreenDirectory */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		87981FE72A112DF100705BAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87EFE60229FE7B020020B2A9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -561,6 +630,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		87981FE52A112DF100705BAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87981FEC2A112DF100705BAC /* CallDirectoryHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87EFE60029FE7B020020B2A9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -571,14 +648,12 @@
 				877822F12A035037003C74B7 /* CameraInput.swift in Sources */,
 				8715D2F62A08EB0D003CC974 /* LiveChatScreen.swift in Sources */,
 				878802382A0A6E6100EF524A /* FirebaseError.swift in Sources */,
-				87981FCB2A0CFBED00705BAC /* CallNotificationObserver.swift in Sources */,
 				878801C42A0A1AB400EF524A /* CameraActionViewTest.swift in Sources */,
 				877822CB2A027BB7003C74B7 /* RTCLoginState.swift in Sources */,
+				87981FDC2A10E8DA00705BAC /* EndCallData.swift in Sources */,
 				878802452A0A72F500EF524A /* String+Extension.swift in Sources */,
-				87981FC92A0CFAF300705BAC /* CallNotification.swift in Sources */,
 				877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */,
 				8788021E2A0A633A00EF524A /* AppDelegate.swift in Sources */,
-				87981FCD2A0CFDAE00705BAC /* NotificationCenter + Extension.swift in Sources */,
 				877A8F4C2A0CAD3300484D46 /* FirebaseApis.swift in Sources */,
 				878802502A0A931B00EF524A /* CloudFunctions.swift in Sources */,
 				8715D2EA2A08D0B6003CC974 /* AgoraRtc.swift in Sources */,
@@ -591,6 +666,7 @@
 				8733E97E2A0153FE00DFDDF0 /* AgoraImprovements.swift in Sources */,
 				878801C62A0A1B4800EF524A /* VideoChat.swift in Sources */,
 				877A8F432A0CAC5400484D46 /* Models.swift in Sources */,
+				87981FE42A1120EF00705BAC /* Audio.swift in Sources */,
 				878802222A0A6AED00EF524A /* UserInfoStore.swift in Sources */,
 				87F572152A0B61B8004FCEC3 /* CloudCodable.swift in Sources */,
 				87EFE63E29FE7CD10020B2A9 /* ViewController.swift in Sources */,
@@ -598,11 +674,13 @@
 				87EFE60A29FE7B020020B2A9 /* VideoChatScreen.swift in Sources */,
 				87A2D01329FFB7BA00AEAB4D /* CloudFunctionApis.swift in Sources */,
 				8715D2EE2A08D3CB003CC974 /* CameraChatView.swift in Sources */,
-				87981FD52A10AC5E00705BAC /* CallState.swift in Sources */,
+				87981FE22A1120C900705BAC /* ProviderDelegate.swift in Sources */,
 				87F572132A0B616E004FCEC3 /* AgoraTokenRepository.swift in Sources */,
 				8715D2DF2A07ED24003CC974 /* Colors.swift in Sources */,
+				87981FF62A11328F00705BAC /* CallStatus.swift in Sources */,
 				8715D2E92A08D0B6003CC974 /* AgoraRtm.swift in Sources */,
 				87A2CFFE29FF9EFF00AEAB4D /* LiveChatViewModel.swift in Sources */,
+				87981FDF2A11203400705BAC /* CallManager.swift in Sources */,
 				8715D2DD2A07ECA1003CC974 /* RemoteHeader.swift in Sources */,
 				877A8F482A0CACE700484D46 /* FirestoreData.swift in Sources */,
 				8715D2D02A07DCFC003CC974 /* Images.swift in Sources */,
@@ -611,17 +689,16 @@
 				87A2D00329FF9F9300AEAB4D /* Constants.swift in Sources */,
 				878801C22A0936B000EF524A /* Logger.swift in Sources */,
 				87981FCF2A0D025E00705BAC /* StartCallData.swift in Sources */,
+				87981FE02A11203400705BAC /* Call.swift in Sources */,
 				87981FD12A0D03E500705BAC /* UserDefaults + Extensions.swift in Sources */,
 				87A2D01729FFB7E400AEAB4D /* GetApiProtocol.swift in Sources */,
 				87A2D01029FFAD4000AEAB4D /* ChannelMessage.swift in Sources */,
-				877A8F132A0BBA9500484D46 /* CallCenter.swift in Sources */,
 				87A2CFF829FF88D600AEAB4D /* ViewControllerDecorator.swift in Sources */,
 				8788023D2A0A72A100EF524A /* Token.swift in Sources */,
 				877822DA2A0282CD003C74B7 /* Bundle + Extensions.swift in Sources */,
 				87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */,
-				87981FDA2A10BFBD00705BAC /* AnswerCallData.swift in Sources */,
+				87981FDA2A10BFBD00705BAC /* AcceptedCallData.swift in Sources */,
 				877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */,
-				87981FC42A0CBA7600705BAC /* CallProvider.swift in Sources */,
 				87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */,
 				8715D2D32A07DDBB003CC974 /* SlidingView.swift in Sources */,
 			);
@@ -629,7 +706,72 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		87981FEF2A112DF100705BAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87981FE82A112DF100705BAC /* SeagreenDirectory */;
+			targetProxy = 87981FEE2A112DF100705BAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		87981FF22A112DF100705BAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LVKN97J3GA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SeagreenDirectory/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SeagreenDirectory;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreenlivevideo.SeagreenDirectory;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		87981FF32A112DF100705BAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LVKN97J3GA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SeagreenDirectory/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SeagreenDirectory;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datasya.seagreenlivevideo.SeagreenDirectory;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		87EFE61129FE7B040020B2A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -742,6 +884,7 @@
 		87EFE61429FE7B040020B2A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -786,6 +929,7 @@
 		87EFE61529FE7B040020B2A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -829,6 +973,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		87981FF12A112DF100705BAC /* Build configuration list for PBXNativeTarget "SeagreenDirectory" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87981FF22A112DF100705BAC /* Debug */,
+				87981FF32A112DF100705BAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		87EFE5FF29FE7B020020B2A9 /* Build configuration list for PBXProject "SeagreenLiveChat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

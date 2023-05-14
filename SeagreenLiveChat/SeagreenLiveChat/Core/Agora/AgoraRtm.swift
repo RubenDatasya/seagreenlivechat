@@ -66,10 +66,6 @@ class AgoraRtm: NSObject {
         return agoraRtm
     }
 
-    var callKit: AgoraRtmCallKit? {
-        agoraRtm.getRtmCall()
-    }
-
     lazy var tokenRepository = AgoraTokenRepository()
     private var rtmChannel: AgoraRtmChannel?
 
@@ -84,7 +80,6 @@ class AgoraRtm: NSObject {
 
     func setDelegate(_ delegate: AgoraRtmDelegate & AgoraRtmInviterDelegate){
         agoraRtm.agoraRtmDelegate = delegate
-        callKit?.callDelegate = self
         inviterDelegate = delegate
     }
 
@@ -229,136 +224,6 @@ extension AgoraRtmCallKit {
                     fail(.failure("rtm refuse invitation fail: \(errorCode.rawValue)"))
                 }
                 return
-            }
-        }
-    }
-}
-
-extension AgoraRtm: AgoraRtmCallDelegate {
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, localInvitationAccepted localInvitation: AgoraRtmLocalInvitation, withResponse response: String?) {
-        print("rtmCallKit localInvitationAccepted")
-
-        let rtm = AgoraRtm.shared
-        if let accepted = rtm.callKitAcceptedBlock {
-            DispatchQueue.main.async {
-                accepted()
-            }
-            rtm.callKitAcceptedBlock = nil
-        }
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, localInvitationRefused localInvitation: AgoraRtmLocalInvitation, withResponse response: String?) {
-        print("rtmCallKit localInvitationRefused")
-
-        let rtm = AgoraRtm.shared
-        if let refused = rtm.callKitRefusedBlock {
-            DispatchQueue.main.async {
-                refused()
-            }
-            LiveChat.shared.appleCallKit.endCall(of: localInvitation.calleeId)
-            rtm.callKitRefusedBlock = nil
-        }
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, remoteInvitationReceived remoteInvitation: AgoraRtmRemoteInvitation) {
-        print("rtmCallKit remoteInvitationReceived")
-
-        let rtm = AgoraRtm.shared
-
-        guard rtm.lastIncomingInvitation == nil else {
-            return
-        }
-
-        guard let inviter = rtm.callKit else {
-            fatalError("rtm inviter nil")
-        }
-
-        LiveChat.shared.appleCallKit.endCall(of: remoteInvitation.callerId)
-
-
-        DispatchQueue.main.async { [unowned inviter, weak self] in
-            self?.lastIncomingInvitation = remoteInvitation
-            let invitation = AgoraRtmInvitation.agRemoteInvitation(remoteInvitation)
-            self?.inviterDelegate?.inviter(inviter, didReceivedIncoming: invitation)
-        }
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, remoteInvitationCanceled remoteInvitation: AgoraRtmRemoteInvitation) {
-        print("rtmCallKit remoteInvitationCanceled")
-        let rtm = AgoraRtm.shared
-
-        guard let inviter = rtm.callKit else {
-            fatalError("rtm inviter nil")
-        }
-        LiveChat.shared.appleCallKit.endCall(of: remoteInvitation.callerId)
-
-        DispatchQueue.main.async { [weak self] in
-            let invitation = AgoraRtmInvitation.agRemoteInvitation(remoteInvitation)
-            self?.inviterDelegate?.inviter(inviter, remoteDidCancelIncoming: invitation)
-            self?.lastIncomingInvitation = nil
-        }
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, localInvitationReceivedByPeer localInvitation: AgoraRtmLocalInvitation) {
-        print("rtmCallKit localInvitationReceivedByPeer")
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, localInvitationCanceled localInvitation: AgoraRtmLocalInvitation) {
-        print("rtmCallKit localInvitationCanceled")
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, localInvitationFailure localInvitation: AgoraRtmLocalInvitation, errorCode: AgoraRtmLocalInvitationErrorCode) {
-        print("rtmCallKit localInvitationFailure: \(errorCode.rawValue)")
-        LiveChat.shared.appleCallKit.endCall(of: localInvitation.calleeId)
-
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, remoteInvitationFailure remoteInvitation: AgoraRtmRemoteInvitation, errorCode: AgoraRtmRemoteInvitationErrorCode) {
-        print("rtmCallKit remoteInvitationFailure: \(errorCode.rawValue)")
-        LiveChat.shared.appleCallKit.endCall(of: remoteInvitation.callerId)
-
-        self.lastIncomingInvitation = nil
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, remoteInvitationRefused remoteInvitation: AgoraRtmRemoteInvitation) {
-        print("rtmCallKit remoteInvitationRefused")
-        self.lastIncomingInvitation = nil
-        LiveChat.shared.appleCallKit.endCall(of: remoteInvitation.callerId)
-
-    }
-
-    func rtmCallKit(_ callKit: AgoraRtmCallKit, remoteInvitationAccepted remoteInvitation: AgoraRtmRemoteInvitation) {
-        print("rtmCallKit remoteInvitationAccepted")
-        self.lastIncomingInvitation = nil
-        LiveChat.shared.appleCallKit.endCall(of: remoteInvitation.callerId)
-
-    }
-}
-
-
-extension AgoraRtmKit {
-
-    func queryPeerOnline(_ peer: String, success: ((_ status: AgoraRtmPeerOnlineState) -> Void)? = nil, fail: ErrorCompletion = nil) {
-        print("rtm query peer: \(peer)")
-
-        queryPeersOnlineStatus([peer]) { (onlineStatusArray, errorCode) in
-            guard errorCode == AgoraRtmQueryPeersOnlineErrorCode.ok else {
-                if let fail = fail {
-                    fail(.failure("rtm queryPeerOnline fail: \(errorCode.rawValue)"))
-                }
-                return
-            }
-
-            guard let onlineStatus = onlineStatusArray?.first else {
-                if let fail = fail {
-                    fail(.failure("rtm queryPeerOnline array nil"))
-                }
-                return
-            }
-
-            if let success = success {
-                success(onlineStatus.state)
             }
         }
     }

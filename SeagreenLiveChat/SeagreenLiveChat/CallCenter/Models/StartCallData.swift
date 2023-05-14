@@ -15,4 +15,13 @@ struct StartCallData: Identifiable {
     var callername: String
     var callerid: String
     var channel: String
+
+    func toCallData() -> CallData {
+        CallData(channel: channel,
+                 callId: .init(),
+                 callerid: callerid,
+                 calleeid: calleeid,
+                 callerName: callername,
+                 bundleId: bundleId)
+    }
 }

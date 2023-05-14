@@ -157,6 +157,25 @@ extension ViewController {
 }
 
 
+extension UIViewController {
+   func add(_ child: UIViewController, frame: CGRect? = nil) {
+       addChild(child)
+
+       if let frame = frame {
+           child.view.frame = frame
+       }
+
+       view.addSubview(child.view)
+       child.didMove(toParent: self)
+   }
+
+   func remove() {
+       willMove(toParent: nil)
+       view.removeFromSuperview()
+       removeFromParent()
+   }
+}
+
 extension ViewController : UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer is UILongPressGestureRecognizer && otherGestureRecognizer is UITapGestureRecognizer ||

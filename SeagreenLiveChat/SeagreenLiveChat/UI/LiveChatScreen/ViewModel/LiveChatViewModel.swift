@@ -41,6 +41,7 @@ protocol LiveChatControlProtocol {
 protocol InteractionProcotol {
     func sendMessage(event: ChannelMessageEvent)
     func startCall()
+    func endCall()
 }
 
 class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
@@ -50,7 +51,8 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     @Published var isSharing: Bool =  false
     @Published var hostState: HostState = .disconnected
 
-    let callProvider = CallProvider()
+    var callManager = AppDelegate.shared.callManager
+    var providerDelegate =  AppDelegate.shared.providerDelegate
 
     let cameraInput : CameraControlProtocol & ResetCameraControlProtocol = CameraInput()
 
@@ -195,18 +197,30 @@ extension LiveChatViewModel: InteractionProcotol {
 
     func startCall() {
         Task {
-            do {
-                try await callProvider.startCall(startCallData: .init(
-                    bundleId: Bundle.main.bundleIdentifier!,
-                    name: "Ruben",
-                    calleeid: "JxOFcbdijDXRiHqlv7kw1KGC7yv2",
-                    callername: "Pikachu",
-                    callerid: UserDefaults.getFuid(),
-                    channel: Constants.Credentials.channel))
-            } catch {
-                print(error)
-                //Handle ui Error
+            let startCallData: StartCallData = .init(
+                bundleId: Bundle.main.bundleIdentifier!,
+                name: "Ruben",
+                calleeid: "JxOFcbdijDXRiHqlv7kw1KGC7yv2",
+                callername: "Pikachu",
+                callerid: UserDefaults.getFuid(),
+                channel: Constants.Credentials.channel)
+
+            let callCommand = CallRequestApi()
+            guard await callCommand.executeCall(startCallData: startCallData) else {
+                throw FirebaseError.couldNotSendPush
             }
+            providerDelegate?.callsActor(startCallData.toCallData())
+            callManager.startCall(handle: startCallData.callername, videoEnabled: true)
+        }
+    }
+
+    func endCall() {
+        stopAudio()
+        callManager.end()
+        Task {
+            let endCallApi = EndCallRequestApi()
+            let actors =  LiveChat.shared.getActors()
+            await endCallApi.endCall(.init(callerId: actors.0 , calleeId: actors.1, bundleId: Bundle.main.bundleIdentifier!))
         }
     }
 

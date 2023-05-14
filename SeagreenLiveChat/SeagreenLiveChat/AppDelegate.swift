@@ -19,8 +19,11 @@ import SwiftUI
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var callObserver: CallNotificationObserver?
     var voipRegistry: PKPushRegistry!
+    let callManager = CallManager()
+    var providerDelegate: ProviderDelegate!
+
+    static var shared: AppDelegate!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
@@ -29,19 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.makeKeyAndVisible()
         self.registerAPNS()
         self.voipRegistration()
+        AppDelegate.shared = self
         LiveChat.setMode(isDemoMode: true)
+        providerDelegate = ProviderDelegate(callManager: callManager)
         return true
-    }
-
-    private func onCallAnswered(_ callData: CallData) {
-        let chatScreen = LiveChatScreen()
-            .environmentObject(LiveChatViewModel())
-        let host = UIHostingController(rootView: chatScreen)
-        window?.rootViewController = host
-        Task(priority: .userInitiated) {
-            let api = AnswerRequestApi()
-            await api.answerCall(callData)
-        }
     }
 
     private func authentificate() async throws -> String {
@@ -73,14 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-extension AppDelegate {
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-    }
-    func applicationWillEnterForeground(_ application: UIApplication) {
-    }
-}
-
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         dump(notification)
@@ -95,12 +81,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("didRegisterForRemoteNotificationsWithDeviceToken")
     }
 
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("didReceiveRemoteNotification")
-//        LiveChat.shared.showIncomingCall(with: userInfo)
-//        callObserver = CallNotificationObserver(onAnswered: onCallAnswered(_:))
-//        completionHandler(.newData)
-    }
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {}
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         dump(response)
@@ -110,12 +91,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: PKPushRegistryDelegate {
 
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        print("didReceiveIncomingPushWith dictionnary",payload.dictionaryPayload)
-        LiveChat.shared.showIncomingCall(with: payload.dictionaryPayload)
-        callObserver = CallNotificationObserver(onAnswered: onCallAnswered(_:))
-        DispatchQueue.main.async {
-            completion()
-        }
+        handlePushPayload(payload.dictionaryPayload)
+        completion()
     }
 
 
@@ -131,6 +108,27 @@ extension AppDelegate: PKPushRegistryDelegate {
             let name = names.randomElement()!
             let user = try await userApi.create(.init(id: uid, name: name, pushToken: token))
             print("didUpdate", user)
+        }
+    }
+
+
+    func handlePushPayload(_ payload: [AnyHashable : Any]) {
+        let callState = payload.toCallStatus()
+        switch callState {
+        case .incoming:
+            providerDelegate.reportIncomingCall(callData: CallData.toCallData(payload)) { error in
+                Logger.severe("handlePushPayload, incoming",error: error)
+            }
+        case .accepted:
+            startAudio()
+            AgoraRtc.shared.toggleAudio()
+            Logger.debug("Call accepted \(payload)")
+        case .declined:
+            callManager.end()
+        case .notAnswered:
+            callManager.end()
+        case .ended:
+            callManager.end()
         }
     }
 }

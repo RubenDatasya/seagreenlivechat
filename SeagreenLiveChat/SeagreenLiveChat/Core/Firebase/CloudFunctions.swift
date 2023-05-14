@@ -10,7 +10,8 @@ import Foundation
 enum CloudFunction {
 
     case callRequest(callData: StartCallData)
-    case callAnswered(answerCallData: AnswerCallData)
+    case callAccepted(answerCallData: AcceptedCallData)
+    case endCallRequest(endCallData: EndCallData)
     case getRtcToken(channelName: String, uid: UInt)
     case getRtmToken(userid: String)
 
@@ -22,8 +23,10 @@ enum CloudFunction {
             return "getRtmToken"
         case .callRequest:
             return "callRequest"
-        case .callAnswered:
-            return "callAnsweredRequest"
+        case .callAccepted:
+            return "callAcceptedRequest"
+        case .endCallRequest:
+            return "endCallRequest"
         }
     }
 
@@ -40,22 +43,29 @@ enum CloudFunction {
             ]
         case .callRequest(let callData):
             return [
+                "callId"    : callData.id.uuidString,
                 "channel"   : callData.channel,
                 "bundleId"  : callData.bundleId,
                 "callerName": callData.callername,
-                "callerId"  : callData.calleeid,
+                "callerId"  : callData.callerid,
                 "calleeName": callData.callername,
                 "calleeId"  : callData.calleeid
             ]
-        case .callAnswered(let callData):
+        case .callAccepted(let callData):
             return [
                 "bundleId"  : callData.bundleId,
+                "callId"    : callData.callId.uuidString,
                 "channel"   : callData.channel,
                 "callerId"  : callData.callerid,
-                "callState" : callData.callState.rawValue
+                "calleeId"  : callData.calleeid,
+            ]
+        case .endCallRequest(let callData):
+            return [
+                "callerId"  : callData.callerId,
+                "calleeId"  : callData.calleeId,
+                "bundleId"  : callData.bundleId
             ]
         }
+
     }
-
-
 }

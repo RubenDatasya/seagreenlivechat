@@ -35,7 +35,7 @@ struct LiveChatHeader: View {
             DemoCallButton()
 
             Button {
-
+                viewModel.endCall()
             } label: {
                 Text("End Call")
                     .bold()
