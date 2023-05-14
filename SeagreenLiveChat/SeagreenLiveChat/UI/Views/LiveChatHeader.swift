@@ -54,13 +54,7 @@ struct LiveChatHeader: View {
     func DemoCallButton() -> some View {
         if LiveChat.shared.isDemo() {
             Button {
-                Task {
-                    do {
-                        try await viewModel.callProvider.startCall(to: "")
-                    } catch {
-                        //Handle startCall error
-                    }
-                }
+                viewModel.startCall()
             } label: {
                 Images.phoneConnection
                     .foregroundColor(Color.white)

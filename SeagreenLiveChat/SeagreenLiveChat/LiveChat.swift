@@ -15,8 +15,6 @@ public class LiveChat: NSObject {
         return AgoraRtm.shared.callKit
     }
 
-    private var prepareToVideoChat: (() -> Void)?
-    private var navigateToLiveChat: (() -> Void)?
     private var calleeId: String? = nil
     private static var isDemoMode: Bool =  false
     lazy var appleCallKit : CallCenter = .init(delegate: self)
@@ -27,14 +25,14 @@ public class LiveChat: NSObject {
         super.init()
     }
 
-
-
     public static func configure(
-        appId: String = "0089641598304276ab3e6baf141c0258",
-        appname: String = "Seagrean"
+        appId       : String = "0089641598304276ab3e6baf141c0258",
+        appname     : String = "Seagrean",
+        bundleId    : String
     ) {
         Constants.Secret.appid = appId
         Constants.Credentials.appName = appname
+        Constants.Credentials.bundleId = bundleId
     }
 
     public static func setMode(isDemoMode: Bool){
@@ -57,7 +55,7 @@ public class LiveChat: NSObject {
 
     // the remoteUserid is the one sent to login with AgoraRtm
     public func setCalleeId(remoteUserid: String) {
-        calleeId =  remoteUserid
+        calleeId = remoteUserid
     }
 
     // the user id is the one sent to login with AgoraRtm
@@ -66,8 +64,8 @@ public class LiveChat: NSObject {
         appleCallKit.startOutgoingCall(of: userid)
     }
 
-    public func showIncomingCall(of userid : String, withData: [AnyHashable : Any]) {
-        appleCallKit.showIncomingCall(of: userid)
+    public func showIncomingCall(with data : [AnyHashable : Any]) {
+        appleCallKit.showIncomingCall(callData: CallData.toCallData(data))
     }
 
     public func onCallAccepted(navigate : @escaping () -> Void){
@@ -89,13 +87,6 @@ extension LiveChat : CallCenterDelegate {
         }
 
         inviter.acceptLastIncomingInvitation()
-
-        self.prepareToVideoChat = { [weak self] in
-            Constants.Credentials.channel = channel
-            Constants.Credentials.remoteUser = remote
-            //Show VideoChat view
-            self?.navigateToLiveChat?()
-        }
     }
 
     func callCenter(_ callCenter: CallCenter, declineCall session: String) {
@@ -169,15 +160,10 @@ extension LiveChat : CallCenterDelegate {
     func callCenter(_ callCenter: CallCenter, endCall session: String) {
         print("callCenter endCall")
         appleCallKit.endCall(of: session)
-        self.prepareToVideoChat = nil
     }
 
     func callCenterDidActiveAudioSession(_ callCenter: CallCenter) {
         print("callCenter didActiveAudioSession")
-        // Incoming call
-        if let prepare = self.prepareToVideoChat {
-            prepare()
-        }
     }
 }
 

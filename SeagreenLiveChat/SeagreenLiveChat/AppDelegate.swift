@@ -14,34 +14,46 @@ import PushKit
 import FirebaseAuth
 import Firebase
 import CallKit
-import FirebaseMessaging
+import SwiftUI
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var callObserver: CallNotificationObserver?
+    var voipRegistry: PKPushRegistry!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.backgroundColor = .white
         self.window!.makeKeyAndVisible()
-        Messaging.messaging().delegate = self
-        Messaging.messaging().isAutoInitEnabled =  true
         self.registerAPNS()
         self.voipRegistration()
         LiveChat.setMode(isDemoMode: true)
         return true
     }
 
+    private func onCallAnswered(_ callData: CallData) {
+        let chatScreen = LiveChatScreen()
+            .environmentObject(LiveChatViewModel())
+        let host = UIHostingController(rootView: chatScreen)
+        window?.rootViewController = host
+        Task(priority: .userInitiated) {
+            let api = AnswerRequestApi()
+            await api.answerCall(callData)
+        }
+    }
+
     private func authentificate() async throws -> String {
-       let result = try await Auth.auth().signInAnonymously()
-       let uid =  result.user.uid
+        let result = try await Auth.auth().signInAnonymously()
+        let uid =  result.user.uid
+        UserDefaults.saveFuid(uid)
         return uid
     }
 
     private func voipRegistration() {
-        let mainQueue = DispatchQueue.main
-        let voipRegistry: PKPushRegistry = PKPushRegistry(queue: mainQueue)
+        let queue = DispatchQueue.global()
+        voipRegistry = PKPushRegistry(queue: queue)
         voipRegistry.delegate = self
         voipRegistry.desiredPushTypes = [.voIP]
     }
@@ -81,28 +93,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("didRegisterForRemoteNotificationsWithDeviceToken")
-        Task {
-            let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-            Messaging.messaging().apnsToken = deviceToken
-            let uid = try await authentificate()
-            let userApi = UserApi()
-            let names =  ["Pikachu","Gengar", "Mario"]
-            let name = names.randomElement()!
-            let user = try await userApi.create(.init(id: uid, name: name, pushToken: token))
-            print("didUpdate", user)
-        }
-
     }
-
-
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("didReceiveRemoteNotification")
-        let conversationtype = userInfo["conversationType"] as! String
-        let caller = userInfo["caller"] as! String
-        let channelName = userInfo["channelName"] as! String
-        LiveChat.shared.showIncomingCall(of: caller, withData: userInfo)
-        completionHandler(.newData)
+//        LiveChat.shared.showIncomingCall(with: userInfo)
+//        callObserver = CallNotificationObserver(onAnswered: onCallAnswered(_:))
+//        completionHandler(.newData)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
@@ -112,13 +109,28 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 extension AppDelegate: PKPushRegistryDelegate {
 
-    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) async {}
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+        print("didReceiveIncomingPushWith dictionnary",payload.dictionaryPayload)
+        LiveChat.shared.showIncomingCall(with: payload.dictionaryPayload)
+        callObserver = CallNotificationObserver(onAnswered: onCallAnswered(_:))
+        DispatchQueue.main.async {
+            completion()
+        }
+    }
 
 
-    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {}
-}
-
-extension AppDelegate : MessagingDelegate {
-
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {}
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        let token = pushCredentials.token.map { String(format: "%02.2hhx", $0) }.joined()
+        print("PKPushRegistryDelegate", "didUpdate with token \(token)")
+        Task {
+            let uid = try await authentificate()
+            let userApi = UserApi()
+            let tokenApi =  PushTokenApi()
+            let _ = try await tokenApi.create(.init(id:token,ownedby: uid, pushToken: token, deviceOS: "iOS"))
+            let names =  ["Pikachu","Gengar", "Mario"]
+            let name = names.randomElement()!
+            let user = try await userApi.create(.init(id: uid, name: name, pushToken: token))
+            print("didUpdate", user)
+        }
+    }
 }

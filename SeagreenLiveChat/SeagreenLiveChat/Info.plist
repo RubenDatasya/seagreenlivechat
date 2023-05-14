@@ -9,7 +9,6 @@
 		<string>audio</string>
 		<string>fetch</string>
 		<string>processing</string>
-		<string>push-to-talk</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>

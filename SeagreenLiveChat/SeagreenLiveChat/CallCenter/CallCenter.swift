@@ -25,10 +25,11 @@ class CallCenter: NSObject {
 
     fileprivate let controller = CXCallController()
     private let provider = CXProvider(configuration: CallCenter.providerConfiguration)
+    private var callData: CallData?
 
     private static var providerConfiguration: CXProviderConfiguration {
         let appName = Constants.Credentials.appName
-        let providerConfiguration = CXProviderConfiguration()
+        let providerConfiguration = CXProviderConfiguration(localizedName: appName)
         providerConfiguration.supportsVideo = true
         providerConfiguration.maximumCallsPerCallGroup = 1
         providerConfiguration.maximumCallGroups = 1
@@ -48,14 +49,13 @@ class CallCenter: NSObject {
         provider.invalidate()
     }
 
-    func showIncomingCall(of session: String) {
+    func showIncomingCall(callData: CallData) {
         let callUpdate = CXCallUpdate()
-        callUpdate.remoteHandle = CXHandle(type: .phoneNumber, value: session)
-        callUpdate.localizedCallerName = session
+        callUpdate.remoteHandle = CXHandle(type: .phoneNumber, value: callData.callerName)
         callUpdate.hasVideo = true
         callUpdate.supportsDTMF = false
-
-        let uuid = pairedUUID(of: session)
+        self.callData = callData
+        let uuid = pairedUUID(of: callData.callerid)
 
         provider.reportNewIncomingCall(with: uuid, update: callUpdate, completion: { error in
             if let error = error {
@@ -135,6 +135,7 @@ extension CallCenter: CXProviderDelegate {
         }
 
         delegate?.callCenter(self, muteCall: action.isMuted, session: session)
+        callData = nil
         action.fulfill()
     }
 
@@ -143,8 +144,9 @@ extension CallCenter: CXProviderDelegate {
             action.fail()
             return
         }
-
-        delegate?.callCenter(self, answerCall: session)
+        NotificationCenter.answeredCall(call: .init(state: .answered(callData: callData!)))
+        callData = nil
+        //delegate?.callCenter(self, answerCall: session)
         action.fulfill()
     }
 

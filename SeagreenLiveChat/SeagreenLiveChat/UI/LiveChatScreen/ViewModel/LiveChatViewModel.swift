@@ -38,8 +38,9 @@ protocol LiveChatControlProtocol {
     func toggleAudio()
 }
 
-protocol SendMessageProtocol {
+protocol InteractionProcotol {
     func sendMessage(event: ChannelMessageEvent)
+    func startCall()
 }
 
 class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
@@ -70,14 +71,15 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     var resetFocus: PassthroughSubject<(),Never> = .init()
     var resetFlash: PassthroughSubject<(),Never> = .init()
 
-
     var alertSubject:  PassthroughSubject<LiveChatAlert, Never> = .init()
     var subscriptions: Set<AnyCancellable> = .init()
 
+
     func initializeAgora() {
-        LiveChat.configure()
-        LiveChat.setCurrentUser()
-        LiveChat.setLiveChatChannel()
+        LiveChat.configure(bundleId: Bundle.main.bundleIdentifier!)
+        //To set firebase user -> leading to token
+        LiveChat.setCurrentUser(userId: "")
+        LiveChat.setLiveChatChannel(channel: "seagreenlivechat_4")
         AgoraRtc.shared.initialize()
         AgoraRtc.shared.addDelegate(self)
         AgoraRtm.shared.initalize()
@@ -185,10 +187,27 @@ extension LiveChatViewModel: LiveChatControlProtocol {
     }
 }
 
-extension LiveChatViewModel: SendMessageProtocol {
+extension LiveChatViewModel: InteractionProcotol {
 
     func sendMessage(event: ChannelMessageEvent) {
         AgoraRtm.shared.sendMessage(event: event)
+    }
+
+    func startCall() {
+        Task {
+            do {
+                try await callProvider.startCall(startCallData: .init(
+                    bundleId: Bundle.main.bundleIdentifier!,
+                    name: "Ruben",
+                    calleeid: "JxOFcbdijDXRiHqlv7kw1KGC7yv2",
+                    callername: "Pikachu",
+                    callerid: UserDefaults.getFuid(),
+                    channel: Constants.Credentials.channel))
+            } catch {
+                print(error)
+                //Handle ui Error
+            }
+        }
     }
 
 }
@@ -264,8 +283,6 @@ extension LiveChatViewModel: AgoraRtmInviterDelegate {
 
     func inviter(_ inviter: AgoraRtmCallKit, didReceivedIncoming invitation: AgoraRtmInvitation) {
         //self.performSegue(withIdentifier: "MainToDial", sender: invitation.caller)
-        LiveChat.shared.showIncomingCall(of: invitation.caller, withData: [:])
-
     }
 
     func inviter(_ inviter: AgoraRtmCallKit, remoteDidCancelIncoming invitation: AgoraRtmInvitation) {

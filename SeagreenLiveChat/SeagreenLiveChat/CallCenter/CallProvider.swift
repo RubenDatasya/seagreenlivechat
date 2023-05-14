@@ -28,12 +28,13 @@ class CallProvider: NSObject,  CXProviderDelegate {
     }
 
 
-    func startCall(to contactName: String) async throws {
-
-        let isRequestSent =  await callCommand.executeCall()
-
+    func startCall(startCallData: StartCallData) async throws {
+        guard await callCommand.executeCall(startCallData: startCallData) else {
+            throw FirebaseError.couldNotSendPush
+        }
+        
         let callId = UUID()
-        let recipient = CXHandle(type: .generic, value: contactName)
+        let recipient = CXHandle(type: .generic, value: startCallData.name)
         let startAction = CXStartCallAction(call: callId, handle: recipient)
         let transaction = CXTransaction(action: startAction)
 

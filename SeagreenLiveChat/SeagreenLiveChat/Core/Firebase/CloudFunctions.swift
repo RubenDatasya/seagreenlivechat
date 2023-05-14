@@ -8,7 +8,9 @@
 import Foundation
 
 enum CloudFunction {
-    case callRequest(channelName: String, caller: String, callee: String)
+
+    case callRequest(callData: StartCallData)
+    case callAnswered(answerCallData: AnswerCallData)
     case getRtcToken(channelName: String, uid: UInt)
     case getRtmToken(userid: String)
 
@@ -20,6 +22,8 @@ enum CloudFunction {
             return "getRtmToken"
         case .callRequest:
             return "callRequest"
+        case .callAnswered:
+            return "callAnsweredRequest"
         }
     }
 
@@ -32,13 +36,23 @@ enum CloudFunction {
             ]
         case .getRtmToken(let userid):
             return [
-                "userid": userid
+                "userid"    : userid
             ]
-        case .callRequest(let channel, let caller, let callee):
+        case .callRequest(let callData):
             return [
-                "channelName": channel,
-                "callerName": caller,
-                "calleeName": callee
+                "channel"   : callData.channel,
+                "bundleId"  : callData.bundleId,
+                "callerName": callData.callername,
+                "callerId"  : callData.calleeid,
+                "calleeName": callData.callername,
+                "calleeId"  : callData.calleeid
+            ]
+        case .callAnswered(let callData):
+            return [
+                "bundleId"  : callData.bundleId,
+                "channel"   : callData.channel,
+                "callerId"  : callData.callerid,
+                "callState" : callData.callState.rawValue
             ]
         }
     }

@@ -14,10 +14,11 @@ enum Constants {
     }
 
     struct Credentials {
-        static var appName: String = ""
-        static var currentUser =  ""
-        static var uid: UInt =  UInt(abs(currentUser.hashValue))
-        static var channel: String = ""
-        static var remoteUser: UInt = 0
+        static var bundleId     : String = ""
+        static var appName      : String = ""
+        static var currentUser  : String =  ""
+        static var uid          : UInt =  UInt(abs(currentUser.hashValue))
+        static var channel      : String = ""
+        static var remoteUser   : UInt = 0
     }
 }
