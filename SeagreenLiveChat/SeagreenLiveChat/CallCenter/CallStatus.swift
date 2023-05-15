@@ -10,7 +10,6 @@ import Foundation
 enum CallStatus: String  {
     case incoming       = "INCOMING"
     case accepted       = "ACCEPTED"
-    case declined       = "DECLINED"
     case notAnswered    = "NOT_ANSWERED"
     case ended          = "ENDED"
 
@@ -20,8 +19,6 @@ enum CallStatus: String  {
             return .incoming
         case CallStatus.accepted.rawValue:
             return .accepted
-        case CallStatus.declined.rawValue:
-            return .declined
         case CallStatus.notAnswered.rawValue:
             return .notAnswered
         case CallStatus.ended.rawValue:

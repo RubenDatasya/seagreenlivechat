@@ -21,11 +21,6 @@ enum LoginStatus {
     case online, offline
 }
 
-protocol AgoraRtmInviterDelegate: NSObjectProtocol {
-    func inviter(_ inviter: AgoraRtmCallKit, didReceivedIncoming invitation: AgoraRtmInvitation)
-    func inviter(_ inviter: AgoraRtmCallKit, remoteDidCancelIncoming invitation: AgoraRtmInvitation)
-}
-
 struct AgoraRtmInvitation {
     var content: String?
     var caller: String // outgoint call
@@ -60,8 +55,6 @@ class AgoraRtm: NSObject {
     fileprivate var callKitRefusedBlock: Completion = nil
     fileprivate var callKitAcceptedBlock: Completion = nil
 
-    weak var inviterDelegate: AgoraRtmInviterDelegate?
-
     var rtm : AgoraRtmKit {
         return agoraRtm
     }
@@ -78,14 +71,14 @@ class AgoraRtm: NSObject {
         agoraRtm = .init(appId: Constants.Secret.appid, delegate: nil)
     }
 
-    func setDelegate(_ delegate: AgoraRtmDelegate & AgoraRtmInviterDelegate){
+    func setDelegate(_ delegate: AgoraRtmDelegate){
         agoraRtm.agoraRtmDelegate = delegate
-        inviterDelegate = delegate
     }
 
     @discardableResult
     func joinMessageChannel(delegate: AgoraRtmChannelDelegate) async throws -> Bool  {
         let token = try await tokenRepository.getRtmToken(with: Constants.Credentials.currentUser)
+        print("joinMessageChannel", Constants.Credentials.currentUser)
         let login = await agoraRtm.login(byToken: token.value, user: Constants.Credentials.currentUser)
         if login == .ok {
             try createMessageChannel(delegate: delegate)

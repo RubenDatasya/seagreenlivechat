@@ -15,7 +15,7 @@ struct LiveChatHeader: View {
         HStack(spacing: 23) {
 
             Button {
-
+                viewModel.toggleAudio()
             } label: {
                 Images.unmute
                     .foregroundColor(.white)

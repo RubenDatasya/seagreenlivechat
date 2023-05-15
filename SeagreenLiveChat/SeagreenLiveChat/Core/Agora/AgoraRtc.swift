@@ -25,7 +25,7 @@ class AgoraRtc: NSObject {
 
     lazy var tokenRepository = AgoraTokenRepository()
 
-    private var audioEnabled: Bool = false
+    private var audioEnabled: Bool = true
 
     private override init() {}
 
@@ -54,6 +54,7 @@ class AgoraRtc: NSObject {
 
     func start() {
         agoraEngine.enableVideo()
+        agoraEngine.disableAudio()
         agoraEngine.setExternalVideoSource(true, useTexture: true, sourceType: .videoFrame)
         agoraEngine.setVideoEncoderConfiguration(encodingConfiguration)
     }
@@ -100,13 +101,16 @@ class AgoraRtc: NSObject {
          }
     }
 
-    func toggleAudio() {
-        if audioEnabled {
-            agoraEngine.disableAudio()
-        }else {
-            agoraEngine.enableAudio()
-        }
+    func toggleAudio(isOn: Bool) {
+        audioEnabled = isOn
+        handleAudio()
     }
+
+    func toggleAudio() {
+        audioEnabled = !audioEnabled
+        handleAudio()
+    }
+
     func stop() {
         agoraEngine.stopPreview()
     }
@@ -126,6 +130,14 @@ class AgoraRtc: NSObject {
         let enhancements : [any AgoraQualityImprovementProtocol] = [AgoraColorEnhancement(), AgoraUnderExposed(), AgoraVideoDenoising()]
         enhancements.forEach { improvement in
             agoraEngine.setExtensionPropertyWithVendor(improvement.name, extension: improvement.extension, key: improvement.key, value: improvement.value,sourceType: .remoteVideo)
+        }
+    }
+
+    private func handleAudio() {
+        if audioEnabled {
+            agoraEngine.disableAudio()
+        }else {
+            agoraEngine.enableAudio()
         }
     }
 }

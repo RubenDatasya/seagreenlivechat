@@ -27,7 +27,7 @@
 		877822CB2A027BB7003C74B7 /* RTCLoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CA2A027BB7003C74B7 /* RTCLoginState.swift */; };
 		877822CD2A027BC9003C74B7 /* CameraState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822CC2A027BC9003C74B7 /* CameraState.swift */; };
 		877822DA2A0282CD003C74B7 /* Bundle + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */; };
-		877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822DE2A0289CD003C74B7 /* enum HostState.swift */; };
+		877822DF2A0289CD003C74B7 /* HostState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822DE2A0289CD003C74B7 /* HostState.swift */; };
 		877822F12A035037003C74B7 /* CameraInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877822F02A035037003C74B7 /* CameraInput.swift */; };
 		877A8F1B2A0BE91200484D46 /* RtcBasic in Frameworks */ = {isa = PBXBuildFile; productRef = 877A8F1A2A0BE91200484D46 /* RtcBasic */; };
 		877A8F432A0CAC5400484D46 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A8F422A0CAC5400484D46 /* Models.swift */; };
@@ -126,7 +126,7 @@
 		877822CA2A027BB7003C74B7 /* RTCLoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCLoginState.swift; sourceTree = "<group>"; };
 		877822CC2A027BC9003C74B7 /* CameraState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraState.swift; sourceTree = "<group>"; };
 		877822D92A0282CD003C74B7 /* Bundle + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Extensions.swift"; sourceTree = "<group>"; };
-		877822DE2A0289CD003C74B7 /* enum HostState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "enum HostState.swift"; sourceTree = "<group>"; };
+		877822DE2A0289CD003C74B7 /* HostState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostState.swift; sourceTree = "<group>"; };
 		877822F02A035037003C74B7 /* CameraInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInput.swift; sourceTree = "<group>"; };
 		877A8F422A0CAC5400484D46 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		877A8F472A0CACE700484D46 /* FirestoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreData.swift; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 				877822C82A027BA8003C74B7 /* CameraPosition.swift */,
 				877822CA2A027BB7003C74B7 /* RTCLoginState.swift */,
 				877822CC2A027BC9003C74B7 /* CameraState.swift */,
-				877822DE2A0289CD003C74B7 /* enum HostState.swift */,
+				877822DE2A0289CD003C74B7 /* HostState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -698,7 +698,7 @@
 				877822DA2A0282CD003C74B7 /* Bundle + Extensions.swift in Sources */,
 				87A2D00929FFA1E200AEAB4D /* LiveChatAlert.swift in Sources */,
 				87981FDA2A10BFBD00705BAC /* AcceptedCallData.swift in Sources */,
-				877822DF2A0289CD003C74B7 /* enum HostState.swift in Sources */,
+				877822DF2A0289CD003C74B7 /* HostState.swift in Sources */,
 				87EFE60829FE7B020020B2A9 /* SeagreenLiveChatApp.swift in Sources */,
 				8715D2D32A07DDBB003CC974 /* SlidingView.swift in Sources */,
 			);

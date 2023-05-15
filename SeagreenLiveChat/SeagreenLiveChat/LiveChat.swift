@@ -38,7 +38,7 @@ public class LiveChat: NSObject {
     }
 
     public static func setCurrentUser(
-        userId: String = UIDevice.current.identifierForVendor?.uuidString ?? ""
+        userId: String
     ) {
         Constants.Credentials.currentUser = userId
     }

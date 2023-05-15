@@ -80,7 +80,7 @@ class LiveChatViewModel: NSObject, ObservableObject, LiveChatStateProtocol {
     func initializeAgora() {
         LiveChat.configure(bundleId: Bundle.main.bundleIdentifier!)
         //To set firebase user -> leading to token
-        LiveChat.setCurrentUser(userId: "")
+        LiveChat.setCurrentUser(userId:  UIDevice.current.identifierForVendor?.uuidString ?? "")
         LiveChat.setLiveChatChannel(channel: "seagreenlivechat_4")
         AgoraRtc.shared.initialize()
         AgoraRtc.shared.addDelegate(self)
@@ -291,15 +291,4 @@ extension LiveChatViewModel: AgoraRtmChannelDelegate {
         }
     }
 
-}
-
-extension LiveChatViewModel: AgoraRtmInviterDelegate {
-
-    func inviter(_ inviter: AgoraRtmCallKit, didReceivedIncoming invitation: AgoraRtmInvitation) {
-        //self.performSegue(withIdentifier: "MainToDial", sender: invitation.caller)
-    }
-
-    func inviter(_ inviter: AgoraRtmCallKit, remoteDidCancelIncoming invitation: AgoraRtmInvitation) {
-
-    }
 }

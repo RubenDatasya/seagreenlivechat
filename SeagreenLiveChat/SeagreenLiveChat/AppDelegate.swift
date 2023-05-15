@@ -120,11 +120,8 @@ extension AppDelegate: PKPushRegistryDelegate {
                 Logger.severe("handlePushPayload, incoming",error: error)
             }
         case .accepted:
-            startAudio()
-            AgoraRtc.shared.toggleAudio()
+            AgoraRtc.shared.toggleAudio(isOn: true)
             Logger.debug("Call accepted \(payload)")
-        case .declined:
-            callManager.end()
         case .notAnswered:
             callManager.end()
         case .ended:
